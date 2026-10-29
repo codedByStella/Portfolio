@@ -20,7 +20,7 @@
 <p class="lede">A source-level review of the system that coordinates structured creative metadata, video generation, synthetic narration, reusable soundtrack assets, subtitle creation, FFmpeg assembly, and artifact archiving.</p>
 <div class="tags"><span class="tag">Python</span><span class="tag">JSON</span><span class="tag">OpenAI API</span><span class="tag">Sora</span><span class="tag">ElevenLabs</span><span class="tag">FFmpeg</span><span class="tag">ASS subtitles</span></div>
 <div class="meta-grid">
-<div><div class="k">Status</div><div class="v">Active development; scheduled cycle paused</div></div>
+<div><div class="k">Status</div><div class="v">Dormant; development concluded</div></div>
 <div><div class="k">Orchestration</div><div class="v">Python nodes and file-based handoffs</div></div>
 <div><div class="k">Creative contract</div><div class="v">Five-field JSON metadata</div></div>
 <div><div class="k">Media processing</div><div class="v">FFmpeg and local soundtrack assets</div></div>
@@ -31,6 +31,7 @@
 <section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
 <p>StellaStudios treats short-form video creation as a multi-stage workflow rather than a single generative request. A GPT node produces structured metadata, and specialized nodes use that metadata to generate video and narration, select and process music, create subtitles, assemble the media, and archive artifacts.</p>
 <p>The architecture separates creative generation from deterministic post-processing. External models supply creative material; Python and FFmpeg handle orchestration, file movement, audio processing, subtitle formatting, encoding, and archival.</p>
+<p><strong>Project origin:</strong> When Sora released, I was approached to build an automated audiovisual pipeline and accepted the premise. I tested Make and n8n first, but found the tooling inefficient for the requirements: model and integration constraints, broken nodes, and missing practical support for features such as subtitles. I rebuilt the system from scratch on Amazon Lightsail, implementing the workflow node by node until I had removed the Make dependency and implemented the features the project required.</p>
 <div class="callout"><p><strong>Scope note:</strong> the source confirms the major components and intended sequence. It does not establish current end-to-end reliability, consistent model output, concurrency safety, or an active unattended publishing service.</p></div></section>
 <section id="metadata"><div class="s-label"><span>02 / creative metadata</span><span class="rule"></span></div>
 <p>The GPT node calls the OpenAI Chat Completions API in JSON mode and expects five fields: <code>title</code>, <code>description</code>, <code>video</code>, <code>voice</code>, and <code>music</code>. Creative presets provide reusable constraints, while model configuration is managed separately. The environmental preset targets a short vertical scenic clip with coherent motion, consistent lighting, and a calm tone.</p>
@@ -62,7 +63,7 @@
 <li><strong>Subtitle timing:</strong> phrase timing is estimated rather than aligned to word-level timestamps.</li>
 <li><strong>Soundtrack selection:</strong> a local track pool is used; the music description is not used to generate a new score.</li>
 <li><strong>Run isolation:</strong> shared pending storage and latest-metadata discovery create concurrency risks.</li>
-<li><strong>Operational status:</strong> the scheduled cycle is currently paused. Source inspection does not prove current end-to-end operation or production uptime.</li>
+<li><strong>Operational status:</strong> the project is dormant. Its development pursuit concluded because the ongoing generative-credit overhead did not offer a clear economic payoff; it is not waiting for a move or currently active development. Source inspection does not prove current end-to-end operation or production uptime.</li>
 <li><strong>Testing:</strong> this review is based on source and configuration inspection, not a comprehensive end-to-end test report.</li>
 </ul></section>
 <section id="next"><div class="s-label"><span>11 / engineering priorities</span><span class="rule"></span></div>
