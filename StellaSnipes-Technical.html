@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StellaSnipes Technical Review | codedByStella</title>
+<meta name="description" content="Technical review of StellaSnipes, a domain-data acquisition and processing MVP using CZDS, JavaScript orchestration, Python utilities, snapshot comparison, and local caching.">
+<meta property="og:title" content="StellaSnipes Technical Review | codedByStella">
+<meta property="og:description" content="Architecture, large-file processing, snapshot comparison, aggregation, caching, and implementation limits.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12151B;--surface:#1B2028;--surface-hi:#212832;--border:#282F39;--text:#E8EAED;--text-dim:#8B93A1;--text-faint:#525A66;--teal:#5FD4C4;--amber:#E0A458;--red:#E2665B;--mono:'IBM Plex Mono',ui-monospace,'SF Mono',monospace;--sans:'IBM Plex Sans',-apple-system,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;scroll-padding-top:24px}body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:86px}a{color:inherit}.statusbar{border-bottom:1px solid var(--border);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;color:var(--text-faint);flex-wrap:wrap;gap:8px}.statusbar .path{color:var(--teal)}.statusbar a{text-decoration:none}.wrap{max-width:840px;margin:0 auto;padding:0 32px}.head{padding:72px 0 42px;border-bottom:1px solid var(--border)}.status-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid rgba(95,212,196,.35);background:rgba(95,212,196,.06);padding:5px 12px;margin-bottom:22px}h1{font-family:var(--mono);font-weight:500;font-size:clamp(26px,4vw,38px);line-height:1.25;margin-bottom:18px}.lede{font-size:17px;color:var(--text-dim);max-width:680px}.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.tag{font-family:var(--mono);font-size:11px;color:var(--text-dim);border:1px solid var(--border);padding:4px 9px}section{padding:42px 0;border-bottom:1px solid var(--border)}.s-label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:18px;display:flex;align-items:center;gap:12px}.rule{flex:1;height:1px;background:var(--border)}h2{font-size:21px;font-weight:600;margin-bottom:13px}h3{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--text);margin:22px 0 8px}p{color:var(--text-dim);margin-bottom:13px;max-width:700px}p strong{color:var(--text)}ul{padding-left:22px;color:var(--text-dim);margin:8px 0 14px}li{padding:3px 0 3px 4px}li::marker{color:var(--teal)}code{font-family:var(--mono);font-size:.9em;color:var(--teal)}.callout{background:var(--surface);border:1px solid var(--border);border-left:2px solid var(--teal);padding:18px 20px;margin:18px 0}.callout p:last-child{margin-bottom:0}.meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:22px 0}.meta-grid div{background:var(--surface);padding:13px 15px}.meta-grid .k{font:10px var(--mono);color:var(--text-faint);text-transform:uppercase;letter-spacing:.07em}.meta-grid .v{color:var(--text);font-size:14px;margin-top:3px;overflow-wrap:anywhere}.table-wrap{overflow-x:auto;border:1px solid var(--border);margin:18px 0}table{border-collapse:collapse;width:100%;font-size:13px;min-width:480px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:top}th{font:11px var(--mono);color:var(--teal);background:var(--surface);font-weight:500}td{color:var(--text-dim)}td:first-child{color:var(--text);white-space:nowrap}.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}.step{border:1px solid var(--border);background:var(--surface);padding:15px}.step .n{font:11px var(--mono);color:var(--teal);margin-bottom:6px}.step p{font-size:13px;margin:0}.footer{position:fixed;z-index:10;left:0;right:0;bottom:0;background:rgba(18,21,27,.96);border-top:1px solid var(--border);backdrop-filter:blur(12px);padding:13px max(20px,calc((100vw - 776px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;font:12px var(--mono)}.footer a{color:var(--teal);text-decoration:none}.footer a:hover{text-decoration:underline}.footer .muted{color:var(--text-faint)}@media(max-width:560px){.statusbar{padding:12px 18px}.wrap{padding:0 20px}.head{padding-top:48px}.meta-grid,.steps{grid-template-columns:1fr}.footer{font-size:10px;padding:12px 14px;gap:8px}.footer .muted{display:none}}
+</style>
+</head>
+<body>
+<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border);margin:0 6px">/</span><span class="path">StellaSnipes / technical-review</span></div><div>IMPLEMENTATION NOTES</div></div>
+<main class="wrap">
+<header class="head">
+<div class="status-tag">TECHNICAL REVIEW / MVP UNDER ACTIVE DEVELOPMENT</div>
+<h1>StellaSnipes: Domain Data Acquisition and Change Detection</h1>
+<p class="lede">A multi-stage pipeline for acquiring domain-zone data, processing large files, comparing sorted snapshots, consolidating multiple inputs, and checking watched domains against local data. This review describes the implementation and its limits without assuming production deployment or measured performance.</p>
+<div class="tags"><span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">CZDS</span><span class="tag">Chunk processing</span><span class="tag">Snapshot diffing</span><span class="tag">Local cache</span></div>
+<div class="meta-grid">
+<div><div class="k">Status</div><div class="v">MVP / active development</div></div>
+<div><div class="k">Orchestration</div><div class="v">JavaScript</div></div>
+<div><div class="k">Processing utilities</div><div class="v">Python</div></div>
+<div><div class="k">External source</div><div class="v">Authenticated CZDS access</div></div>
+<div><div class="k">Intermediate data</div><div class="v">Local files and cached snapshots</div></div>
+<div><div class="k">Validation</div><div class="v">No fresh end-to-end test run claimed</div></div>
+</div>
+</header>
+<section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
+<p>StellaSnipes is a domain-data acquisition and processing application. It connects authenticated access to the Centralized Zone Data Service (CZDS) with local file processing, snapshot comparison, multi-source aggregation, and watched-domain checks.</p>
+<p>The central design choice is to separate acquisition from later processing. Retained snapshots and derived outputs can be reused across runs, while specialized Python utilities handle large inputs without requiring the entire dataset to be loaded as one in-memory object.</p>
+</section>
+<section id="flow"><div class="s-label"><span>02 / primary data path</span><span class="rule"></span></div>
+<div class="flow"><div class="flow-step"><strong>1. Acquire</strong><span>Access available CZDS zone resources through authenticated requests and save local snapshots.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>2. Normalize</strong><span>Read compressed inputs incrementally, extract domain entries, and write manageable chunks.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>3. Sort and merge</strong><span>Sort intermediate results, merge sorted data, and remove duplicate entries.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>4. Compare</strong><span>Compare existing sorted snapshots and write entries present in one snapshot but not the other.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>5. Consolidate and reconcile</strong><span>Combine CZDS-derived output with additional inputs and check watched domains against cached zone data.</span></div></div>
+<p>The pipeline connects these stages through JavaScript orchestration and specialized Python processing utilities. The sequence describes the documented architecture, not a claim that every run completes successfully without intervention.</p>
+</section>
+<section id="acquisition"><div class="s-label"><span>03 / external data acquisition</span><span class="rule"></span></div>
+<p>The acquisition subsystem integrates with CZDS to retrieve available domain-zone resources through authenticated access. Its documented behavior includes resource discovery, retrieval of zone snapshots for configured top-level domains, local persistence, reuse of previously acquired snapshots, retry handling for certain failed downloads, and coordination with downstream processing.</p>
+<p>Acquisition quality and freshness depend on the upstream service, authentication, resource availability, and when snapshots are retrieved. A locally stored snapshot is a record of the data acquired at that time, not a guarantee of current completeness.</p>
+</section>
+<section id="processing"><div class="s-label"><span>04 / large-file processing</span><span class="rule"></span></div>
+<p>A dedicated Python utility processes compressed zone files incrementally. Rather than treating the complete input as a single object, it reads data in portions, extracts and normalizes domain entries, filters supported formats, writes intermediate chunks, sorts them, and merges the sorted results with duplicate elimination.</p>
+<ul><li>Incremental reading of compressed input.</li><li>Domain extraction and normalization.</li><li>Chunked intermediate-file generation.</li><li>Sorting and merging of intermediate results.</li><li>Deduplication and normalized snapshot output.</li></ul>
+<p>This design demonstrates large-file processing and external intermediate storage. No specific maximum input size, throughput, memory ceiling, or execution time has been measured for this review.</p>
+</section>
+<section id="comparison"><div class="s-label"><span>05 / snapshot comparison</span><span class="rule"></span></div>
+<p>The comparison utility reads two sorted datasets incrementally and identifies entries present in one snapshot but absent from the other. It writes a derived difference set and reports progress and completion.</p>
+<p>Because the inputs are sorted, the comparison can advance through both files without first materializing the complete datasets in memory. Derived differences can then be passed into later aggregation steps without requiring each comparison to begin with a fresh acquisition.</p>
+<div class="callout"><strong>Freshness tradeoff</strong><p>Snapshot comparison explains what differs between the files supplied to it. It does not establish that either snapshot is current. Freshness depends on acquisition timing and the age of the available data.</p></div>
+</section>
+<section id="aggregation"><div class="s-label"><span>06 / multi-source aggregation</span><span class="rule"></span></div>
+<p>The orchestration layer combines CZDS-derived results with additional domain inputs, deduplicates the consolidated collection, and retains source-related information used by later processing logic.</p>
+<p>This component reconciles independent input paths into a common result. Source tracking helps preserve distinctions between records produced by different stages; internal representations and detailed selection criteria are not published.</p>
+</section>
+<section id="watch"><div class="s-label"><span>07 / watched-domain reconciliation</span><span class="rule"></span></div>
+<p>The watched-domain workflow groups tracked domains by top-level domain and checks membership against locally cached zone snapshots. It reads zone data incrementally rather than requiring a full zone dataset to be represented as one in-memory collection.</p>
+<p>This provides targeted membership checks alongside the broader snapshot-difference workflow. The result is bounded by the snapshot available for each zone and the correctness of the grouping and reconciliation logic.</p>
+</section>
+<section id="cache"><div class="s-label"><span>08 / caching and intermediate files</span><span class="rule"></span></div>
+<p>Local caching connects acquisition and processing across runs. The implementation persists acquired snapshots and derived comparison output, selects snapshots using zone-date logic, reuses existing files when appropriate, and removes certain older date-associated cache files.</p>
+<p>Reusing data can avoid redundant downloads when a suitable snapshot already exists. Cache selection and cleanup also need to preserve the right files for the intended comparison; the existence of a cache does not by itself guarantee that a selected snapshot is the newest or correct one.</p>
+</section>
+<section id="orchestration"><div class="s-label"><span>09 / cross-language orchestration</span><span class="rule"></span></div>
+<p>JavaScript coordinates the broader workflow and integrates Python utilities for large-file processing and snapshot comparison. The orchestration connects acquisition, snapshot selection, difference retrieval, additional feed ingestion, aggregation, source tracking, watched-domain checks, and handling of selected stage-specific failures.</p>
+<div class="code-label">architecture sketch</div>
+<div class="code"><span class="c1">JavaScript orchestration</span>
+  ├─ CZDS acquisition and local snapshot selection
+  ├─ Python normalization and sorted-file merge
+  ├─ Python snapshot comparison
+  ├─ additional domain-feed ingestion
+  ├─ aggregation and deduplication
+  └─ watched-domain reconciliation against cached data</div>
+<p>This is an architectural summary, not a copy of the private implementation. Source code, private configuration, raw domain records, and detailed selection criteria are not published.</p>
+</section>
+<section id="economics"><div class="s-label"><span>10 / economic design</span><span class="rule"></span></div>
+<p>The project establishes an in-house processing foundation before committing to a complete commercial data solution. Local reuse and incremental comparison offer ways to reduce repeated acquisition and processing when existing data remains suitable.</p>
+<ul><li>Reuse previously acquired snapshots where appropriate.</li><li>Compare stored datasets without downloading every record again for each comparison.</li><li>Integrate multiple input feeds in one processing workflow.</li><li>Evaluate the MVP before increasing recurring data-service expenditure.</li></ul>
+<p>These are design goals, not measured business outcomes. No specific cost savings, return on investment, throughput, or performance advantage is claimed without evidence.</p>
+</section>
+<section id="limits"><div class="s-label"><span>11 / status and limitations</span><span class="rule"></span></div>
+<table><thead><tr><th>Area</th><th>Scope and boundary</th></tr></thead><tbody>
+<tr><td>Project status</td><td>MVP under active development; this review does not establish a currently running scheduled production service.</td></tr>
+<tr><td>Acquisition</td><td>Depends on authenticated CZDS access and upstream resource availability.</td></tr>
+<tr><td>Data freshness</td><td>Local snapshots can lag behind newer data available from upstream or premium services.</td></tr>
+<tr><td>Processing scale</td><td>Chunking and incremental comparison address large-file handling, but no maximum scale or throughput is claimed.</td></tr>
+<tr><td>Reliability</td><td>The reviewed implementation supports the described processing paths; comprehensive end-to-end reliability has not been established here.</td></tr>
+<tr><td>Private details</td><td>Credentials, configuration, raw domain records, and detailed selection criteria are not published.</td></tr>
+</tbody></table>
+</section>
+<section id="verification"><div class="s-label"><span>12 / verification and scope</span><span class="rule"></span></div>
+<p>This review is based on the inspected CZDS acquisition, file-processing, comparison, caching, aggregation, and orchestration implementation. It describes code paths and their relationships rather than asserting that every path was freshly executed.</p>
+<p>The review does not establish comprehensive end-to-end test coverage, guaranteed completeness of every generated dataset, production-grade fault tolerance, or measured performance at a particular scale. These claims would require repeatable test results and operational measurements.</p>
+</section>
+<section id="summary" style="border-bottom:none"><div class="s-label"><span>13 / summary</span><span class="rule"></span></div>
+<p>StellaSnipes combines authenticated domain-zone acquisition, chunk-based normalization, sorted-data merging, snapshot comparison, multi-source aggregation, local caching, and watched-domain reconciliation in a JavaScript-coordinated workflow with Python processing utilities.</p>
+<p>Its engineering focus is the reuse and comparison of large external datasets while keeping the economic tradeoff between local processing and commercial data services explicit. It remains an MVP under active development, with production reliability and quantified operating benefits still to be demonstrated.</p>
+</section>
+<footer class="page-footer"><a href="StellaSnipes.html">← Back to StellaSnipes</a><a href="index.html">Portfolio index →</a></footer>
+</main>
+</body>
+</html>

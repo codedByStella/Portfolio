@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StellaOpsec | Security Assessment Toolkit</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMTIxNTFCIi8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyODJGMzkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjQiIHk9IjIzIiBmb250LWZhbWlseT0iJ0lCTSBQbGV4IE1vbm8nLCB1aS1tb25vc3BhY2UsIG1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9IjYwMCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzVGRDRDNCI+Jmd0O188L3RleHQ+Cjwvc3ZnPgo=">
+<meta name="description" content="Operator environment hardening and verification toolkit for authorized red-team engagements. Built by codedByStella.">
+<meta property="og:title" content="StellaOpsec.toolkit  -  codedByStella">
+<meta property="og:description" content="A fail-loud verification toolkit for red-team infrastructure  -  built for engagements where the target's detection stack fingerprints the environment itself.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151B; --surface:#1B2028; --surface-hi:#212832; --border:#282F39;
+    --text:#E8EAED; --text-dim:#8B93A1; --text-faint:#525A66;
+    --teal:#5FD4C4; --amber:#E0A458; --red:#E2665B;
+    --mono:'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+    --sans:'IBM Plex Sans', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.65; -webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  .statusbar{border-bottom:1px solid var(--border); padding:12px 32px; display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:12px; color:var(--text-faint); flex-wrap:wrap; gap:8px;}
+  .statusbar .path{color:var(--amber);}
+  .statusbar a{border-bottom:1px solid transparent;}
+  .statusbar a:hover{border-bottom-color:var(--text-faint);}
+  .dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--amber); box-shadow:0 0 6px var(--amber); margin-right:6px; animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+
+  .wrap{max-width:840px; margin:0 auto; padding:0 32px;}
+
+  .head{padding:80px 0 50px; border-bottom:1px solid var(--border);}
+  .status-tag{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:12px; color:var(--amber); border:1px solid rgba(224,164,88,0.35); background:rgba(224,164,88,0.06); padding:5px 12px; margin-bottom:24px;}
+  h1{font-family:var(--mono); font-weight:500; font-size:clamp(26px,4vw,38px); letter-spacing:-0.01em; margin-bottom:18px;}
+  .lede{font-size:17px; color:var(--text-dim); max-width:640px;}
+  .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:28px;}
+  .tag{font-family:var(--mono); font-size:11.5px; color:var(--text-dim); border:1px solid var(--border); padding:4px 10px;}
+
+  section{padding:52px 0; border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+  .s-label{font-family:var(--mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-faint); margin-bottom:20px; display:flex; align-items:center; gap:12px;}
+  .s-label .rule{flex:1; height:1px; background:var(--border);}
+  h2{font-family:var(--sans); font-size:22px; font-weight:600; margin-bottom:16px;}
+  p{color:var(--text-dim); margin-bottom:14px; max-width:680px;}
+  p strong{color:var(--text); font-weight:600;}
+
+  ul.feature-list{list-style:none; display:flex; flex-direction:column; gap:16px; margin-top:8px;}
+  ul.feature-list li{padding-left:24px; position:relative; color:var(--text-dim);}
+  ul.feature-list li::before{content:'▸'; position:absolute; left:0; color:var(--amber); font-family:var(--mono);}
+  ul.feature-list li strong{color:var(--text); font-weight:600; display:block; margin-bottom:3px; font-family:var(--mono); font-size:14px;}
+
+  .code{background:var(--surface); border:1px solid var(--border); padding:22px 24px; font-family:var(--mono); font-size:12.8px; color:var(--text-dim); overflow-x:auto; margin:18px 0; line-height:1.7; white-space:pre;}
+  .code .c1{color:var(--text-faint);}
+  .code .c2{color:var(--red);}
+  .code .c3{color:var(--amber);}
+  .code-label{font-family:var(--mono); font-size:11px; color:var(--text-faint); margin-bottom:8px; letter-spacing:0.04em;}
+
+  .notice{background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--amber); padding:22px 26px; margin:24px 0;}
+  .notice p{margin-bottom:0; color:var(--text-dim); font-size:14px;}
+  .notice .n-label{font-family:var(--mono); font-size:11px; color:var(--amber); letter-spacing:0.06em; margin-bottom:8px; text-transform:uppercase;}
+
+  .result{background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--amber); padding:24px 26px; margin-top:8px;}
+  .result p{margin-bottom:0; color:var(--text-dim);}
+
+  .redacted-banner{
+    position:relative;
+    height:200px;
+    background:#181209;
+    border:1px solid var(--border);
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:8px 0 32px;
+  }
+  .redacted-banner .rb-stripes{
+    position:absolute;
+    inset:0;
+    background:repeating-linear-gradient(135deg, rgba(224,164,88,0.14) 0 10px, transparent 10px 20px);
+  }
+  .redacted-banner .rb-content{
+    position:relative;
+    text-align:center;
+    transform:rotate(-4deg);
+  }
+  .redacted-banner .rb-main{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:38px;
+    letter-spacing:0.1em;
+    color:var(--amber);
+    text-shadow:0 0 24px rgba(224,164,88,0.25);
+  }
+  .redacted-banner .rb-sub{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-faint);
+    letter-spacing:0.05em;
+    margin-top:10px;
+  }
+
+  .crossref{border:1px dashed var(--border); padding:18px 22px; margin-top:28px; font-size:13.5px;}
+  .crossref .cr-label{font-family:var(--mono); font-size:11px; color:var(--text-faint); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;}
+  .crossref a{color:var(--amber); border-bottom:1px solid transparent;}
+  .crossref a:hover{border-bottom-color:var(--amber);}
+  .crossref p{margin:0; color:var(--text-dim); font-size:13.5px;}
+
+  footer{padding:56px 32px 70px; max-width:840px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-family:var(--mono); font-size:13px;}
+  footer a{color:var(--amber);}
+
+body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:12px;padding:13px 20px;background:rgba(18,21,27,.96);border-top:1px solid var(--border);font-family:var(--mono);font-size:12px}.tech-sticky a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(95,212,196,.35)}.tech-sticky .hint{color:var(--text-faint)}@media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center}}
+</style>
+</head>
+<body>
+
+  <div class="statusbar">
+    <div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border); margin:0 6px;">/</span><span class="path">StellaOpsec.toolkit</span></div>
+    <div><span class="dot"></span>dormant</div>
+  </div>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="status-tag">● PROTOTYPE · DORMANT</div>
+      <h1>Collect security findings into a reviewable report</h1>
+      <p class="lede">StellaOpsec is a modular PowerShell toolkit for collecting selected Windows, network, web, identity, event-log, and cloud configuration data. It organizes those observations into structured reports so an assessor can review what the available evidence does and does not establish.</p>
+      <div class="tags">
+        <span class="tag">PowerShell</span>
+        <span class="tag">VM hardening</span>
+        <span class="tag">network isolation</span>
+        <span class="tag">fail-loud verification</span>
+      </div>
+    </div>
+
+    <div class="wrap" style="padding:0;">
+      <div class="redacted-banner">
+        <div class="rb-stripes"></div>
+        <div class="rb-content">
+          <div class="rb-main">[ REDACTED ]</div>
+          <div class="rb-sub">nice try  -  the good stuff's under NDA, not under a &lt;script&gt; tag</div>
+        </div>
+      </div>
+      <div class="notice">
+        <div class="n-label">scope note</div>
+        <p>The public portfolio describes assessment areas and verification boundaries without publishing sensitive operational details. The project is a dormant prototype, not a currently offered security service or a comprehensive scanner.</p>
+      </div>
+    </div>
+
+    <section>
+      <div class="s-label"><span>overview</span><span class="rule"></span></div>
+      <p>A security review may involve Windows configuration, network services, web headers, identity settings, event logs, and cloud policies. Running separate scripts for each source makes the results harder to compare and hand off.</p>
+      <p>StellaOpsec uses separate PowerShell modules to collect selected configuration data, then combines the results into HTML, JSON, CSV, or Excel reports for review.</p>
+    </section>
+
+    <section>
+      <div class="s-label"><span>why this matters</span><span class="rule"></span></div>
+      <p>The practical goal is to make collected evidence easier to inspect and communicate. A structured report can help an assessor separate observed configuration from assumptions, identify gaps that need follow-up, and explain which checks were limited by permissions, dependencies, or missing data.</p>
+      <p>For a small team, the toolkit offers a repeatable way to run selected checks and prepare a consistent handoff. It does not replace expert interpretation, a penetration test, or a dedicated cloud-security platform.</p>
+    </section>
+
+    <section>
+      <div class="s-label"><span>what it does</span><span class="rule"></span></div>
+      <ul class="feature-list">
+        <li><strong>Hardware identity layer</strong>Randomizes registry-exposed hardware strings  -  GPU descriptor, hardware profile GUID, simulated install date  -  that fingerprinting services commonly check as VM tells.</li>
+        <li><strong>Network layer</strong>Pairs VM-level network isolation with a proxy chain and an independently-verified kill switch, so a VPN/proxy failure can never leak the operator's real egress path mid-engagement.</li>
+        <li><strong>Fail-loud audit script</strong>A standalone PowerShell verification pass checks the environment against ~10 known fingerprinting vectors before it's used operationally  -  MAC OUI against known hypervisor prefixes, GPU descriptor, install-date age, DNS leak test, kill-switch test  -  and refuses to give a quiet pass; anything unconfirmed halts with an explicit <code>[CRITICAL]</code>.</li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="s-label"><span>verification logic</span><span class="rule"></span></div>
+      <h2>The audit is the deliverable, not the evasion</h2>
+      <p>The key design principle is to distinguish an observation from a conclusion. A reachable port does not prove a service is vulnerable, a public-looking policy entry does not alone establish effective exposure, and an inventory result does not prove that a security control is working end to end.</p>
+
+      <div class="code-label">fingerprint verification (illustrative excerpt)</div>
+      <div class="code">$vmwareOUIs = @(<span class="c3">'000C29'</span>, <span class="c3">'000569'</span>, <span class="c3">'001C14'</span>, <span class="c3">'005056'</span>)
+<span class="c2">if</span> ($vmwareOUIs -contains $oui) {
+    $macStatus = <span class="c3">'FAIL - VMware OUI detected'</span>; $flags += <span class="c3">'MAC'</span>
+}
+
+<span class="c2">if</span> ($gpuDesc -like <span class="c3">'*VMware*'</span> -or $gpuDesc -like <span class="c3">'*SVGA*'</span>) {
+    $gpuStatus = <span class="c3">'FAIL - VMware GPU exposed'</span>; $flags += <span class="c3">'GPU'</span>
+}
+
+<span class="c1"># ... network egress, DNS leak, kill-switch, and install-age checks</span>
+<span class="c1"># follow the same pattern: verify with evidence, or flag and halt.</span></div>
+
+      <p>Assessment results can be incomplete when commands fail, required modules are missing, permissions are insufficient, or source data is unavailable. A dependable next version should represent each check as successful, failed, or incomplete, preserve relevant error context, and avoid presenting missing evidence as a clean result.</p>
+    </section>
+
+    <section style="border-bottom:none;">
+      <div class="s-label"><span>engagement notes</span><span class="rule"></span></div>
+      <div class="result">
+        <p><strong>Status: prototype / dormant.</strong> The inspected source contains modules for Windows host inventory, network and web checks, credential-related configuration, event-log review, Active Directory, selected Google Cloud and Azure settings, finding generation, and report export. This does not establish broad environment coverage or successful end-to-end execution.</p>
+      </div>
+
+      <div class="crossref">
+        <div class="cr-label">same discipline, different domain</div>
+        <p>The next engineering priorities are safer CLI argument handling, accurate interpretation of configuration fields, PowerShell-version compatibility, explicit partial-failure states, and repeatable tests against representative systems. The emphasis is on making the existing checks more precise and dependable, not overstating what they prove.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <a href="StellaStudios.html">← StellaStudios.pipeline</a>
+    <a href="mailto:codedbystella@gmail.com">codedbystella@gmail.com</a>
+    <a href="StellaBot.html">StellaBot.service →</a>
+  </footer>
+
+<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION DETAILS?</span><a href="StellaOpsec-Technical.html">Read the technical review ↗</a></div>
+</body>
+</html>

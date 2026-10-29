@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StellaAudits, codedByStella</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMTIxNTFCIi8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyODJGMzkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjQiIHk9IjIzIiBmb250LWZhbWlseT0iJ0lCTSBQbGV4IE1vbm8nLCB1aS1tb25vc3BhY2UsIG1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9IjYwMCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzVGRDRDNCI+Jmd0O188L3RleHQ+Cjwvc3ZnPgo=">
+<meta name="description" content="Automated website compliance & risk audit pipeline, scans a site for ADA/accessibility, SEO, and security liability issues, scores it, and generates a client-ready PDF report. Built by codedByStella.">
+<meta property="og:title" content="StellaAudits, codedByStella">
+<meta property="og:description" content="A modular audit pipeline that scans a business's website across legal, visitor, and security risk, scores it transparently, and produces a client-ready PDF report plus a compliant outreach draft.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151B; --surface:#1B2028; --surface-hi:#212832; --border:#282F39;
+    --text:#E8EAED; --text-dim:#8B93A1; --text-faint:#525A66;
+    --teal:#5FD4C4; --amber:#E0A458; --red:#E2665B;
+    --mono:'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+    --sans:'IBM Plex Sans', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.65; -webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  .statusbar{border-bottom:1px solid var(--border); padding:12px 32px; display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:12px; color:var(--text-faint); flex-wrap:wrap; gap:8px;}
+  .statusbar .path{color:var(--teal);}
+  .statusbar a{border-bottom:1px solid transparent;}
+  .statusbar a:hover{border-bottom-color:var(--text-faint);}
+  .dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 6px var(--teal); margin-right:6px; animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+
+  .wrap{max-width:840px; margin:0 auto; padding:0 32px;}
+
+  .head{padding:80px 0 50px; border-bottom:1px solid var(--border);}
+  .status-tag{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:12px; color:var(--teal); border:1px solid rgba(95,212,196,0.35); background:rgba(95,212,196,0.06); padding:5px 12px; margin-bottom:24px;}
+  h1{font-family:var(--mono); font-weight:500; font-size:clamp(26px,4vw,38px); letter-spacing:-0.01em; margin-bottom:18px;}
+  .lede{font-size:17px; color:var(--text-dim); max-width:640px;}
+  .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:28px;}
+  .tag{font-family:var(--mono); font-size:11.5px; color:var(--text-dim); border:1px solid var(--border); padding:4px 10px;}
+
+  section{padding:52px 0; border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+  .s-label{font-family:var(--mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-faint); margin-bottom:20px; display:flex; align-items:center; gap:12px;}
+  .s-label .rule{flex:1; height:1px; background:var(--border);}
+  h2{font-family:var(--sans); font-size:22px; font-weight:600; margin-bottom:16px;}
+  p{color:var(--text-dim); margin-bottom:14px; max-width:680px;}
+  p strong{color:var(--text); font-weight:600;}
+
+  ul.feature-list{list-style:none; display:flex; flex-direction:column; gap:16px; margin-top:8px;}
+  ul.feature-list li{padding-left:24px; position:relative; color:var(--text-dim);}
+  ul.feature-list li::before{content:'▸'; position:absolute; left:0; color:var(--teal); font-family:var(--mono);}
+  ul.feature-list li strong{color:var(--text); font-weight:600; display:block; margin-bottom:3px; font-family:var(--mono); font-size:14px;}
+
+  .code{background:var(--surface); border:1px solid var(--border); padding:22px 24px; font-family:var(--mono); font-size:12.8px; color:var(--text-dim); overflow-x:auto; margin:18px 0; line-height:1.7; white-space:pre;}
+  .code .c1{color:var(--text-faint);}
+  .code .c2{color:var(--teal);}
+  .code .c3{color:var(--amber);}
+  .code-label{font-family:var(--mono); font-size:11px; color:var(--text-faint); margin-bottom:8px; letter-spacing:0.04em;}
+
+  .result{background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--teal); padding:24px 26px; margin-top:8px;}
+  .result p{margin-bottom:0; color:var(--text-dim);}
+
+  .sample{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); margin-top:18px;}
+  .sample div{background:var(--surface); padding:16px 14px;}
+  .sample .n{font-family:var(--mono); font-size:22px; color:var(--text);}
+  .sample .l{font-family:var(--mono); font-size:11px; color:var(--text-faint); margin-top:4px; letter-spacing:0.04em;}
+
+  .crossref{border:1px dashed var(--border); padding:18px 22px; margin-top:28px; font-size:13.5px;}
+  .crossref .cr-label{font-family:var(--mono); font-size:11px; color:var(--text-faint); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;}
+  .crossref a{color:var(--teal); border-bottom:1px solid transparent;}
+  .crossref a:hover{border-bottom-color:var(--teal);}
+  .crossref p{margin:0; color:var(--text-dim); font-size:13.5px;}
+
+  footer{padding:56px 32px 70px; max-width:840px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-family:var(--mono); font-size:13px;}
+  footer a{color:var(--teal);}
+
+  body{padding-bottom:78px;}
+  .tech-sticky{position:fixed; z-index:20; left:0; right:0; bottom:0; display:flex; justify-content:center; align-items:center; gap:12px; padding:13px 20px; background:rgba(18,21,27,0.96); border-top:1px solid var(--border); backdrop-filter:blur(12px); font-family:var(--mono); font-size:12px;}
+  .tech-sticky a{color:var(--teal); text-decoration:none; border-bottom:1px solid rgba(95,212,196,0.35); padding-bottom:2px;}
+  .tech-sticky a:hover{border-bottom-color:var(--teal);}
+  .tech-sticky .hint{color:var(--text-faint);}
+  @media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center;}}
+</style>
+</head>
+<body>
+
+  <div class="statusbar">
+    <div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border); margin:0 6px;">/</span><span class="path">StellaAudits</span></div>
+    <div><span class="dot"></span>online</div>
+  </div>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="status-tag">● ONLINE, Compliance &amp; Risk Automation</div>
+      <h1>Turn website issues into a clear action plan</h1>
+      <p class="lede">StellaAudits checks a business website for common accessibility, search visibility, and basic security issues, then organizes the findings into a report a client can use. Each issue has a severity and an explanation, while repeat reviews make it easier to see what changed. The goal is a useful starting point for deciding what to fix first, not a substitute for expert testing.</p>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">BeautifulSoup</span>
+        <span class="tag">Jinja2 / xhtml2pdf</span>
+        <span class="tag">SQLite</span>
+        <span class="tag">Google PageSpeed API</span>
+      </div>
+    </div>
+
+    <section>
+      <div class="s-label"><span>what it helps with</span><span class="rule"></span></div>
+      <p>A quick website review can miss accessibility, search, or configuration problems. StellaAudits collects its checks in one report, with the evidence and severity beside each finding so the owner or developer can decide what to investigate first.</p>
+      <ul class="feature-list">
+        <li><strong>One readable report</strong>Accessibility, SEO, local search, and selected security checks use a shared finding format, then feed a PDF report instead of leaving the owner to sort through separate warning lists.</li>
+        <li><strong>Graceful deeper detection</strong>An optional PageSpeed/Lighthouse pass cross-checks static findings against a real rendered page, color contrast, tap targets, Core Web Vitals. No API key configured? It degrades to a single informational note and the rest of the audit proceeds at full strength.</li>
+        <li><strong>JS-rendering awareness</strong>Detects when a page is likely a near-empty client-rendered shell and automatically downgrades the static structural findings that can't be trusted against it, instead of confidently reporting a false defect.</li>
+        <li><strong>Explainable scoring</strong>A flat, inspectable penalty model (High −15, Medium −7, Low −2) a business owner, or Stella, defending the number to a client, can see through end to end. Meta findings about the audit's own limitations never cost points.</li>
+        <li><strong>Lead tracking &amp; diffing</strong>Every run lands in a local SQLite log with its score, grade, and a findings snapshot, so a repeat scan can show exactly what got resolved, what's new, and what's still open since last time.</li>
+        <li><strong>Compliant outreach drafting</strong>Generates a CAN-SPAM-compliant draft pitch alongside the PDF, never auto-sent, always reviewed by a human first, and it refuses to quietly omit the required mailing address.</li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="s-label"><span>how it works</span><span class="rule"></span></div>
+      <p>Most automated site-audit tools fall into one of two traps: they guess with no admission of uncertainty, or they require a full headless-browser stack just to run once. Static HTML parsing is fast and honest about <em>what</em> it measured, but it can be flatly wrong against a JavaScript-rendered shell, reporting "no H1, no content" against a site that's actually fine once rendered is a false, credibility-damaging finding.</p>
+      <p>The scoring model separates site findings from notes about the audit itself. Static checks can run by default, while browser-based measurements add context when available. A limitation in the audit should not lower the client's score.</p>
+    </section>
+
+    <section>
+      <div class="s-label"><span>engineering detail</span><span class="rule"></span></div>
+      <h2>Scoring that separates caveats from defects</h2>
+      <p>An early real run against a JS-heavy site surfaced a concrete bug: the audit's own "site appears JavaScript-rendered" disclosure, a note about the tool's confidence, not a defect on the site, was eating 7 points from the score just for existing. The fix is a single flag on the shared <code>Finding</code> model.</p>
+
+      <div class="code-label">scoring.py, meta findings never cost points</div>
+      <div class="code"><span class="c2">def</span> compute_score(findings):
+    score = <span class="c3">100</span>
+    <span class="c2">for</span> f <span class="c2">in</span> findings:
+        <span class="c1"># is_meta findings are notices about the audit itself</span>
+        <span class="c1"># (JS-rendering caveat, "PageSpeed not run," etc.) --</span>
+        <span class="c1"># never a site defect, so they should never cost points.</span>
+        <span class="c2">if</span> f.is_meta:
+            <span class="c2">continue</span>
+        score -= SEVERITY_PENALTY.get(f.severity, <span class="c3">0</span>)
+    <span class="c2">return</span> max(<span class="c3">0</span>, min(<span class="c3">100</span>, score))</div>
+
+      <p>The same discipline runs through the outreach-email generator: an <code>is_meta</code> finding is explicitly barred from being picked as a "hook" bullet in a cold pitch, true, but a bad look to sell as a reason to hire someone.</p>
+    </section>
+
+    <section style="border-bottom:none;">
+      <div class="s-label"><span>sample results</span><span class="rule"></span></div>
+      <div class="result">
+        <p>Active, used to generate real client-facing audits. The result below is a sample from a live client engagement, not this site or any property of mine, the client's domain is withheld here for confidentiality.</p>
+      </div>
+
+      <div class="code-label" style="margin-top:22px;">sample result, anonymized client site, not codedbystella.github.io</div>
+      <div class="sample">
+        <div><div class="n">33 / F</div><div class="l">SITE HEALTH SCORE</div></div>
+        <div><div class="n">7</div><div class="l">MEDIUM-PRIORITY</div></div>
+        <div><div class="n">9</div><div class="l">LOW-PRIORITY</div></div>
+        <div><div class="n">20</div><div class="l">TOTAL FINDINGS</div></div>
+      </div>
+
+      <div class="crossref">
+        <div class="cr-label">same discipline, different domain</div>
+        <p>The PageSpeed integration is optional. If the API is unavailable or no key is configured, the rest of the audit still runs and reports the limitation.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <a href="StellaBot.html">← StellaBot.service</a>
+    <a href="mailto:codedbystella@gmail.com">codedbystella@gmail.com</a>
+    <a href="index.html">back to index →</a>
+  </footer>
+
+
+  <div class="tech-sticky">
+    <span class="hint">WANT THE IMPLEMENTATION DETAILS?</span>
+    <a href="StellaAudits-Technical.html">Read the technical review ↗</a>
+  </div>
+
+</body>
+</html>

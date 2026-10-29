@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StellaScrapes | Public Data Search and Lead Preparation</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMTIxNTFCIi8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyODJGMzkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjQiIHk9IjIzIiBmb250LWZhbWlseT0iJ0lCTSBQbGV4IE1vbm8nLCB1aS1tb25vc3BhY2UsIG1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9IjYwMCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzVGRDRDNCI+Jmd0O188L3RleHQ+Cjwvc3ZnPgo=">
+<meta name="description" content="Search supported municipal open-data sources, normalize public records, and export structured datasets for research and lead preparation.">
+<meta property="og:title" content="StellaScrapes.cli  -  codedByStella">
+<meta property="og:description" content="A local public-records search MVP with registry-driven Socrata retrieval, dataset discovery, permit cleaning, and CSV and Excel exports.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151B; --surface:#1B2028; --surface-hi:#212832; --border:#282F39;
+    --text:#E8EAED; --text-dim:#8B93A1; --text-faint:#525A66;
+    --teal:#5FD4C4; --amber:#E0A458; --red:#E2665B;
+    --mono:'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+    --sans:'IBM Plex Sans', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.65; -webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  .statusbar{border-bottom:1px solid var(--border); padding:12px 32px; display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:12px; color:var(--text-faint); flex-wrap:wrap; gap:8px;}
+  .statusbar .path{color:var(--teal);}
+  .statusbar a{border-bottom:1px solid transparent;}
+  .statusbar a:hover{border-bottom-color:var(--text-faint);}
+  .dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 6px var(--teal); margin-right:6px; animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+
+  .wrap{max-width:840px; margin:0 auto; padding:0 32px;}
+
+  .head{padding:80px 0 50px; border-bottom:1px solid var(--border);}
+  .status-tag{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:12px; color:var(--teal); border:1px solid rgba(95,212,196,0.35); background:rgba(95,212,196,0.06); padding:5px 12px; margin-bottom:24px;}
+  h1{font-family:var(--mono); font-weight:500; font-size:clamp(26px,4vw,38px); letter-spacing:-0.01em; margin-bottom:18px;}
+  .lede{font-size:17px; color:var(--text-dim); max-width:640px;}
+  .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:28px;}
+  .tag{font-family:var(--mono); font-size:11.5px; color:var(--text-dim); border:1px solid var(--border); padding:4px 10px;}
+
+  section{padding:52px 0; border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+  .s-label{font-family:var(--mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-faint); margin-bottom:20px; display:flex; align-items:center; gap:12px;}
+  .s-label .rule{flex:1; height:1px; background:var(--border);}
+  h2{font-family:var(--sans); font-size:22px; font-weight:600; margin-bottom:16px;}
+  p{color:var(--text-dim); margin-bottom:14px; max-width:680px;}
+  p strong{color:var(--text); font-weight:600;}
+
+  ul.feature-list{list-style:none; display:flex; flex-direction:column; gap:16px; margin-top:8px;}
+  ul.feature-list li{padding-left:24px; position:relative; color:var(--text-dim);}
+  ul.feature-list li::before{content:'▸'; position:absolute; left:0; color:var(--teal); font-family:var(--mono);}
+  ul.feature-list li strong{color:var(--text); font-weight:600; display:block; margin-bottom:3px; font-family:var(--mono); font-size:14px;}
+
+  .code{background:var(--surface); border:1px solid var(--border); padding:22px 24px; font-family:var(--mono); font-size:12.8px; color:var(--text-dim); overflow-x:auto; margin:18px 0; line-height:1.7; white-space:pre;}
+  .code .c1{color:var(--text-faint);}
+  .code .c2{color:var(--teal);}
+  .code-label{font-family:var(--mono); font-size:11px; color:var(--text-faint); margin-bottom:8px; letter-spacing:0.04em;}
+
+  .result{background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--teal); padding:24px 26px; margin-top:8px;}
+  .result p{margin-bottom:0; color:var(--text-dim);}
+
+  .crossref{border:1px dashed var(--border); padding:18px 22px; margin-top:28px; font-size:13.5px;}
+  .crossref .cr-label{font-family:var(--mono); font-size:11px; color:var(--text-faint); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;}
+  .crossref a{color:var(--teal); border-bottom:1px solid transparent;}
+  .crossref a:hover{border-bottom-color:var(--teal);}
+  .crossref p{margin:0; color:var(--text-dim); font-size:13.5px;}
+
+  footer{padding:56px 32px 70px; max-width:840px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-family:var(--mono); font-size:13px;}
+  footer a{color:var(--teal);}
+
+  body{padding-bottom:78px;}
+  .tech-sticky{position:fixed; z-index:20; left:0; right:0; bottom:0; display:flex; justify-content:center; align-items:center; gap:12px; padding:13px 20px; background:rgba(18,21,27,0.96); border-top:1px solid var(--border); backdrop-filter:blur(12px); font-family:var(--mono); font-size:12px;}
+  .tech-sticky a{color:var(--teal); text-decoration:none; border-bottom:1px solid rgba(95,212,196,0.35); padding-bottom:2px;}
+  .tech-sticky a:hover{border-bottom-color:var(--teal);}
+  .tech-sticky .hint{color:var(--text-faint);}
+  @media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center;}}
+</style>
+</head>
+<body>
+
+  <div class="statusbar">
+    <div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border); margin:0 6px;">/</span><span class="path">StellaScrapes</span></div>
+    <div><span class="dot"></span>online</div>
+  </div>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="status-tag">● FUNCTIONAL MVP · commercialization on hold</div>
+      <h1>Make public records easier to search and use</h1>
+      <p class="lede">StellaScrapes turns supported municipal open-data records into structured results that can be reviewed, cleaned, and exported. Search by location, record type, trade, or date range without building a separate API request for every dataset. The current MVP retrieves data through Socrata; broader coverage and commercialization remain on hold pending proof of sale.</p>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">Socrata Open Data API</span>
+        <span class="tag">Registry-driven search</span>
+        <span class="tag">CSV and Excel export</span>
+      </div>
+    </div>
+
+    <section>
+      <div class="s-label"><span>how it works</span><span class="rule"></span></div>
+      <p>Use the local browser interface for quick searches and exports, or the Python command-line interface for search, catalog maintenance, and discovery tasks. The browser app is a local tool, not a hosted multi-user service.</p>
+      <div class="code-label">query syntax</div>
+      <div class="code"><span class="c1">[trade] [data type] in [city]</span>   <span class="c2">→</span> hvac permits in seattle
+<span class="c1">[trade] [city] last [N] days</span>    <span class="c2">→</span> roofing chicago last 30 days
+<span class="c1">[city] [data type]</span>              <span class="c2">→</span> austin foreclosures
+<span class="c1">[city] [trade]</span>                  <span class="c2">→</span> los angeles electrical
+
+data types:  permits, foreclosures, code_violations,
+             business_licenses, tax_liens, evictions</div>
+
+      <div class="code-label">example commands</div>
+      <div class="code">$ python main.py search <span class="c2">"hvac permits in seattle"</span>
+$ python main.py discover        <span class="c1"># find all US Socrata domains</span>
+$ python main.py catalog         <span class="c1"># map datasets per domain</span>
+$ python main.py cities          <span class="c1"># list registry coverage</span></div>
+
+      <div class="code-label">illustrative output (synthetic records)</div>
+      <div class="code"> LEAD  DATE        ADDRESS                     TYPE              CONTRACTOR
+ ★★★  2026-06-26  9525 N Example Hwy Unit 331  Building Permit   <span class="c1"> -  open opportunity  - </span>
+ ★★    2026-06-26  4102 Sample Rd               Mechanical Permit <span class="c2">Example HVAC LLC</span>
+ ★★    2026-06-26  711 Riverside Dr             Building Permit   <span class="c2">Placeholder Construction Co</span>
+ ★     2026-06-26  2902 W 44th St Bldg 1         Plumbing Permit   <span class="c1"> -  open opportunity  - </span>
+
+ 4 records · sorted by lead_score · full export → CSV + Excel</div>
+    </section>
+
+    <section>
+      <div class="s-label"><span>the problem</span><span class="rule"></span></div>
+      <p>Public records can be useful for market research, but each publishing agency organizes its datasets differently. Field names, dataset identifiers, and update practices vary, making it difficult to compare or reuse records across locations.</p>
+      <p>StellaScrapes interprets a plain-English query, resolves it against a configurable dataset registry, and retrieves records from supported Socrata sources. Separate discovery tools catalog potential datasets for review. Finding a dataset does not automatically make it supported, so new sources still need validation and integration.</p>
+    </section>
+
+    <section>
+      <div class="s-label"><span>business use</span><span class="rule"></span></div>
+      <p>For research teams and businesses, the value is less time spent finding datasets and cleaning inconsistent records. Permit data can support local construction research or give a team records to review for potential leads. A score helps sort results; it does not establish that a record is a qualified prospect.</p>
+      <p>The registry separates much of the source configuration from the search logic. That gives the project a path to expand coverage without writing an entirely separate search implementation for every location. It does not mean every city or record category is currently supported.</p>
+    </section>
+
+    <section>
+      <div class="s-label"><span>what it helps with</span><span class="rule"></span></div>
+      <ul class="feature-list">
+        <li><strong>Plain-English search</strong>Queries such as <code>hvac permits in seattle</code> are parsed into location, record type, trade, and date filters, then resolved against configured datasets.</li>
+        <li><strong>Dataset discovery</strong>Cataloging tools inspect Socrata domains and dataset metadata to identify potential sources for later review. Discovery is a starting point, not automatic proof of support.</li>
+        <li><strong>Central registry</strong>A JSON registry maps locations and record categories to dataset IDs and candidate field names, keeping source configuration separate from query handling.</li>
+        <li><strong>Permit cleaning and prioritization</strong>Cleaning rules normalize selected fields, remove duplicates, and assign a rules-based priority score to help people review records. Scores are not validated predictions of buyer intent or revenue.</li>
+        <li><strong>Portable exports</strong>Search and cleaning workflows can produce CSV and formatted Excel files for analysis or handoff.</li>
+      </ul>
+      <p style="margin-top:20px;">The browser interface is built with Express and standard HTML, CSS, and JavaScript. A separate Python CLI exposes search, discovery, cataloging, tests, and the preliminary prospecting workflow. Both interfaces remain local and depend on the current registry and supported retrieval paths.</p>
+    </section>
+
+    <section style="border-bottom:none;">
+      <div class="s-label"><span>status and limits</span><span class="rule"></span></div>
+      <div class="result">
+        <p><strong>Functional MVP; further development and commercialization are on hold pending proof of sale.</strong> Socrata is the operationally implemented retrieval platform in the inspected search paths. Four additional platform types appear in configuration but do not have retrieval adapters. The directory-based buyer-prospecting module is parked after the target source blocked requests during checks in July 2026.</p><p>Project documentation advertises 66 cities and 15 data types, but those figures describe intended or configured coverage, not a guarantee that every combination works. Discovery and field mapping are heuristic and require verification. The Node.js Socrata path has a 5,000-record request limit and a 30-second timeout.</p><p>Previously recorded test runs reported 37 JavaScript checks passing, plus 43 Python passes and three warnings. These are historical results, not a fresh test run or proof of end-to-end reliability.</p>
+      </div>
+
+      <div class="crossref">
+        <div class="cr-label">related project</div>
+        <p>The focus on configurable data workflows also appears in <a href="StellaSnipes.html">StellaSnipes</a>, which tracks changes across large domain datasets. Both projects separate repeatable processing from source-specific configuration.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <a href="StellaSnipes.html">← StellaSnipes.pipeline</a>
+    <a href="mailto:codedbystella@gmail.com">codedbystella@gmail.com</a>
+    <a href="StellaStudios.html">StellaStudios.pipeline →</a>
+  </footer>
+
+  <div class="tech-sticky">
+    <span class="hint">WANT THE IMPLEMENTATION DETAILS?</span>
+    <a href="StellaScrapes-Technical.html">Read the technical review ↗</a>
+  </div>
+
+</body>
+</html>

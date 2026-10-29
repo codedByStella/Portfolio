@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StellaScrapes Technical Review | codedByStella</title>
+<meta name="description" content="Technical review of StellaScrapes, a local public-records search and lead-preparation MVP using Python, Node.js, a dataset registry, and Socrata APIs.">
+<meta property="og:title" content="StellaScrapes Technical Review | codedByStella">
+<meta property="og:description" content="Architecture, query routing, dataset discovery, permit processing, exports, verification, and implementation limits.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12151B;--surface:#1B2028;--surface-hi:#212832;--border:#282F39;--text:#E8EAED;--text-dim:#8B93A1;--text-faint:#525A66;--teal:#5FD4C4;--amber:#E0A458;--red:#E2665B;--mono:'IBM Plex Mono',ui-monospace,'SF Mono',monospace;--sans:'IBM Plex Sans',-apple-system,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;scroll-padding-top:24px}body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:86px}a{color:inherit}.statusbar{border-bottom:1px solid var(--border);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;color:var(--text-faint);flex-wrap:wrap;gap:8px}.statusbar .path{color:var(--teal)}.statusbar a{text-decoration:none}.wrap{max-width:840px;margin:0 auto;padding:0 32px}.head{padding:72px 0 42px;border-bottom:1px solid var(--border)}.status-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid rgba(95,212,196,.35);background:rgba(95,212,196,.06);padding:5px 12px;margin-bottom:22px}h1{font-family:var(--mono);font-weight:500;font-size:clamp(26px,4vw,38px);line-height:1.25;margin-bottom:18px}.lede{font-size:17px;color:var(--text-dim);max-width:680px}.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.tag{font-family:var(--mono);font-size:11px;color:var(--text-dim);border:1px solid var(--border);padding:4px 9px}section{padding:42px 0;border-bottom:1px solid var(--border)}.s-label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:18px;display:flex;align-items:center;gap:12px}.rule{flex:1;height:1px;background:var(--border)}h2{font-size:21px;font-weight:600;margin-bottom:13px}h3{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--text);margin:22px 0 8px}p{color:var(--text-dim);margin-bottom:13px;max-width:700px}p strong{color:var(--text)}ul{padding-left:22px;color:var(--text-dim);margin:8px 0 14px}li{padding:3px 0 3px 4px}li::marker{color:var(--teal)}code{font-family:var(--mono);font-size:.9em;color:var(--teal)}.callout{background:var(--surface);border:1px solid var(--border);border-left:2px solid var(--teal);padding:18px 20px;margin:18px 0}.callout p:last-child{margin-bottom:0}.meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:22px 0}.meta-grid div{background:var(--surface);padding:13px 15px}.meta-grid .k{font:10px var(--mono);color:var(--text-faint);text-transform:uppercase;letter-spacing:.07em}.meta-grid .v{color:var(--text);font-size:14px;margin-top:3px;overflow-wrap:anywhere}.table-wrap{overflow-x:auto;border:1px solid var(--border);margin:18px 0}table{border-collapse:collapse;width:100%;font-size:13px;min-width:480px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:top}th{font:11px var(--mono);color:var(--teal);background:var(--surface);font-weight:500}td{color:var(--text-dim)}td:first-child{color:var(--text);white-space:nowrap}.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}.step{border:1px solid var(--border);background:var(--surface);padding:15px}.step .n{font:11px var(--mono);color:var(--teal);margin-bottom:6px}.step p{font-size:13px;margin:0}.footer{position:fixed;z-index:10;left:0;right:0;bottom:0;background:rgba(18,21,27,.96);border-top:1px solid var(--border);backdrop-filter:blur(12px);padding:13px max(20px,calc((100vw - 776px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;font:12px var(--mono)}.footer a{color:var(--teal);text-decoration:none}.footer a:hover{text-decoration:underline}.footer .muted{color:var(--text-faint)}@media(max-width:560px){.statusbar{padding:12px 18px}.wrap{padding:0 20px}.head{padding-top:48px}.meta-grid,.steps{grid-template-columns:1fr}.footer{font-size:10px;padding:12px 14px;gap:8px}.footer .muted{display:none}}
+</style>
+</head>
+<body>
+<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border);margin:0 6px">/</span><span class="path">StellaScrapes / technical-review</span></div><div>IMPLEMENTATION NOTES</div></div>
+<main class="wrap">
+<header class="head">
+<div class="status-tag">TECHNICAL REVIEW / FUNCTIONAL MVP</div>
+<h1>StellaScrapes: Public Data Search and Lead Preparation</h1>
+<p class="lede">A local application that routes plain-English queries to configured public datasets, normalizes supported records, and exports results for further analysis. This review describes the implementation, the data paths, and the difference between working components and planned coverage.</p>
+<div class="tags"><span class="tag">Python</span><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Socrata API</span><span class="tag">JSON registry</span><span class="tag">CSV / XLSX</span></div>
+<div class="meta-grid">
+<div><div class="k">Status</div><div class="v">Functional MVP / commercialization on hold</div></div>
+<div><div class="k">Interfaces</div><div class="v">Local browser app and Python CLI</div></div>
+<div><div class="k">Operational retrieval</div><div class="v">Socrata datasets</div></div>
+<div><div class="k">Configuration</div><div class="v">Central JSON registry</div></div>
+<div><div class="k">Data processing</div><div class="v">Normalization, deduplication, prioritization</div></div>
+<div><div class="k">Output</div><div class="v">CSV and formatted Excel workbooks</div></div>
+</div>
+</header>
+
+<section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
+<p>StellaScrapes is a local public-records search and processing application. It accepts natural-language queries, resolves them against configured locations and dataset categories, retrieves records from supported Socrata sources, and prepares results for inspection or export.</p>
+<p>The project includes a second workflow for discovering Socrata publishing domains and cataloging their datasets. That workflow helps identify candidate sources for future integration, but discovery alone does not establish that a dataset can be queried reliably by the main application.</p>
+<p>The application is an MVP. It is not a hosted multi-user service, and the configured coverage should not be read as proof that every location and category is operational.</p>
+</section>
+
+<section id="dataflow"><div class="s-label"><span>02 / primary search path</span><span class="rule"></span></div>
+<div class="flow"><div class="flow-step"><strong>1. Query interpretation</strong><span>Parse location, record type, trade terms, and date filters from a plain-English query.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>2. Registry resolution</strong><span>Match recognized terms and aliases to configured locations and dataset definitions, with fuzzy matching when needed.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>3. Supported retrieval</strong><span>Build a request for the configured Socrata dataset and apply available query filters and retrieval limits.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>4. Normalize and filter</strong><span>Convert returned fields into a common result structure and apply supported date or status filters.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>5. Clean and export</strong><span>Optionally normalize permit fields, deduplicate, prioritize records, and write CSV or Excel output.</span></div></div>
+<p>The browser and Python entry points expose overlapping functionality, but they are not interchangeable. The CLI also exposes discovery and catalog maintenance operations that are not fully represented in the browser interface.</p>
+</section>
+
+<section id="query"><div class="s-label"><span>03 / query interpretation</span><span class="rule"></span></div>
+<p>The search layer converts user-facing terms into structured parameters rather than requiring users to know each dataset's API fields. Representative query forms include:</p>
+<div class="code">hvac permits in seattle
+roofing chicago last 30 days
+austin foreclosures</div>
+<p>The parser attempts to identify location, record category, trade or keyword filters, and date ranges. Recognized terms are resolved against the registry; fuzzy matching provides a fallback when a query does not exactly match a known term.</p>
+<p>Parsing and fuzzy matching are convenience features, not guarantees of correct intent. Ambiguous terms or incomplete registry mappings can produce incorrect or empty results, so users should review the selected source and returned records.</p>
+</section>
+
+<section id="registry"><div class="s-label"><span>04 / registry-driven configuration</span><span class="rule"></span></div>
+<p>A centralized JSON registry associates geographic entries and record categories with source domains, dataset identifiers, candidate field mappings, update metadata, and optional filters.</p>
+<p>Both search paths use registry-driven configuration to avoid writing a separate search implementation for each dataset. This reduces duplication, but adding a registry entry is not enough by itself: field mappings, query behavior, and the returned records still need validation.</p>
+<div class="callout"><strong>Key distinction</strong><p>Configuration describes a candidate integration. Operational support requires a working retrieval path and verified mapping for the source in question.</p></div>
+</section>
+
+<section id="discovery"><div class="s-label"><span>05 / discovery and cataloging</span><span class="rule"></span></div>
+<p>The Python discovery tools query the Socrata catalog, paginate through results, retrieve dataset metadata, and write catalog output for later review. Metadata includes names, descriptions, columns, update dates, and source links where available.</p>
+<ul><li>Discover domains publishing Socrata-hosted open data.</li><li>Catalog all discovered domains or a selected domain.</li><li>Classify candidate datasets using heuristics.</li><li>Infer possible fields for dates, addresses, descriptions, record types, contractors, and names.</li><li>Checkpoint catalog output and track failed domains.</li><li>Prepare selected datasets for import into the central registry.</li></ul>
+<p>A catalog-import utility maps selected domains to city or county entries and can merge missing dataset categories into the registry. Classification and field inference are heuristic, so the resulting configuration needs review before dependable retrieval.</p>
+</section>
+
+<section id="cleaning"><div class="s-label"><span>06 / permit cleaning and prioritization</span><span class="rule"></span></div>
+<p>The permit-cleaning path prepares raw results for consistent review and downstream analysis. Depending on available source fields and configured rules, it can:</p>
+<ul><li>Reject records that fail basic address-quality requirements.</li><li>Exclude selected cancellation, demolition, and other unwanted categories.</li><li>Normalize addresses and supported date formats.</li><li>Format available telephone numbers and monetary values.</li><li>Deduplicate records using a configured identification key.</li><li>Map source columns into a standardized permit-oriented schema.</li><li>Assign a heuristic priority score and export the results to CSV or Excel.</li></ul>
+<p>The score uses selected characteristics such as estimated project value, work-description terms, and contractor availability. It is a rules-based review aid, not a validated estimate of purchase intent, conversion likelihood, or revenue. A generic cleaning path handles non-permit records with basic normalization, filtering, deduplication, and export.</p>
+</section>
+
+<section id="interfaces"><div class="s-label"><span>07 / application interfaces</span><span class="rule"></span></div>
+<h3>Node.js browser application</h3>
+<p>The local web application uses Express to expose search, CSV and Excel export, and browser metadata endpoints. Its front end uses standard HTML, CSS, and JavaScript. The interface provides a query input, example searches, a results table, search metadata, fuzzy-match feedback, and export controls. The number of displayed rows is capped separately from the underlying retrieval limit.</p>
+<h3>Python command-line interface</h3>
+<p>The interactive CLI provides search, configured-location inspection, domain discovery, cataloging, tests, and access to the preliminary prospecting workflow. It also supports direct search commands and standalone discovery and catalog operations.</p>
+<p>Both interfaces are intended for local use. The project does not demonstrate a hosted service, multi-user access controls, or production-scale operations.</p>
+</section>
+
+<section id="prospecting"><div class="s-label"><span>08 / buyer-prospecting module</span><span class="rule"></span></div>
+<p>A separate module was designed to create business contact lists for potential buyers of public-records-derived lead lists. Its workflow supports configurable city and state inputs, twelve predefined business categories, optional category and page limits, HTML parsing for business names, phone numbers and addresses, and CSV or formatted Excel exports. It can also save raw HTML responses for troubleshooting.</p>
+<div class="callout warning"><strong>Parked, not operational</strong><p>Project documentation records that the target business directory blocked requests during checks in July 2026. The module cannot currently be relied upon to produce usable prospect lists. Replacing the source and validating an appropriate collection method are separate work items, not completed features.</p></div>
+</section>
+
+<section id="coverage"><div class="s-label"><span>09 / coverage and limits</span><span class="rule"></span></div>
+<table><thead><tr><th>Area</th><th>Current boundary</th></tr></thead><tbody>
+<tr><td>Retrieval</td><td>Socrata is the operationally implemented platform in the inspected Python and Node.js search paths.</td></tr>
+<tr><td>Other platforms</td><td>Four additional platform types appear in configuration but do not have implemented retrieval adapters.</td></tr>
+<tr><td>Advertised coverage</td><td>Documentation lists 66 cities and 15 data types. These figures describe intended or configured coverage, not guaranteed working combinations.</td></tr>
+<tr><td>Request limits</td><td>The Node.js Socrata path has a configured maximum of 5,000 records per request and a 30-second timeout.</td></tr>
+<tr><td>Metadata</td><td>Dataset classification and field mapping use heuristics and require verification.</td></tr>
+<tr><td>Buyer prospecting</td><td>The directory-based workflow is parked due to source blocking.</td></tr>
+<tr><td>Deployment</td><td>Local MVP. Hosted multi-user operation and production-scale reliability have not been demonstrated.</td></tr>
+</tbody></table>
+<p>These limits describe the inspected implementation and project documentation. They should be revisited if retrieval adapters, source mappings, or operating conditions change.</p>
+</section>
+
+<section id="testing"><div class="s-label"><span>10 / verification and testing</span><span class="rule"></span></div>
+<p>The repository includes separate JavaScript and Python test scripts. Previously recorded JavaScript results reported 37 passing checks covering areas such as parsing, registry behavior, error handling, and live API paths. The Python script previously reported 43 passes and three warnings; it is a standalone script rather than a conventional test module discovered by the standard unittest runner.</p>
+<p>These are historical results, not a fresh test execution for this review. They provide evidence that selected components and paths were checked, but they do not establish exhaustive test coverage, continuous upstream API availability, or end-to-end reliability for every registered location and category.</p>
+</section>
+
+<section id="stack"><div class="s-label"><span>11 / technology stack</span><span class="rule"></span></div>
+<table><thead><tr><th>Technology</th><th>Purpose</th></tr></thead><tbody>
+<tr><td>Python</td><td>Search workflows, cataloging, cleaning, prospecting, and supporting utilities.</td></tr>
+<tr><td>JavaScript / Node.js</td><td>Local application server and browser-side behavior.</td></tr>
+<tr><td>Express</td><td>HTTP routing and API endpoints.</td></tr>
+<tr><td>JSON</td><td>Dataset registry, catalog output, and discovery metadata.</td></tr>
+<tr><td>Socrata Open Data API</td><td>Implemented public-record retrieval and catalog integration.</td></tr>
+<tr><td>HTML / CSS</td><td>Browser interface and presentation.</td></tr>
+<tr><td>CSV / XLSX</td><td>Portable raw and processed data exports.</td></tr>
+<tr><td>Test scripts</td><td>Search routing and selected application-behavior checks.</td></tr>
+</tbody></table>
+</section>
+
+<section id="commercial"><div class="s-label"><span>12 / development and commercialization</span><span class="rule"></span></div>
+<p>The implemented foundation combines registry-driven public-records search, dataset discovery, permit normalization, heuristic prioritization, and export workflows. The next major milestone is commercial validation, not a claim that a complete commercial platform already exists.</p>
+<p>Further work on coverage, source reliability, and buyer acquisition should be weighed against demonstrated demand. The prospecting module remains parked, and the current application should be described as a functional, extensible MVP rather than an automated lead-generation business.</p>
+</section>
+
+<footer class="page-footer"><a href="StellaScrapes.html">← Back to StellaScrapes</a><a href="index.html">Portfolio index →</a></footer>
+</main>
+</body>
+</html>

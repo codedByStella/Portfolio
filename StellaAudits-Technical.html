@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StellaAudits Technical Review | codedByStella</title>
+<meta name="description" content="Technical review of StellaAudits, a locally operated website auditing and reporting MVP built with Python, Flask, SQLite, and optional Lighthouse integration.">
+<meta property="og:title" content="StellaAudits Technical Review | codedByStella">
+<meta property="og:description" content="Architecture, audit modules, scoring, persistence, reporting, and implementation limits of StellaAudits.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12151B;--surface:#1B2028;--surface-hi:#212832;--border:#282F39;--text:#E8EAED;--text-dim:#8B93A1;--text-faint:#525A66;--teal:#5FD4C4;--amber:#E0A458;--red:#E2665B;--mono:'IBM Plex Mono',ui-monospace,'SF Mono',monospace;--sans:'IBM Plex Sans',-apple-system,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;scroll-padding-top:24px}body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:86px}a{color:inherit}.statusbar{border-bottom:1px solid var(--border);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;color:var(--text-faint);flex-wrap:wrap;gap:8px}.statusbar .path{color:var(--teal)}.statusbar a{text-decoration:none}.wrap{max-width:840px;margin:0 auto;padding:0 32px}.head{padding:72px 0 42px;border-bottom:1px solid var(--border)}.status-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid rgba(95,212,196,.35);background:rgba(95,212,196,.06);padding:5px 12px;margin-bottom:22px}h1{font-family:var(--mono);font-weight:500;font-size:clamp(26px,4vw,38px);line-height:1.25;margin-bottom:18px}.lede{font-size:17px;color:var(--text-dim);max-width:680px}.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.tag{font-family:var(--mono);font-size:11px;color:var(--text-dim);border:1px solid var(--border);padding:4px 9px}section{padding:42px 0;border-bottom:1px solid var(--border)}.s-label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:18px;display:flex;align-items:center;gap:12px}.rule{flex:1;height:1px;background:var(--border)}h2{font-size:21px;font-weight:600;margin-bottom:13px}h3{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--text);margin:22px 0 8px}p{color:var(--text-dim);margin-bottom:13px;max-width:700px}p strong{color:var(--text)}ul{padding-left:22px;color:var(--text-dim);margin:8px 0 14px}li{padding:3px 0 3px 4px}li::marker{color:var(--teal)}code{font-family:var(--mono);font-size:.9em;color:var(--teal)}.callout{background:var(--surface);border:1px solid var(--border);border-left:2px solid var(--teal);padding:18px 20px;margin:18px 0}.callout p:last-child{margin-bottom:0}.meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:22px 0}.meta-grid div{background:var(--surface);padding:13px 15px}.meta-grid .k{font:10px var(--mono);color:var(--text-faint);text-transform:uppercase;letter-spacing:.07em}.meta-grid .v{color:var(--text);font-size:14px;margin-top:3px;overflow-wrap:anywhere}.table-wrap{overflow-x:auto;border:1px solid var(--border);margin:18px 0}table{border-collapse:collapse;width:100%;font-size:13px;min-width:480px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:top}th{font:11px var(--mono);color:var(--teal);background:var(--surface);font-weight:500}td{color:var(--text-dim)}td:first-child{color:var(--text);white-space:nowrap}.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}.step{border:1px solid var(--border);background:var(--surface);padding:15px}.step .n{font:11px var(--mono);color:var(--teal);margin-bottom:6px}.step p{font-size:13px;margin:0}.footer{position:fixed;z-index:10;left:0;right:0;bottom:0;background:rgba(18,21,27,.96);border-top:1px solid var(--border);backdrop-filter:blur(12px);padding:13px max(20px,calc((100vw - 776px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;font:12px var(--mono)}.footer a{color:var(--teal);text-decoration:none}.footer a:hover{text-decoration:underline}.footer .muted{color:var(--text-faint)}@media(max-width:560px){.statusbar{padding:12px 18px}.wrap{padding:0 20px}.head{padding-top:48px}.meta-grid,.steps{grid-template-columns:1fr}.footer{font-size:10px;padding:12px 14px;gap:8px}.footer .muted{display:none}}
+</style>
+</head>
+<body>
+<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border);margin:0 6px">/</span><span class="path">StellaAudits / technical-review</span></div><div>IMPLEMENTATION NOTES</div></div>
+<main class="wrap">
+<header class="head">
+<div class="status-tag">TECHNICAL REVIEW / WORKING MVP</div>
+<h1>StellaAudits: Automated Website Audit and Reporting Platform</h1>
+<p class="lede">A locally operated auditing application that brings website checks, severity scoring, historical comparisons, PDF reporting, and human-reviewed outreach into one repeatable workflow. This page documents the implementation and its limits for technical readers.</p>
+<div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">Beautiful Soup</span><span class="tag">Jinja2</span><span class="tag">xhtml2pdf</span><span class="tag">PageSpeed / Lighthouse</span></div>
+<div class="meta-grid">
+<div><div class="k">Status</div><div class="v">Working MVP / active development</div></div>
+<div><div class="k">Languages</div><div class="v">Python, HTML</div></div>
+<div><div class="k">Persistence</div><div class="v">SQLite</div></div>
+<div><div class="k">Reporting</div><div class="v">Jinja2 templates and xhtml2pdf</div></div>
+<div><div class="k">External integration</div><div class="v">Google PageSpeed Insights / Lighthouse</div></div>
+<div><div class="k">Operating model</div><div class="v">Local, single-user workflow</div></div>
+</div>
+</header>
+
+<section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
+<p>StellaAudits retrieves a supplied website, runs a collection of accessibility, search-engine optimization, local visibility, and passive security checks, then turns the results into a scored report. Each finding can carry a category, severity, explanation, business relevance, recommended action, reference, and supporting evidence.</p>
+<p>The same workflow records audit history, compares later runs, tracks lead status, and prepares a personalized outreach draft. The central design goal is to make automated checks useful in a small service workflow without removing human review from commercial outreach.</p>
+<div class="callout"><p><strong>Scope note:</strong> this is a working MVP, not a certification service. A generated score summarizes the checks that ran. It does not prove legal compliance, complete accessibility, security, search performance, or business results.</p></div>
+</section>
+
+<section id="pipeline"><div class="s-label"><span>02 / audit pipeline</span><span class="rule"></span></div>
+<h2>Orchestration and shared findings</h2>
+<p>The runner coordinates specialized modules and normalizes their output into a shared finding model. That separation lets detection code focus on evidence while scoring, persistence, and report generation operate on a consistent structure.</p>
+<div class="steps">
+<div class="step"><div class="n">01 / FETCH</div><p>Retrieve the target URL and parse the initial HTML response.</p></div>
+<div class="step"><div class="n">02 / INSPECT</div><p>Run accessibility, SEO, local SEO, and passive security checks.</p></div>
+<div class="step"><div class="n">03 / CROSS-CHECK</div><p>Use optional PageSpeed and Lighthouse data when external access succeeds.</p></div>
+<div class="step"><div class="n">04 / NORMALIZE</div><p>Collect findings, evidence, severity, and remediation guidance.</p></div>
+<div class="step"><div class="n">05 / SCORE & SAVE</div><p>Calculate the score and retain an audit summary plus finding snapshot.</p></div>
+<div class="step"><div class="n">06 / DELIVER</div><p>Render a PDF and make the result available through the local interface.</p></div>
+</div>
+</section>
+
+<section id="accessibility"><div class="s-label"><span>03 / accessibility</span><span class="rule"></span></div>
+<p>Static checks inspect common accessibility-related HTML structures, including image alternative text, form labels, document language and title, heading hierarchy, unnamed links, duplicate IDs, table-header structure, and embedded-frame titles.</p>
+<p>When PageSpeed integration is available, Lighthouse can add browser-rendered findings such as color contrast and other structural issues. Findings are organized around relevant WCAG criteria and include explanations and suggested fixes where supported.</p>
+<p><strong>Limit:</strong> automated checks cannot independently establish ADA compliance or replace keyboard testing, assistive-technology testing, and manual accessibility review.</p>
+</section>
+
+<section id="seo"><div class="s-label"><span>04 / search visibility</span><span class="rule"></span></div>
+<h2>SEO and local SEO</h2>
+<p>SEO checks examine page titles, meta descriptions, primary headings, image alt text, canonical declarations, mobile viewport configuration, structured-data presence, HTTPS usage, basic response time, and robots.txt and sitemap availability. Optional Lighthouse data adds a browser-based SEO assessment and score.</p>
+<p>The local-search module looks for LocalBusiness structured data, supported business name, address and telephone fields, opening-hours information, phone numbers in visible text, embedded Google Maps content, and favicon availability.</p>
+<p><strong>Limits:</strong> the application does not establish search rankings, guarantee indexing, predict ranking changes, verify real-world business details, or perform comprehensive directory comparisons. It evaluates the supplied site and selected supporting resources.</p>
+</section>
+
+<section id="security"><div class="s-label"><span>05 / security checks</span><span class="rule"></span></div>
+<p>The security module is passive. It inspects transport-security configuration, response headers, potential technology-version disclosure, mixed-content references, and selected insecure form conditions. Findings include evidence and remediation guidance where available.</p>
+<div class="callout"><p><strong>Deliberate boundary:</strong> this is not a vulnerability scanner or penetration-testing framework. It does not perform authenticated testing or exploitation. Passing an individual check does not establish that a site is secure.</p></div>
+</section>
+
+<section id="rendering"><div class="s-label"><span>06 / rendering awareness</span><span class="rule"></span></div>
+<p>Some sites return an initial HTML document with little content, then populate the page after JavaScript executes. StellaAudits uses initial-page content and framework indicators to estimate when static checks may be operating on an incomplete page.</p>
+<p>When it detects a possible blind spot, the audit can add a confidence notice and adjust selected unconfirmed structural findings. Available browser-rendered PageSpeed data can provide additional evidence.</p>
+<p>This detector is heuristic. It does not guarantee that all affected findings are corrected or independently verified.</p>
+</section>
+
+<section id="scoring"><div class="s-label"><span>07 / scoring model</span><span class="rule"></span></div>
+<p>Findings receive severity labels and contribute fixed deductions to a bounded site-health score, which is mapped to a letter grade. Informational metadata about the audit itself is excluded from the penalty calculation.</p>
+<div class="table-wrap"><table><thead><tr><th>Severity</th><th>Score deduction</th><th>Use</th></tr></thead><tbody><tr><td>High</td><td>15 points</td><td>Higher-priority finding under the configured model.</td></tr><tr><td>Medium</td><td>7 points</td><td>Moderate-priority finding.</td></tr><tr><td>Low</td><td>2 points</td><td>Lower-priority finding.</td></tr><tr><td>Metadata</td><td>0 points</td><td>Notices about audit coverage or confidence, not site defects.</td></tr></tbody></table></div>
+<p>The score is an internal prioritization and presentation mechanism, not an independently validated measure of website quality, legal exposure, security, or business performance. Its meaning depends on which checks ran and how accurate their findings are.</p>
+</section>
+
+<section id="history"><div class="s-label"><span>08 / persistence and leads</span><span class="rule"></span></div>
+<p>SQLite stores audit summaries and compact finding snapshots. Records can retain audit dates, domains, scores, grades, finding counts, report references, and whether an audit attempt succeeded or failed.</p>
+<ul>
+<li>Compare recorded runs to identify resolved, newly appearing, and persistent findings.</li>
+<li>Track lead states such as new, contacted, responded, client, not interested, and failed.</li>
+<li>Filter lead lists, add optional notes, update statuses, and retrieve generated reports or outreach drafts.</li>
+</ul>
+<p>Comparisons depend on the available history and stable finding identifiers. A finding disappearing from a later report does not prove the underlying issue was fully fixed.</p>
+</section>
+
+<section id="reporting"><div class="s-label"><span>09 / reporting and outreach</span><span class="rule"></span></div>
+<p>Jinja2 templates and xhtml2pdf produce downloadable reports containing the target URL, audit date, score, grade, finding totals, category sections, and recommended actions. Historical comparison information can be included when an earlier audit is available.</p>
+<p>The outreach subsystem selects a limited set of substantive findings for a draft email and avoids using internal confidence notices as sales arguments. It does not send email automatically.</p>
+<p>The draft includes promotional-message disclosure, sender details, and reply-based opt-out language. If the physical mailing address is missing from configuration, the application raises a warning and marks the draft do not send. This is a safeguard for one configuration requirement, not a complete legal-compliance determination. Human review remains necessary.</p>
+</section>
+
+<section id="interface"><div class="s-label"><span>10 / local interface</span><span class="rule"></span></div>
+<p>Flask connects the audit services to a local browser interface for running audits and managing leads. The reviewed feature set includes single-URL audits, batch submissions of up to 100 URLs, sequential processing with a delay between items, batch-progress polling, lead filtering and status updates, and downloads for reports and drafts.</p>
+<p>Batch processing continues after individual URL failures. The app binds to the loopback interface by default. Completed audit records persist in SQLite, while batch-progress state is held in memory.</p>
+<p>This is a local single-user workflow, not an established multi-user hosted service. Authentication, deployment hardening, and persistent background-job infrastructure are not established by the reviewed implementation.</p>
+</section>
+
+<section id="stack"><div class="s-label"><span>11 / technology stack</span><span class="rule"></span></div>
+<div class="table-wrap"><table><thead><tr><th>Technology</th><th>Role</th></tr></thead><tbody>
+<tr><td>Python</td><td>Audit modules, scoring, orchestration, and application logic.</td></tr>
+<tr><td>Flask</td><td>Local web interface and HTTP endpoints.</td></tr>
+<tr><td>SQLite</td><td>Audit history and lead-status persistence.</td></tr>
+<tr><td>Requests</td><td>Website retrieval and external API requests.</td></tr>
+<tr><td>Beautiful Soup</td><td>HTML parsing and structural inspection.</td></tr>
+<tr><td>Jinja2</td><td>PDF report template rendering.</td></tr>
+<tr><td>xhtml2pdf</td><td>PDF generation.</td></tr>
+<tr><td>Google PageSpeed Insights API</td><td>Optional browser-rendered Lighthouse measurements.</td></tr>
+<tr><td>HTML and JSON</td><td>Browser interface, report presentation, and user-editable configuration.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="architecture"><div class="s-label"><span>12 / integration map</span><span class="rule"></span></div>
+<p>The reviewed source establishes these integration paths:</p>
+<ul>
+<li>The runner coordinates specialized detection modules and collects their findings.</li>
+<li>The JavaScript-rendering detector informs confidence notices and selected severity adjustments.</li>
+<li>The optional PageSpeed integration supplies browser-rendered measurements and reports whether data was obtained.</li>
+<li>The shared finding model feeds scoring, report generation, and historical comparison.</li>
+<li>The database stores audit summaries and finding snapshots.</li>
+<li>The report generator combines results, configuration, and available historical context into a PDF.</li>
+<li>The outreach generator prepares a draft from substantive findings for a person to review.</li>
+<li>The Flask app connects these services to the browser interface, batch workflow, lead dashboard, and download routes.</li>
+</ul>
+<p>This modular structure separates detection from presentation and record management while allowing the outputs to participate in one workflow.</p>
+</section>
+
+<section id="verification"><div class="s-label"><span>13 / verification and limits</span><span class="rule"></span></div>
+<p>This review is based on project documentation and inspected application and audit-module source, including the runner, finding model, scoring, persistence, fetching, accessibility, SEO, local SEO, security, PageSpeed, JavaScript-rendering detection, and outreach modules.</p>
+<p>The review verifies the described architectural relationships at source level. It does not establish comprehensive end-to-end test coverage, production reliability, accuracy for every generated finding, or commercial results. Automated checks can produce false positives and miss issues requiring browser interaction or human judgment. External PageSpeed measurements depend on API access.</p>
+<div class="callout"><p><strong>Summary:</strong> StellaAudits is a working MVP that connects automated website checks to scoring, history, PDF reporting, lead tracking, and human-reviewed outreach. Its value is the repeatable workflow. Its reports remain bounded by detection coverage and require review before being treated as evidence of remediation or compliance.</p></div>
+</section>
+</main>
+<footer class="footer"><a href="StellaAudits.html">← Back to StellaAudits</a><span class="muted">CODE REVIEW / SOURCE-LEVEL SCOPE</span><a href="index.html">Portfolio index ↗</a></footer>
+</body>
+</html>

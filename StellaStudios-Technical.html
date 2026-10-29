@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StellaStudios Technical Review | codedByStella</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#12151B;--surface:#1B2028;--surface-hi:#212832;--border:#282F39;--text:#E8EAED;--text-dim:#8B93A1;--text-faint:#525A66;--teal:#5FD4C4;--amber:#E0A458;--red:#E2665B;--mono:'IBM Plex Mono',ui-monospace,'SF Mono',monospace;--sans:'IBM Plex Sans',-apple-system,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;scroll-padding-top:24px}body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:86px}a{color:inherit}.statusbar{border-bottom:1px solid var(--border);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;color:var(--text-faint);flex-wrap:wrap;gap:8px}.statusbar .path{color:var(--teal)}.statusbar a{text-decoration:none}.wrap{max-width:840px;margin:0 auto;padding:0 32px}.head{padding:72px 0 42px;border-bottom:1px solid var(--border)}.status-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--teal);border:1px solid rgba(95,212,196,.35);background:rgba(95,212,196,.06);padding:5px 12px;margin-bottom:22px}h1{font-family:var(--mono);font-weight:500;font-size:clamp(26px,4vw,38px);line-height:1.25;margin-bottom:18px}.lede{font-size:17px;color:var(--text-dim);max-width:680px}.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}.tag{font-family:var(--mono);font-size:11px;color:var(--text-dim);border:1px solid var(--border);padding:4px 9px}section{padding:42px 0;border-bottom:1px solid var(--border)}.s-label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:18px;display:flex;align-items:center;gap:12px}.rule{flex:1;height:1px;background:var(--border)}h2{font-size:21px;font-weight:600;margin-bottom:13px}h3{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--text);margin:22px 0 8px}p{color:var(--text-dim);margin-bottom:13px;max-width:700px}p strong{color:var(--text)}ul{padding-left:22px;color:var(--text-dim);margin:8px 0 14px}li{padding:3px 0 3px 4px}li::marker{color:var(--teal)}code{font-family:var(--mono);font-size:.9em;color:var(--teal)}.callout{background:var(--surface);border:1px solid var(--border);border-left:2px solid var(--teal);padding:18px 20px;margin:18px 0}.callout p:last-child{margin-bottom:0}.meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin:22px 0}.meta-grid div{background:var(--surface);padding:13px 15px}.meta-grid .k{font:10px var(--mono);color:var(--text-faint);text-transform:uppercase;letter-spacing:.07em}.meta-grid .v{color:var(--text);font-size:14px;margin-top:3px;overflow-wrap:anywhere}.table-wrap{overflow-x:auto;border:1px solid var(--border);margin:18px 0}table{border-collapse:collapse;width:100%;font-size:13px;min-width:480px}th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:top}th{font:11px var(--mono);color:var(--teal);background:var(--surface);font-weight:500}td{color:var(--text-dim)}td:first-child{color:var(--text);white-space:nowrap}.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}.step{border:1px solid var(--border);background:var(--surface);padding:15px}.step .n{font:11px var(--mono);color:var(--teal);margin-bottom:6px}.step p{font-size:13px;margin:0}.footer{position:fixed;z-index:10;left:0;right:0;bottom:0;background:rgba(18,21,27,.96);border-top:1px solid var(--border);backdrop-filter:blur(12px);padding:13px max(20px,calc((100vw - 776px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;font:12px var(--mono)}.footer a{color:var(--teal);text-decoration:none}.footer a:hover{text-decoration:underline}.footer .muted{color:var(--text-faint)}@media(max-width:560px){.statusbar{padding:12px 18px}.wrap{padding:0 20px}.head{padding-top:48px}.meta-grid,.steps{grid-template-columns:1fr}.footer{font-size:10px;padding:12px 14px;gap:8px}.footer .muted{display:none}}
+</style>
+</head>
+<body>
+<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border);margin:0 6px">/</span><span class="path">StellaStudios / technical-review</span></div><div>IMPLEMENTATION NOTES</div></div>
+<main class="wrap">
+<header class="head">
+<div class="status-tag">TECHNICAL REVIEW / MVP</div>
+<h1>StellaStudios: Automated Audiovisual Production Pipeline</h1>
+<p class="lede">A source-level review of the system that coordinates structured creative metadata, video generation, synthetic narration, reusable soundtrack assets, subtitle creation, FFmpeg assembly, and artifact archiving.</p>
+<div class="tags"><span class="tag">Python</span><span class="tag">JSON</span><span class="tag">OpenAI API</span><span class="tag">Sora</span><span class="tag">ElevenLabs</span><span class="tag">FFmpeg</span><span class="tag">ASS subtitles</span></div>
+<div class="meta-grid">
+<div><div class="k">Status</div><div class="v">Active development; scheduled cycle paused</div></div>
+<div><div class="k">Orchestration</div><div class="v">Python nodes and file-based handoffs</div></div>
+<div><div class="k">Creative contract</div><div class="v">Five-field JSON metadata</div></div>
+<div><div class="k">Media processing</div><div class="v">FFmpeg and local soundtrack assets</div></div>
+<div><div class="k">Output</div><div class="v">Assembled short-form video</div></div>
+<div><div class="k">Review basis</div><div class="v">Source and configuration inspection</div></div>
+</div>
+</header>
+<section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
+<p>StellaStudios treats short-form video creation as a multi-stage workflow rather than a single generative request. A GPT node produces structured metadata, and specialized nodes use that metadata to generate video and narration, select and process music, create subtitles, assemble the media, and archive artifacts.</p>
+<p>The architecture separates creative generation from deterministic post-processing. External models supply creative material; Python and FFmpeg handle orchestration, file movement, audio processing, subtitle formatting, encoding, and archival.</p>
+<div class="callout"><p><strong>Scope note:</strong> the source confirms the major components and intended sequence. It does not establish current end-to-end reliability, consistent model output, concurrency safety, or an active unattended publishing service.</p></div></section>
+<section id="metadata"><div class="s-label"><span>02 / creative metadata</span><span class="rule"></span></div>
+<p>The GPT node calls the OpenAI Chat Completions API in JSON mode and expects five fields: <code>title</code>, <code>description</code>, <code>video</code>, <code>voice</code>, and <code>music</code>. Creative presets provide reusable constraints, while model configuration is managed separately. The environmental preset targets a short vertical scenic clip with coherent motion, consistent lighting, and a calm tone.</p>
+<p>The node checks that required fields are present before storing the result. The prompt and schema describe more constraints than the implementation independently validates, so required-key presence should not be confused with full schema enforcement. Prompt wording also cannot guarantee that an external model follows every visual instruction.</p></section>
+<section id="video"><div class="s-label"><span>03 / video generation</span><span class="rule"></span></div>
+<p>The video node reads production metadata, selects the relevant configuration, submits the scene description to an external video-generation service, waits for completion, retrieves the result, and saves the video for downstream use. This keeps the creative specification separate from later media assembly.</p>
+<p>The intended properties include stable perspective, continuous motion, consistent lighting, and no abrupt scene changes. These are prompt goals, not guarantees of the generated footage. Actual quality remains dependent on the service and individual generation.</p></section>
+<section id="voice"><div class="s-label"><span>04 / narration</span><span class="rule"></span></div>
+<p>The narration node sends the generated <code>voice</code> field to an external text-to-speech service, applies configured voice and synthesis parameters, and saves the returned audio artifact. This stage is independent of video rendering and hands the audio file to later stages.</p>
+<p>Prompt constraints specify a brief, understated delivery and fragment structure. The generated text and service output can still vary, so downstream timing and composition must work with the artifacts actually returned.</p></section>
+<section id="music"><div class="s-label"><span>05 / soundtrack processing</span><span class="rule"></span></div>
+<p>The music node does not generate a soundtrack from the metadata's <code>music</code> description. It selects an existing track from a local collection, inspects its duration, chooses a short segment, and uses FFmpeg to extract it. Loudness normalization and fade processing are applied before the resulting clip is passed to assembly.</p>
+<p>This is a hybrid design: the metadata can describe intended musical character, but the inspected implementation uses a reusable local asset pool rather than conditioning music generation on that description.</p></section>
+<section id="subtitles"><div class="s-label"><span>06 / subtitle generation</span><span class="rule"></span></div>
+<p>The subtitle node removes the whisper marker from narration text, splits the remaining text into phrases, measures the narration duration, and distributes those phrases across the timeline. It writes styled Advanced SubStation Alpha (ASS) subtitles with configured typography, outlines, and fade effects.</p>
+<p>Timing is estimated at the phrase level. The implementation does not establish phoneme-level or word-level alignment, so subtitles may not match every spoken word precisely.</p></section>
+<section id="assembly"><div class="s-label"><span>07 / audiovisual assembly</span><span class="rule"></span></div>
+<p>The stitching stage combines the video, narration, soundtrack segment, and subtitle artifact. FFmpeg handles audio preparation and mixing, source-level adjustments, optional subtitle burn-in, optional text watermarking, and H.264 video with AAC audio encoding.</p>
+<p>Keeping assembly separate from generation allows the system to process available artifacts through a conventional media pipeline. The final result depends on the correct artifacts being associated with the same production run.</p></section>
+<section id="orchestration"><div class="s-label"><span>08 / orchestration and storage</span><span class="rule"></span></div>
+<p>The coordinator invokes metadata generation, soundtrack processing, speech synthesis, subtitle generation, video generation, stitching, and archiving. A pending directory provides intermediate handoffs, and the archiver organizes artifacts after assembly. A separate uploader process is part of the wider project.</p>
+<p>Not every stage receives an explicit production identifier. Some stages independently discover the latest metadata or clear shared pending directories. Concurrent runs can therefore interfere with each other or associate an artifact with the wrong run. Per-job identifiers and isolated workspaces would strengthen this design.</p></section>
+<section id="operations"><div class="s-label"><span>09 / diagnostics</span><span class="rule"></span></div>
+<p>The project includes logging around configuration, stage execution, artifact handling, and errors. This makes individual pipeline stages easier to inspect than a single opaque process. Logging alone, however, does not provide robust retries, transactional handoffs, or recovery after partial failure.</p></section>
+<section id="limits"><div class="s-label"><span>10 / verification and limits</span><span class="rule"></span></div>
+<ul>
+<li><strong>Metadata validation:</strong> required fields are checked, but the full prompt and schema contract is not comprehensively enforced by code.</li>
+<li><strong>Visual quality:</strong> prompt constraints express desired output and do not guarantee temporal or geometric consistency.</li>
+<li><strong>Subtitle timing:</strong> phrase timing is estimated rather than aligned to word-level timestamps.</li>
+<li><strong>Soundtrack selection:</strong> a local track pool is used; the music description is not used to generate a new score.</li>
+<li><strong>Run isolation:</strong> shared pending storage and latest-metadata discovery create concurrency risks.</li>
+<li><strong>Operational status:</strong> the scheduled cycle is currently paused. Source inspection does not prove current end-to-end operation or production uptime.</li>
+<li><strong>Testing:</strong> this review is based on source and configuration inspection, not a comprehensive end-to-end test report.</li>
+</ul></section>
+<section id="next"><div class="s-label"><span>11 / engineering priorities</span><span class="rule"></span></div>
+<p>The most direct hardening work is to validate metadata against an executable schema, isolate every run with a unique job identifier, bind all artifacts to that identifier, and define stage-level timeout, retry, and recovery behavior. Automated end-to-end tests should verify that the assembled video uses the expected narration, music, and subtitle artifacts before it is approved for publication.</p></section>
+<section id="summary"><div class="s-label"><span>12 / summary</span><span class="rule"></span></div>
+<p>StellaStudios demonstrates a modular audiovisual workflow that joins generative services with conventional media processing. Its distinguishing engineering work is in the structured handoffs, specialized nodes, and assembly process. The next maturity step is not adding more model calls, but improving validation, run isolation, recovery, and verification.</p>
+<div class="back"><a href="StellaStudios.html">← Back to StellaStudios overview</a></div></section>
+</main>
+</body>
+</html>

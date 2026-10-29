@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StellaBot | Persistent AI Desktop Companion</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMTIxNTFCIi8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyODJGMzkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjQiIHk9IjIzIiBmb250LWZhbWlseT0iJ0lCTSBQbGV4IE1vbm8nLCB1aS1tb25vc3BhY2UsIG1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9IjYwMCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzVGRDRDNCI+Jmd0O188L3RleHQ+Cjwvc3ZnPgo=">
+<meta name="description" content="Autonomous desktop agent  -  a context-aware state machine with OS-level window tracking, visual context capture, and graceful degradation under API failure. Built by codedByStella.">
+<meta property="og:title" content="StellaBot.service  -  codedByStella">
+<meta property="og:description" content="A localized, multi-threaded AI agent that tracks foreground window activity, maintains short-term visual context, and initiates interaction based on idle thresholds  -  with strict retry logic and local state persistence.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151B; --surface:#1B2028; --surface-hi:#212832; --border:#282F39;
+    --text:#E8EAED; --text-dim:#8B93A1; --text-faint:#525A66;
+    --teal:#5FD4C4; --amber:#E0A458; --red:#E2665B;
+    --mono:'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+    --sans:'IBM Plex Sans', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.65; -webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  .statusbar{border-bottom:1px solid var(--border); padding:12px 32px; display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:12px; color:var(--text-faint); flex-wrap:wrap; gap:8px;}
+  .statusbar .path{color:var(--teal);}
+  .statusbar a{border-bottom:1px solid transparent;}
+  .statusbar a:hover{border-bottom-color:var(--text-faint);}
+  .dot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 6px var(--teal); margin-right:6px; animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+
+  .wrap{max-width:840px; margin:0 auto; padding:0 32px;}
+
+  .head{padding:80px 0 50px; border-bottom:1px solid var(--border);}
+  .status-tag{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:12px; color:var(--teal); border:1px solid rgba(95,212,196,0.35); background:rgba(95,212,196,0.06); padding:5px 12px; margin-bottom:24px;}
+  h1{font-family:var(--mono); font-weight:500; font-size:clamp(26px,4vw,38px); letter-spacing:-0.01em; margin-bottom:18px;}
+  .lede{font-size:17px; color:var(--text-dim); max-width:640px;}
+  .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:28px;}
+  .tag{font-family:var(--mono); font-size:11.5px; color:var(--text-dim); border:1px solid var(--border); padding:4px 10px;}
+
+  section{padding:52px 0; border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+  .s-label{font-family:var(--mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-faint); margin-bottom:20px; display:flex; align-items:center; gap:12px;}
+  .s-label .rule{flex:1; height:1px; background:var(--border);}
+  h2{font-family:var(--sans); font-size:22px; font-weight:600; margin-bottom:16px;}
+  p{color:var(--text-dim); margin-bottom:14px; max-width:680px;}
+  p strong{color:var(--text); font-weight:600;}
+
+  ul.feature-list{list-style:none; display:flex; flex-direction:column; gap:16px; margin-top:8px;}
+  ul.feature-list li{padding-left:24px; position:relative; color:var(--text-dim);}
+  ul.feature-list li::before{content:'▸'; position:absolute; left:0; color:var(--teal); font-family:var(--mono);}
+  ul.feature-list li strong{color:var(--text); font-weight:600; display:block; margin-bottom:3px; font-family:var(--mono); font-size:14px;}
+
+  .code{background:var(--surface); border:1px solid var(--border); padding:22px 24px; font-family:var(--mono); font-size:12.8px; color:var(--text-dim); overflow-x:auto; margin:18px 0; line-height:1.7; white-space:pre;}
+  .code .c1{color:var(--text-faint);}
+  .code .c2{color:var(--teal);}
+  .code .c3{color:var(--amber);}
+  .code-label{font-family:var(--mono); font-size:11px; color:var(--text-faint); margin-bottom:8px; letter-spacing:0.04em;}
+
+  .result{background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--teal); padding:24px 26px; margin-top:8px;}
+  .result p{margin-bottom:0; color:var(--text-dim);}
+
+  .crossref{border:1px dashed var(--border); padding:18px 22px; margin-top:28px; font-size:13.5px;}
+  .crossref .cr-label{font-family:var(--mono); font-size:11px; color:var(--text-faint); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;}
+  .crossref a{color:var(--teal); border-bottom:1px solid transparent;}
+  .crossref a:hover{border-bottom-color:var(--teal);}
+  .crossref p{margin:0; color:var(--text-dim); font-size:13.5px;}
+
+  footer{padding:56px 32px 70px; max-width:840px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-family:var(--mono); font-size:13px;}
+  footer a{color:var(--teal);}
+
+body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:12px;padding:13px 20px;background:rgba(18,21,27,.96);border-top:1px solid var(--border);font-family:var(--mono);font-size:12px}.tech-sticky a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(95,212,196,.35)}.tech-sticky .hint{color:var(--text-faint)}@media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center}}
+</style>
+</head>
+<body>
+
+  <div class="statusbar">
+    <div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border); margin:0 6px;">/</span><span class="path">StellaBot.service</span></div>
+    <div><span class="dot"></span>online</div>
+  </div>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="status-tag">● ACTIVE DEVELOPMENT</div>
+      <h1>A desktop companion built around continuity</h1>
+      <p class="lede">StellaBot combines persistent memory, personalization, desktop context, visual-frame processing, speech output, and proactive conversation in one Python application. The goal is to make interactions build on previous sessions and relevant activity, rather than starting from zero each time.</p>
+      <div class="tags">
+        <span class="tag">Python</span>
+        <span class="tag">Win32 API (ctypes)</span>
+        <span class="tag">Multi-threading</span>
+        <span class="tag">SQLite</span>
+        <span class="tag">PowerShell (TTS)</span>
+      </div>
+    </div>
+
+    <section>
+      <div class="s-label"><span>architecture</span><span class="rule"></span></div>
+      <p>This system is not a simple chat wrapper. It is a background daemon designed to monitor, evaluate, and interact with the local environment without blocking the main thread or crashing on bad data.</p>
+      <ul class="feature-list">
+        <li><strong>OS-level context awareness</strong>Utilizes <code>ctypes</code> and the Win32 API (<code>GetForegroundWindow</code>, <code>GetWindowTextW</code>) to track the user's active application. Captures window state via <code>ImageGrab</code>, handles deduplication using SHA-1 hashing, and maintains a rolling context reel.</li>
+        <li><strong>Asynchronous orchestration</strong>Runs a multi-threaded architecture featuring independent loops for visual capture, idle detection, and autonomous initiative. Uses <code>threading.Event</code> to allow safe user-cancellation of in-flight API requests.</li>
+        <li><strong>Graceful degradation &amp; rate limiting</strong>All external LLM calls are routed through a retry decorator that handles 429/500/503 status codes with exponential backoff. If the API drops, the system catches the exception, preserves state, and fails safely without corrupting the local database.</li>
+        <li><strong>Local state persistence</strong>Maintains conversational continuity and relationship context using a local SQLite database. Handles concurrent reads/writes safely, and utilizes JSON flat-files for tracking rapid state changes (idle timers, window transitions).</li>
+        <li><strong>Persistent TTS subprocess</strong>Spawns and manages a long-running PowerShell subprocess to handle text-to-speech generation, piping Base64-encoded strings to the worker to avoid the overhead of spinning up a new process for every generated response.</li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="s-label"><span>the problem</span><span class="rule"></span></div>
+      <p>Most chat sessions start with the latest message. StellaBot can also retrieve selected memories and preferences, along with desktop and visual context, before sending a request to the model. The application stores that context locally in SQLite and JSON.</p>
+      <p>The design separates fast local context collection from slower model requests. That helps keep desktop observation and state updates distinct from conversation generation, while the initiative logic is intended to avoid repeated unanswered interruptions.</p>
+    </section>
+
+    <section>
+      <div class="s-label"><span>engineering detail</span><span class="rule"></span></div>
+      <h2>Initiative &amp; backoff</h2>
+      <p>Proactive interaction is governed by idle-time and activity-state logic, including a cap on unanswered autonomous messages. These mechanisms are intended to let the companion back off when the user does not engage. Their presence in source code does not establish that every timing or interruption edge case has been validated.</p>
+      <p>To prevent the agent from talking to itself endlessly, it implements a hard cap on unanswered autonomous messages. If the user doesn't reply, the agent backs off and returns to silent observation.</p>
+
+      <div class="code-label">conceptual logic for autonomous backoff</div>
+      <div class="code"><span class="c1"># Agent already tried to speak; user is busy. Go quiet.</span>
+<span class="c2">if</span> initiative_unanswered &gt;= INITIATIVE_MAX_UNANSWERED:
+    <span class="c2">continue</span>
+
+<span class="c1"># Visual state hasn't changed. No new reason to speak.</span>
+<span class="c2">if</span> screen_hash == last_spoken_hash:
+    <span class="c2">continue</span>
+
+<span class="c1"># State is new and settled; ask the model if it wants to speak.</span>
+reply = ask_agent(..., initiative=<span class="c3">True</span>)
+<span class="c2">if</span> <span class="c3">"[QUIET]"</span> <span class="c2">in</span> reply:
+    <span class="c2">continue</span></div>
+
+      <p>Without a backoff limit, an always-on companion can keep interrupting after the user has stopped responding. StellaBot tracks unanswered initiatives and returns to quiet observation after the configured limit.</p>
+    </section>
+
+    <section style="border-bottom:none;">
+      <div class="s-label"><span>status</span><span class="rule"></span></div>
+      <div class="result">
+        <p><strong>Active development.</strong> The inspected code includes memory and personalization, Windows desktop awareness, visual-context handling, conversation orchestration, Kokoro speech synthesis, and proactive initiative routines. Sustained operation and comprehensive end-to-end testing are constrained by model-inference costs and available local hardware. This review does not establish a continuously running production deployment.</p>
+      </div>
+
+      <div class="crossref">
+        <div class="cr-label">same discipline, different domain</div>
+        <p>The project is measured at 4,348 source lines across its project directory, excluding historical backups, environment directories, runtime state, logs, and model weights. This page describes inspected components and their static call relationships, not a guarantee that every behavior has been verified end to end.</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <a href="StellaOpsec.html">← StellaOpsec.toolkit</a>
+    <a href="mailto:codedbystella@gmail.com">codedbystella@gmail.com</a>
+    <a href="StellaAudits.html">StellaAudits.engine →</a>
+  </footer>
+
+<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION DETAILS?</span><a href="StellaBot-Technical.html">Read the technical review ↗</a></div>
+</body>
+</html>
