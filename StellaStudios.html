@@ -113,6 +113,12 @@ body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;b
       </div>
     </div>
 
+    <section id="origin">
+      <div class="s-label"><span>why I rebuilt it</span><span class="rule"></span></div>
+      <p>When Sora released, I was approached to build an automated audiovisual production pipeline, and I accepted the premise. I first experimented with Make and n8n, but found the tooling inefficient for the workflow I needed. The available models and integrations were too constrained, many nodes were simply broken, and required capabilities such as subtitle generation were not practical to implement within those tools.</p>
+      <p>Rather than keep fighting the limitations, I rebuilt the pipeline from scratch on Amazon Lightsail, implementing it node by node. I replaced the visual automation dependencies with my own orchestration and processing steps until the system no longer depended on Make and could support the features the project required.</p>
+    </section>
+
     <section>
       <div class="s-label"><span>shipped output</span><span class="rule"></span></div>
       <p>A finished piece straight out of the pipeline  -  generation, voice, subtitle sync, mastering, and watermark, no manual edit:</p>
