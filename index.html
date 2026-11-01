@@ -514,7 +514,7 @@
     <div class="hero-meta">
       <div><strong>7</strong>systems &amp; prototypes</div>
       <div><strong>3</strong>domains, data, media, security</div>
-      <div><strong>7</strong>project-specific status pages</div>
+      <div><strong>3</strong>domains represented</div>
     </div>
   </section>
 
@@ -523,7 +523,7 @@
     <p style="max-width:680px; margin-top:16px;">Across these projects, the tech stacks vary: Python, Node, PowerShell, FFmpeg, Discord's API, Socrata's API, and Google's PageSpeed API. The recurring theme is designing around real constraints: external services fail, inputs vary, and uncertain results need to be handled deliberately.</p>
     <ul class="pattern-list">
       <li><strong>Verify, don't assume.</strong> The OSRS daemon won't trust a price without checking it against recent history first. StellaSnipes won't call a domain "clean" without an evidence trail behind that verdict. StellaOpsec keeps selected configuration observations separate from conclusions, rather than treating inventory as proof of security.</li>
-      <li><strong>Degrade gracefully, don't crash.</strong> Every external dependency across these projects, a price API, a domain-health service, a generative model, gets a timeout and a fallback path, so one flaky upstream service never takes the whole system down with it.</li>
+      <li><strong>Design for failure.</strong> Several projects use timeout, retry, or fallback handling around external services. The exact safeguards vary by integration; they reduce specific failure risks rather than guaranteeing uninterrupted operation.</li>
       <li><strong>Keep a human in the loop where it actually matters.</strong> StellaStudios holds finished output for review before publishing. StellaSnipes routes unverifiable domains to a review queue instead of guessing. Automation that removes judgment entirely isn't more valuable, it's just wrong faster.</li>
     </ul>
     <p style="max-width:680px;">The common thread is practical engineering judgment: choosing what to automate, where to preserve human review, and how to make uncertainty visible rather than hiding it.</p>
@@ -607,7 +607,7 @@
         <div class="proc-name">StellaBot<span class="ext">.service</span></div>
         <div class="proc-desc">Windows-focused Python desktop-companion prototype exploring persistent conversational context, local memory, desktop activity awareness, voice components, and proactive initiative.</div>
         <div class="proc-stat"><span>Python</span> · SQLite / JSON persistence · Tkinter · Windows integration</div>
-        <div class="proc-usecase">same shape as: local co-pilots, context-aware assistants, always-on agents</div>
+        <div class="proc-usecase">same shape as: desktop companions, context-aware assistants, local agents</div>
       </div>
       <div class="proc-arrow">inspect →</div>
     </a>
