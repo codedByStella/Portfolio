@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StellaSnipes Technical Review | codedByStella</title>
-<meta name="description" content="Technical review of StellaSnipes, a domain-data acquisition and processing MVP using CZDS, JavaScript orchestration, Python utilities, snapshot comparison, and local caching.">
+<meta name="description" content="Technical review of StellaSnipes: CZDS acquisition, large-file processing, snapshot comparison, multi-source aggregation, and local caching.">
 <meta property="og:title" content="StellaSnipes Technical Review | codedByStella">
-<meta property="og:description" content="Architecture, large-file processing, snapshot comparison, aggregation, caching, and implementation limits.">
+<meta property="og:description" content="Architecture and implementation notes for domain-data acquisition, processing, comparison, and monitoring.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,8 +20,8 @@
 <main class="wrap">
 <header class="head">
 <div class="status-tag">TECHNICAL REVIEW / MVP UNDER ACTIVE DEVELOPMENT</div>
-<h1>StellaSnipes: Domain Data Acquisition and Change Detection</h1>
-<p class="lede">A multi-stage pipeline for acquiring domain-zone data, processing large files, comparing sorted snapshots, consolidating multiple inputs, and checking watched domains against local data. This review describes the implementation and its limits without assuming production deployment or measured performance.</p>
+<h1>StellaSnipes: Domain Data Acquisition and Processing</h1>
+<p class="lede">A multi-stage application for acquiring domain-zone data, processing large files, comparing sorted snapshots, consolidating multiple inputs, and checking watched domains against local data. This review describes the engineering implementation and its limits without assuming production deployment or measured performance.</p>
 <div class="tags"><span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">CZDS</span><span class="tag">Chunk processing</span><span class="tag">Snapshot diffing</span><span class="tag">Local cache</span></div>
 <div class="meta-grid">
 <div><div class="k">Status</div><div class="v">MVP / active development</div></div>
@@ -56,7 +56,7 @@
 </section>
 <section id="aggregation"><div class="s-label"><span>06 / multi-source aggregation</span><span class="rule"></span></div>
 <p>The orchestration layer combines CZDS-derived results with additional domain inputs, deduplicates the consolidated collection, and retains source-related information used by later processing logic.</p>
-<p>This component reconciles independent input paths into a common result. Source tracking helps preserve distinctions between records produced by different stages; internal representations and detailed selection criteria are not published.</p>
+<p>This component reconciles independent input paths into a common result. Source tracking helps preserve distinctions between records produced by different stages; internal representations and proprietary implementation details are not published.</p>
 </section>
 <section id="watch"><div class="s-label"><span>07 / watched-domain reconciliation</span><span class="rule"></span></div>
 <p>The watched-domain workflow groups tracked domains by top-level domain and checks membership against locally cached zone snapshots. It reads zone data incrementally rather than requiring a full zone dataset to be represented as one in-memory collection.</p>
@@ -76,32 +76,28 @@
   ├─ additional domain-feed ingestion
   ├─ aggregation and deduplication
   └─ watched-domain reconciliation against cached data</div>
-<p>This is an architectural summary, not a copy of the private implementation. Source code, private configuration, raw domain records, and detailed selection criteria are not published.</p>
+<p>This is an architectural summary, not a copy of the private implementation. Source code, private configuration, raw domain records, and proprietary implementation details are not published.</p>
 </section>
-<section id="economics"><div class="s-label"><span>10 / economic design</span><span class="rule"></span></div>
-<p>The project establishes an in-house processing foundation before committing to a complete commercial data solution. Local reuse and incremental comparison offer ways to reduce repeated acquisition and processing when existing data remains suitable.</p>
-<ul><li>Reuse previously acquired snapshots where appropriate.</li><li>Compare stored datasets without downloading every record again for each comparison.</li><li>Integrate multiple input feeds in one processing workflow.</li><li>Evaluate the MVP before increasing recurring data-service expenditure.</li></ul>
-<p>These are design goals, not measured business outcomes. No specific cost savings, return on investment, throughput, or performance advantage is claimed without evidence.</p>
-</section>
-<section id="limits"><div class="s-label"><span>11 / status and limitations</span><span class="rule"></span></div>
+<section id="limits"><div class="s-label"><span>10 / status and limitations</span><span class="rule"></span></div>
 <table><thead><tr><th>Area</th><th>Scope and boundary</th></tr></thead><tbody>
 <tr><td>Project status</td><td>MVP under active development; this review does not establish a currently running scheduled production service.</td></tr>
 <tr><td>Acquisition</td><td>Depends on authenticated CZDS access and upstream resource availability.</td></tr>
-<tr><td>Data freshness</td><td>Local snapshots can lag behind newer data available from upstream or premium services.</td></tr>
+<tr><td>Data freshness</td><td>Local snapshots reflect the source data available when they were acquired and can become outdated.</td></tr>
 <tr><td>Processing scale</td><td>Chunking and incremental comparison address large-file handling, but no maximum scale or throughput is claimed.</td></tr>
 <tr><td>Reliability</td><td>The reviewed implementation supports the described processing paths; comprehensive end-to-end reliability has not been established here.</td></tr>
-<tr><td>Private details</td><td>Credentials, configuration, raw domain records, and detailed selection criteria are not published.</td></tr>
+<tr><td>Private details</td><td>Credentials, configuration, raw domain records, and proprietary implementation details are not published.</td></tr>
 </tbody></table>
 </section>
-<section id="verification"><div class="s-label"><span>12 / verification and scope</span><span class="rule"></span></div>
+<section id="verification"><div class="s-label"><span>11 / verification and scope</span><span class="rule"></span></div>
 <p>This review is based on the inspected CZDS acquisition, file-processing, comparison, caching, aggregation, and orchestration implementation. It describes code paths and their relationships rather than asserting that every path was freshly executed.</p>
 <p>The review does not establish comprehensive end-to-end test coverage, guaranteed completeness of every generated dataset, production-grade fault tolerance, or measured performance at a particular scale. These claims would require repeatable test results and operational measurements.</p>
 </section>
-<section id="summary" style="border-bottom:none"><div class="s-label"><span>13 / summary</span><span class="rule"></span></div>
+<section id="summary" style="border-bottom:none"><div class="s-label"><span>12 / summary</span><span class="rule"></span></div>
 <p>StellaSnipes combines authenticated domain-zone acquisition, chunk-based normalization, sorted-data merging, snapshot comparison, multi-source aggregation, local caching, and watched-domain reconciliation in a JavaScript-coordinated workflow with Python processing utilities.</p>
-<p>Its engineering focus is the reuse and comparison of large external datasets while keeping the economic tradeoff between local processing and commercial data services explicit. It remains an MVP under active development, with production reliability and quantified operating benefits still to be demonstrated.</p>
+<p>Its engineering focus is coordinating external data acquisition with incremental local processing, reusable snapshots, and reconciliation across multiple inputs. It remains an MVP under active development, with production reliability and quantified performance still to be demonstrated.</p>
 </section>
 <footer class="page-footer"><a href="StellaSnipes.html">← Back to StellaSnipes</a><a href="index.html">Portfolio index →</a></footer>
 </main>
+<div class="tech-sticky"><span class="hint">PROJECT LINKS</span><a href="StellaSnipes.html">Project overview ↗</a><a href="https://github.com/codedByStella/StellaSnipes" target="_blank" rel="noopener noreferrer">Inspect public source on GitHub ↗</a></div>
 </body>
 </html>
