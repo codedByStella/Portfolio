@@ -10,4 +10,4 @@ The portfolio distinguishes between working applications, prototypes, and retire
 
 **[View the live portfolio](https://codedbystella.github.io/Portfolio/)**
 
-Public source repositories are linked from their respective project pages. Source availability and publication scope vary by project. Each project page identifies its corresponding repository and explains any publication boundaries. StellaAudits is available as a public, intentionally non-runnable inspection repository: https://github.com/codedByStella/StellaAudits. Email codedbystella@gmail.com if you want to discuss a project or walk through additional implementation details.
+Public source repositories are linked from their respective project pages. Source availability and publication scope vary by project. Where source is published, the project page links to its repository and explains relevant publication boundaries. StellaAudits is available as a public, intentionally non-runnable inspection repository: https://github.com/codedByStella/StellaAudits. Email codedbystella@gmail.com if you want to discuss a project or walk through additional implementation details.
