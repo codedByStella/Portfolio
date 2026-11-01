@@ -71,6 +71,9 @@
   body{padding-bottom:78px;}
   .tech-sticky{position:fixed; z-index:20; left:0; right:0; bottom:0; display:flex; justify-content:center; align-items:center; gap:12px; padding:13px 20px; background:rgba(18,21,27,0.96); border-top:1px solid var(--border); backdrop-filter:blur(12px); font-family:var(--mono); font-size:12px;}
   .tech-sticky a{color:var(--teal); text-decoration:none; border-bottom:1px solid rgba(95,212,196,0.35); padding-bottom:2px;}
+  .tech-sticky .source-unavailable{color:var(--amber);}
+  .tech-sticky a.source-link{color:var(--amber);border-bottom-color:rgba(224,164,88,.4);}
+  .tech-sticky a.source-link:hover{border-bottom-color:var(--amber);}
   .tech-sticky a:hover{border-bottom-color:var(--teal);}
   .tech-sticky .hint{color:var(--text-faint);}
   @media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center;}}
@@ -101,6 +104,6 @@
 <div class="crossref"><div class="cr-label">related project</div><p>See also <a href="StellaAudits.html">StellaAudits</a> and <a href="StellaOpsec.html">StellaOpsec</a> for other examples of automation and systems engineering.</p></div></section>
 </div>
 <footer><a href="StellaSnipes.html">← StellaSnipes.pipeline</a><a href="mailto:codedbystella@gmail.com">codedbystella@gmail.com</a><a href="StellaStudios.html">StellaStudios.pipeline →</a></footer>
-<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION OVERVIEW?</span><a href="StellaScrapes-Technical.html">Read the technical review ↗</a></div>
+<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION OVERVIEW?</span><a href="StellaScrapes-Technical.html">Read the technical review ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaScrapes" target="_blank" rel="noopener noreferrer">Inspect source on GitHub ↗</a><a href="StellaOpsec.html">See the next project →</a></div>
 </body>
 </html>
