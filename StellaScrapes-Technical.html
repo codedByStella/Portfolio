@@ -18,109 +18,29 @@
 <body>
 <div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border);margin:0 6px">/</span><span class="path">StellaScrapes / technical-review</span></div><div>IMPLEMENTATION NOTES</div></div>
 <main class="wrap">
-<header class="head">
-<div class="status-tag">TECHNICAL REVIEW / FUNCTIONAL MVP</div>
-<h1>StellaScrapes: Public Data Search and Lead Preparation</h1>
-<p class="lede">A local application that routes plain-English queries to configured public datasets, normalizes supported records, and exports results for further analysis. This review describes the implementation, the data paths, and the difference between working components and planned coverage.</p>
-<div class="tags"><span class="tag">Python</span><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">Socrata API</span><span class="tag">JSON registry</span><span class="tag">CSV / XLSX</span></div>
-<div class="meta-grid">
-<div><div class="k">Status</div><div class="v">Functional MVP / commercialization on hold</div></div>
-<div><div class="k">Interfaces</div><div class="v">Local browser app and Python CLI</div></div>
-<div><div class="k">Operational retrieval</div><div class="v">Socrata datasets</div></div>
-<div><div class="k">Configuration</div><div class="v">Central JSON registry</div></div>
-<div><div class="k">Data processing</div><div class="v">Normalization, deduplication, prioritization</div></div>
-<div><div class="k">Output</div><div class="v">CSV and formatted Excel workbooks</div></div>
-</div>
-</header>
-
-<section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
-<p>StellaScrapes is a local public-records search and processing application. It accepts natural-language queries, resolves them against configured locations and dataset categories, retrieves records from supported Socrata sources, and prepares results for inspection or export.</p>
-<p>The project includes a second workflow for discovering Socrata publishing domains and cataloging their datasets. That workflow helps identify candidate sources for future integration, but discovery alone does not establish that a dataset can be queried reliably by the main application.</p>
-<p>The application is an MVP. It is not a hosted multi-user service, and the configured coverage should not be read as proof that every location and category is operational.</p>
-</section>
-
-<section id="dataflow"><div class="s-label"><span>02 / primary search path</span><span class="rule"></span></div>
-<div class="flow"><div class="flow-step"><strong>1. Query interpretation</strong><span>Parse location, record type, trade terms, and date filters from a plain-English query.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>2. Registry resolution</strong><span>Match recognized terms and aliases to configured locations and dataset definitions, with fuzzy matching when needed.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>3. Supported retrieval</strong><span>Build a request for the configured Socrata dataset and apply available query filters and retrieval limits.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>4. Normalize and filter</strong><span>Convert returned fields into a common result structure and apply supported date or status filters.</span></div><div class="flow-arrow">↓</div><div class="flow-step"><strong>5. Clean and export</strong><span>Optionally normalize permit fields, deduplicate, prioritize records, and write CSV or Excel output.</span></div></div>
-<p>The browser and Python entry points expose overlapping functionality, but they are not interchangeable. The CLI also exposes discovery and catalog maintenance operations that are not fully represented in the browser interface.</p>
-</section>
-
-<section id="query"><div class="s-label"><span>03 / query interpretation</span><span class="rule"></span></div>
-<p>The search layer converts user-facing terms into structured parameters rather than requiring users to know each dataset's API fields. Representative query forms include:</p>
-<div class="code">hvac permits in seattle
-roofing chicago last 30 days
-austin foreclosures</div>
-<p>The parser attempts to identify location, record category, trade or keyword filters, and date ranges. Recognized terms are resolved against the registry; fuzzy matching provides a fallback when a query does not exactly match a known term.</p>
-<p>Parsing and fuzzy matching are convenience features, not guarantees of correct intent. Ambiguous terms or incomplete registry mappings can produce incorrect or empty results, so users should review the selected source and returned records.</p>
-</section>
-
-<section id="registry"><div class="s-label"><span>04 / registry-driven configuration</span><span class="rule"></span></div>
-<p>A centralized JSON registry associates geographic entries and record categories with source domains, dataset identifiers, candidate field mappings, update metadata, and optional filters.</p>
-<p>Both search paths use registry-driven configuration to avoid writing a separate search implementation for each dataset. This reduces duplication, but adding a registry entry is not enough by itself: field mappings, query behavior, and the returned records still need validation.</p>
-<div class="callout"><strong>Key distinction</strong><p>Configuration describes a candidate integration. Operational support requires a working retrieval path and verified mapping for the source in question.</p></div>
-</section>
-
-<section id="discovery"><div class="s-label"><span>05 / discovery and cataloging</span><span class="rule"></span></div>
-<p>The Python discovery tools query the Socrata catalog, paginate through results, retrieve dataset metadata, and write catalog output for later review. Metadata includes names, descriptions, columns, update dates, and source links where available.</p>
-<ul><li>Discover domains publishing Socrata-hosted open data.</li><li>Catalog all discovered domains or a selected domain.</li><li>Classify candidate datasets using heuristics.</li><li>Infer possible fields for dates, addresses, descriptions, record types, contractors, and names.</li><li>Checkpoint catalog output and track failed domains.</li><li>Prepare selected datasets for import into the central registry.</li></ul>
-<p>A catalog-import utility maps selected domains to city or county entries and can merge missing dataset categories into the registry. Classification and field inference are heuristic, so the resulting configuration needs review before dependable retrieval.</p>
-</section>
-
-<section id="cleaning"><div class="s-label"><span>06 / permit cleaning and prioritization</span><span class="rule"></span></div>
-<p>The permit-cleaning path prepares raw results for consistent review and downstream analysis. Depending on available source fields and configured rules, it can:</p>
-<ul><li>Reject records that fail basic address-quality requirements.</li><li>Exclude selected cancellation, demolition, and other unwanted categories.</li><li>Normalize addresses and supported date formats.</li><li>Format available telephone numbers and monetary values.</li><li>Deduplicate records using a configured identification key.</li><li>Map source columns into a standardized permit-oriented schema.</li><li>Assign a heuristic priority score and export the results to CSV or Excel.</li></ul>
-<p>The score uses selected characteristics such as estimated project value, work-description terms, and contractor availability. It is a rules-based review aid, not a validated estimate of purchase intent, conversion likelihood, or revenue. A generic cleaning path handles non-permit records with basic normalization, filtering, deduplication, and export.</p>
-</section>
-
-<section id="interfaces"><div class="s-label"><span>07 / application interfaces</span><span class="rule"></span></div>
-<h3>Node.js browser application</h3>
-<p>The local web application uses Express to expose search, CSV and Excel export, and browser metadata endpoints. Its front end uses standard HTML, CSS, and JavaScript. The interface provides a query input, example searches, a results table, search metadata, fuzzy-match feedback, and export controls. The number of displayed rows is capped separately from the underlying retrieval limit.</p>
-<h3>Python command-line interface</h3>
-<p>The interactive CLI provides search, configured-location inspection, domain discovery, cataloging, tests, and access to the preliminary prospecting workflow. It also supports direct search commands and standalone discovery and catalog operations.</p>
-<p>Both interfaces are intended for local use. The project does not demonstrate a hosted service, multi-user access controls, or production-scale operations.</p>
-</section>
-
-<section id="prospecting"><div class="s-label"><span>08 / buyer-prospecting module</span><span class="rule"></span></div>
-<p>A separate module was designed to create business contact lists for potential buyers of public-records-derived lead lists. Its workflow supports configurable city and state inputs, twelve predefined business categories, optional category and page limits, HTML parsing for business names, phone numbers and addresses, and CSV or formatted Excel exports. It can also save raw HTML responses for troubleshooting.</p>
-<div class="callout warning"><strong>Parked, not operational</strong><p>Project documentation records that the target business directory blocked requests during checks in July 2026. The module cannot currently be relied upon to produce usable prospect lists. Replacing the source and validating an appropriate collection method are separate work items, not completed features.</p></div>
-</section>
-
-<section id="coverage"><div class="s-label"><span>09 / coverage and limits</span><span class="rule"></span></div>
-<table><thead><tr><th>Area</th><th>Current boundary</th></tr></thead><tbody>
-<tr><td>Retrieval</td><td>Socrata is the operationally implemented platform in the inspected Python and Node.js search paths.</td></tr>
-<tr><td>Other platforms</td><td>Four additional platform types appear in configuration but do not have implemented retrieval adapters.</td></tr>
-<tr><td>Advertised coverage</td><td>Documentation lists 66 cities and 15 data types. These figures describe intended or configured coverage, not guaranteed working combinations.</td></tr>
-<tr><td>Request limits</td><td>The Node.js Socrata path has a configured maximum of 5,000 records per request and a 30-second timeout.</td></tr>
-<tr><td>Metadata</td><td>Dataset classification and field mapping use heuristics and require verification.</td></tr>
-<tr><td>Buyer prospecting</td><td>The directory-based workflow is parked due to source blocking.</td></tr>
-<tr><td>Deployment</td><td>Local MVP. Hosted multi-user operation and production-scale reliability have not been demonstrated.</td></tr>
-</tbody></table>
-<p>These limits describe the inspected implementation and project documentation. They should be revisited if retrieval adapters, source mappings, or operating conditions change.</p>
-</section>
-
-<section id="testing"><div class="s-label"><span>10 / verification and testing</span><span class="rule"></span></div>
-<p>The repository includes separate JavaScript and Python test scripts. Previously recorded JavaScript results reported 37 passing checks covering areas such as parsing, registry behavior, error handling, and live API paths. The Python script previously reported 43 passes and three warnings; it is a standalone script rather than a conventional test module discovered by the standard unittest runner.</p>
-<p>These are historical results, not a fresh test execution for this review. They provide evidence that selected components and paths were checked, but they do not establish exhaustive test coverage, continuous upstream API availability, or end-to-end reliability for every registered location and category.</p>
-</section>
-
-<section id="stack"><div class="s-label"><span>11 / technology stack</span><span class="rule"></span></div>
-<table><thead><tr><th>Technology</th><th>Purpose</th></tr></thead><tbody>
-<tr><td>Python</td><td>Search workflows, cataloging, cleaning, prospecting, and supporting utilities.</td></tr>
-<tr><td>JavaScript / Node.js</td><td>Local application server and browser-side behavior.</td></tr>
-<tr><td>Express</td><td>HTTP routing and API endpoints.</td></tr>
-<tr><td>JSON</td><td>Dataset registry, catalog output, and discovery metadata.</td></tr>
-<tr><td>Socrata Open Data API</td><td>Implemented public-record retrieval and catalog integration.</td></tr>
-<tr><td>HTML / CSS</td><td>Browser interface and presentation.</td></tr>
-<tr><td>CSV / XLSX</td><td>Portable raw and processed data exports.</td></tr>
-<tr><td>Test scripts</td><td>Search routing and selected application-behavior checks.</td></tr>
-</tbody></table>
-</section>
-
-<section id="commercial"><div class="s-label"><span>12 / development and commercialization</span><span class="rule"></span></div>
-<p>The implemented foundation combines registry-driven public-records search, dataset discovery, permit normalization, heuristic prioritization, and export workflows. The next major milestone is commercial validation, not a claim that a complete commercial platform already exists.</p>
-<p>Further work on coverage, source reliability, and buyer acquisition should be weighed against demonstrated demand. The prospecting module remains parked, and the current application should be described as a functional, extensible MVP rather than an automated lead-generation business.</p>
-</section>
-
-<footer class="page-footer"><a href="StellaScrapes.html">← Back to StellaScrapes</a><a href="index.html">Portfolio index →</a></footer>
+<header class="head"><div class="status-tag">TECHNICAL REVIEW / MVP ACHIEVED</div><h1>StellaScrapes: Public Data Discovery and Processing</h1>
+<p class="lede">An engineering overview of a Python and Node.js application built around public-data discovery, registry-based source configuration, record processing, and structured exports. This page distinguishes the original working application from the deliberately incomplete public portfolio repository.</p>
+<div class="tags"><span class="tag">Python</span><span class="tag">Node.js / Express</span><span class="tag">Socrata API</span><span class="tag">JSON</span><span class="tag">CSV / XLSX</span></div>
+<div class="meta-grid"><div><div class="k">Project status</div><div class="v">MVP achieved · active development</div></div><div><div class="k">Original application</div><div class="v">Local Python CLI and browser interface</div></div><div><div class="k">Primary data platform</div><div class="v">Socrata public-data sources</div></div><div><div class="k">Portfolio release</div><div class="v">Selective redaction · non-runnable</div></div></div></header>
+<section><div class="s-label"><span>01 / system overview</span><span class="rule"></span></div><p>StellaScrapes was developed to reduce the repeated work involved in finding public datasets, connecting source-specific structures to a common workflow, preparing records, and exporting results. The original application reached a functional MVP using Socrata as its implemented public-data retrieval platform.</p><p>The project has two related concerns: discovering and cataloging potential data sources, and processing records from sources that have been integrated into the application. These are distinct stages. A dataset appearing in discovery or configuration does not by itself establish that the search application can retrieve and process it correctly.</p><div class="callout"><p><strong>Important publication boundary.</strong> The public GitHub repository is a portfolio snapshot, not the complete application. Production retrieval, query-routing, dataset-selection, and processing implementations have been withheld or replaced with non-operational placeholders. The public code is intentionally non-runnable.</p></div></section>
+<section><div class="s-label"><span>02 / architecture</span><span class="rule"></span></div><div class="table-wrap"><table><thead><tr><th>Component</th><th>Responsibility in the project</th><th>Public release</th></tr></thead><tbody>
+<tr><td>Python CLI</td><td>Entry point for search-related workflows, source discovery, catalog operations, and supporting utilities.</td><td>Structure and selected utilities retained; production paths withheld.</td></tr>
+<tr><td>Domain discovery</td><td>Inspects Socrata catalog endpoints and identifies domains publishing public datasets.</td><td>Selected discovery code and documentation retained.</td></tr>
+<tr><td>Dataset cataloging</td><td>Collects dataset metadata such as names, descriptions, columns, update information, and source links where available.</td><td>Selected catalog functionality retained; proprietary classification and selection logic withheld.</td></tr>
+<tr><td>Source registry</td><td>Stores structured source and dataset configuration used by the original application.</td><td>Sanitized placeholder/configuration examples only.</td></tr>
+<tr><td>Query and retrieval layer</td><td>Connects user search intent to configured sources and retrieves matching records.</td><td>Production implementation removed or replaced.</td></tr>
+<tr><td>Processing utilities</td><td>Prepare selected records for review and export, including permit-oriented cleaning workflows.</td><td>Only selected supporting utilities are present; core processing logic is withheld.</td></tr>
+<tr><td>Node.js / Express interface</td><td>Provides the original local browser application and its HTTP endpoints.</td><td>Scaffolding and selected interface components remain; the public router is non-operational.</td></tr>
+<tr><td>Export layer</td><td>Writes structured CSV and Excel outputs for downstream use.</td><td>Selected export implementation retained.</td></tr>
+</tbody></table></div></section>
+<section><div class="s-label"><span>03 / discovery and cataloging</span><span class="rule"></span></div><p>The discovery workflow queries Socrata's public catalog and examines publishing domains and dataset metadata. Catalog information can include dataset names, descriptions, column information, update dates, and source links where those fields are exposed.</p><p>This stage is intended to surface candidate sources for engineering review. Metadata and heuristic classification can suggest that a dataset may be relevant, but they do not prove that its schema, update behavior, or query semantics are suitable for the main application. Each integration requires source-specific validation.</p></section>
+<section><div class="s-label"><span>04 / registry and retrieval design</span><span class="rule"></span></div><p>The original application uses structured registry data to keep source-specific configuration separate from shared workflow logic. The registry concept provides a place to associate geographic coverage and record categories with dataset identifiers and relevant source metadata.</p><p>In the working application, the search path interprets a user query, resolves it against configured sources, and requests records from supported Socrata datasets. The exact production routing, selection, request construction, and retrieval logic is not included in the public release, so this page describes the system boundary rather than publishing a reproducible implementation.</p><div class="callout"><p><strong>Configuration is not proof of support.</strong> A listed city, category, or dataset is only a candidate until the source mapping and retrieval behavior have been tested against the live dataset.</p></div></section>
+<section><div class="s-label"><span>05 / record processing and exports</span><span class="rule"></span></div><p>The original project includes record-preparation workflows, with permit-oriented utilities for cleaning and standardizing selected fields, handling duplicates, and organizing results for review. Some workflows can apply rules-based prioritization to help users sort records.</p><p>These scores are organizational heuristics, not validated measures of purchase intent, conversion probability, or expected revenue. Source data varies, and missing or inconsistent fields can affect the quality of any normalized output.</p><p>CSV and Excel exports provide portable outputs for subsequent analysis. Spreadsheet-safe escaping is used in selected export paths to reduce formula-injection risk from untrusted cell values; it is not a substitute for reviewing data before opening or sharing it.</p></section>
+<section><div class="s-label"><span>06 / application interfaces</span><span class="rule"></span></div><h3>Python command-line workflow</h3><p>The original application includes a Python CLI for search-related operations and supporting discovery and catalog tasks. The public repository retains selected command and utility structure, but the production search implementation is not present.</p><h3>Local browser application</h3><p>The original browser interface is built around Node.js, Express, and standard HTML, CSS, and JavaScript. It was designed for local use rather than hosted multi-user deployment. The public repository contains selected server and interface scaffolding, but its public routing path intentionally does not perform the original live search.</p></section>
+<section><div class="s-label"><span>07 / scope and limitations</span><span class="rule"></span></div><ul><li><strong>Implemented platform:</strong> Socrata is the public-data retrieval platform used by the original working search paths.</li><li><strong>Variable source support:</strong> Dataset discovery and registry entries do not guarantee operational integration; mappings and retrieval behavior require validation.</li><li><strong>Heuristic processing:</strong> Classification, field inference, normalization, and prioritization can require source-specific review.</li><li><strong>Local application:</strong> The original MVP is a local tool. Hosted multi-user operation and production-scale service guarantees are not claimed.</li><li><strong>Public code:</strong> The published repository intentionally omits proprietary application logic and is not a runnable release.</li></ul><p>The project remains in active development. This review avoids publishing source-specific coverage counts, historical test totals, request limits, or implementation details that are not necessary to explain the architecture and are not independently established by the public release.</p></section>
+<section><div class="s-label"><span>08 / technology</span><span class="rule"></span></div><div class="table-wrap"><table><thead><tr><th>Technology</th><th>Role</th></tr></thead><tbody><tr><td>Python</td><td>CLI workflows, discovery, cataloging, and supporting data utilities.</td></tr><tr><td>JavaScript / Node.js</td><td>Local application server and browser-side behavior.</td></tr><tr><td>Express</td><td>HTTP server and application endpoints.</td></tr><tr><td>Socrata Open Data API</td><td>Public dataset discovery and the original application's implemented retrieval source.</td></tr><tr><td>JSON</td><td>Registry, catalog, and structured configuration data.</td></tr><tr><td>CSV / XLSX</td><td>Portable data exports.</td></tr><tr><td>HTML / CSS</td><td>Browser interface.</td></tr></tbody></table></div></section>
+<section><div class="s-label"><span>09 / public source and project status</span><span class="rule"></span></div><p>The portfolio repository preserves a selected view of the project: its structure, selected supporting utilities, sanitized sample outputs, and documentation of the engineering approach. Proprietary retrieval, query interpretation, source selection, and processing logic are not published.</p><p><strong>MVP achieved; active development continues.</strong> The original application reached a functional MVP. The public repository is deliberately non-runnable and should be evaluated as a portfolio artifact, not as an installable package or a complete source release.</p><div class="callout"><p><strong>View the public repository:</strong> <a href="https://github.com/codedByStella/StellaScrapes" target="_blank" rel="noopener noreferrer">https://github.com/codedByStella/StellaScrapes</a></p></div></section>
 </main>
+<div class="footer"><a href="StellaScrapes.html">← Back to StellaScrapes</a><span class="muted">codedByStella / technical review</span><a href="index.html">Portfolio index →</a></div>
 </body>
 </html>
