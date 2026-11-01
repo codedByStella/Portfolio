@@ -502,31 +502,31 @@
   <div class="statusbar">
     <div><span class="path">codedbystella@portfolio</span><span class="sep">:</span><span>~$</span> systemctl status --all</div>
     <div class="statusbar-right">
-      <span><span class="dot"></span>7 services tracked</span>
-      <span>uptime: contract-ready</span>
+      <span><span class="dot"></span>7 projects tracked</span>
+      <span>status: mixed / project-specific</span>
     </div>
   </div>
 
   <section class="hero">
     <div class="eyebrow">codedByStella, freelance engineer in systems &amp; adversarial engineering</div>
     <h1>I build the pipelines, daemons, and simulated adversaries that other people's roadmaps depend on.<span class="cursor"></span></h1>
-    <p>Seven systems below, spanning three domains, but the same underlying skill runs through all of them: designing software that keeps working when it's alone. No one watching it in real time to catch problems, no guarantee the upstream API stays online, no guarantee the incoming data matches what the documentation promised. That's the actual job when you hire a systems engineer, and it's what every project on this page demonstrates.</p>
+    <p>Seven projects below, spanning data, media, and security. They range from working tools to prototypes, each documenting a different set of engineering decisions, implementation constraints, and lessons from building software.</p>
     <div class="hero-meta">
-      <div><strong>7</strong>systems shipped</div>
+      <div><strong>7</strong>systems &amp; prototypes</div>
       <div><strong>3</strong>domains, data, media, security</div>
-      <div><strong>24/7</strong>autonomous operation where applicable</div>
+      <div><strong>7</strong>project-specific status pages</div>
     </div>
   </section>
 
   <section class="hero" style="padding-top:0; padding-bottom:60px;">
     <div class="s-label-inline">the pattern underneath all seven</div>
-    <p style="max-width:680px; margin-top:16px;">Look across these seven projects and the tech stacks don't overlap much, Python, Node, PowerShell, ffmpeg, Discord's API, Socrata's API, Google's PageSpeed API. What <em>does</em> overlap is the design discipline: every one of them treats "the outside world will fail, lie, or go silent" as the default case, not the exception.</p>
+    <p style="max-width:680px; margin-top:16px;">Across these projects, the tech stacks vary: Python, Node, PowerShell, FFmpeg, Discord's API, Socrata's API, and Google's PageSpeed API. The recurring theme is designing around real constraints: external services fail, inputs vary, and uncertain results need to be handled deliberately.</p>
     <ul class="pattern-list">
       <li><strong>Verify, don't assume.</strong> The OSRS daemon won't trust a price without checking it against recent history first. StellaSnipes won't call a domain "clean" without an evidence trail behind that verdict. StellaOpsec keeps selected configuration observations separate from conclusions, rather than treating inventory as proof of security.</li>
       <li><strong>Degrade gracefully, don't crash.</strong> Every external dependency across these projects, a price API, a domain-health service, a generative model, gets a timeout and a fallback path, so one flaky upstream service never takes the whole system down with it.</li>
       <li><strong>Keep a human in the loop where it actually matters.</strong> StellaStudios holds finished output for review before publishing. StellaSnipes routes unverifiable domains to a review queue instead of guessing. Automation that removes judgment entirely isn't more valuable, it's just wrong faster.</li>
     </ul>
-    <p style="max-width:680px;">That's the actual pitch: not "I know Seven APIs," but "I build things that don't need me to babysit them, and when they can't be sure, they say so instead of guessing."</p>
+    <p style="max-width:680px;">The common thread is practical engineering judgment: choosing what to automate, where to preserve human review, and how to make uncertainty visible rather than hiding it.</p>
   </section>
 
   <section class="ai-approach">
@@ -597,7 +597,7 @@
   <div class="processes">
 
     <a class="proc" href="StellaBot.html">
-      <div class="proc-status online">● ONLINE</div>
+      <div class="proc-status dormant">● PROTOTYPE</div>
       <div class="proc-thumb proc-thumb-code">
         <div class="ptc-dim">idle 00:04:12 · screen settled</div>
         <div class="ptc-teal">→ evaluating initiative</div>
@@ -605,8 +605,8 @@
       </div>
       <div>
         <div class="proc-name">StellaBot<span class="ext">.service</span></div>
-        <div class="proc-desc">Autonomous desktop agent, Win32 window tracking, rolling visual context, and idle-triggered initiative with a hard backoff cap, running as an always-on gaming co-pilot.</div>
-        <div class="proc-stat"><span>multi-threaded</span> · local SQLite state · Win32 API (ctypes)</div>
+        <div class="proc-desc">Windows-focused Python desktop-companion prototype exploring persistent conversational context, local memory, desktop activity awareness, voice components, and proactive initiative.</div>
+        <div class="proc-stat"><span>Python</span> · SQLite / JSON persistence · Tkinter · Windows integration</div>
         <div class="proc-usecase">same shape as: local co-pilots, context-aware assistants, always-on agents</div>
       </div>
       <div class="proc-arrow">inspect →</div>
@@ -731,7 +731,7 @@
       backend systems · automation pipelines · adversarial simulation<br>
       get in touch → <a href="mailto:codedbystella@gmail.com">codedbystella@gmail.com</a>
     </div>
-    <div class="closing">Every system on this page shipped and ran. No mockups. If it's on this page, it's something I can build for you too, reach out and describe the problem.</div>
+    <div class="closing">The project pages distinguish working systems from prototypes and retired work. They show the implementation scope and evidence available for each project. Reach out to discuss a project or describe the problem you need solved.</div>
   </footer>
 
 </body>
