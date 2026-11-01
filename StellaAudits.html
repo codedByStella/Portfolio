@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StellaAudits, codedByStella</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMTIxNTFCIi8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyODJGMzkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjQiIHk9IjIzIiBmb250LWZhbWlseT0iJ0lCTSBQbGV4IE1vbm8nLCB1aS1tb25vc3BhY2UsIG1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9IjYwMCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzVGRDRDNCI+Jmd0O188L3RleHQ+Cjwvc3ZnPgo=">
-<meta name="description" content="Automated website compliance & risk audit pipeline, scans a site for ADA/accessibility, SEO, and security liability issues, scores it, and generates a client-ready PDF report. Built by codedByStella.">
+<meta name="description" content="A locally operated website-auditing MVP that checks common accessibility, SEO, local-search, and selected security indicators, then generates a PDF report. Built by codedByStella.">
 <meta property="og:title" content="StellaAudits, codedByStella">
-<meta property="og:description" content="A modular audit pipeline that scans a business's website across legal, visitor, and security risk, scores it transparently, and produces a client-ready PDF report plus a compliant outreach draft.">
+<meta property="og:description" content="A modular website-auditing MVP that organizes selected accessibility, SEO, local-search, and security indicators into a scored report and human-reviewed outreach draft.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -93,7 +93,7 @@
     <div class="head">
       <div class="status-tag">● ONLINE, Compliance &amp; Risk Automation</div>
       <h1>Turn website issues into a clear action plan</h1>
-      <p class="lede">StellaAudits checks a business website for common accessibility, search visibility, and basic security issues, then organizes the findings into a report a client can use. Each issue has a severity and an explanation, while repeat reviews make it easier to see what changed. The goal is a useful starting point for deciding what to fix first, not a substitute for expert testing.</p>
+      <p class="lede">StellaAudits checks a business website for selected accessibility, search-visibility, local-search, and basic security indicators, then organizes the findings into a report. Findings include severity and explanatory context, while repeat reviews help identify what changed between recorded runs. It is a preliminary review tool, not a substitute for expert testing or a determination of compliance or security.</p>
       <div class="tags">
         <span class="tag">Python</span>
         <span class="tag">BeautifulSoup</span>
@@ -108,38 +108,28 @@
       <p>A quick website review can miss accessibility, search, or configuration problems. StellaAudits collects its checks in one report, with the evidence and severity beside each finding so the owner or developer can decide what to investigate first.</p>
       <ul class="feature-list">
         <li><strong>One readable report</strong>Accessibility, SEO, local search, and selected security checks use a shared finding format, then feed a PDF report instead of leaving the owner to sort through separate warning lists.</li>
-        <li><strong>Graceful deeper detection</strong>An optional PageSpeed/Lighthouse pass cross-checks static findings against a real rendered page, color contrast, tap targets, Core Web Vitals. No API key configured? It degrades to a single informational note and the rest of the audit proceeds at full strength.</li>
-        <li><strong>JS-rendering awareness</strong>Detects when a page is likely a near-empty client-rendered shell and automatically downgrades the static structural findings that can't be trusted against it, instead of confidently reporting a false defect.</li>
-        <li><strong>Explainable scoring</strong>A flat, inspectable penalty model (High −15, Medium −7, Low −2) a business owner, or Stella, defending the number to a client, can see through end to end. Meta findings about the audit's own limitations never cost points.</li>
-        <li><strong>Lead tracking &amp; diffing</strong>Every run lands in a local SQLite log with its score, grade, and a findings snapshot, so a repeat scan can show exactly what got resolved, what's new, and what's still open since last time.</li>
-        <li><strong>Compliant outreach drafting</strong>Generates a CAN-SPAM-compliant draft pitch alongside the PDF, never auto-sent, always reviewed by a human first, and it refuses to quietly omit the required mailing address.</li>
+        <li><strong>Optional Lighthouse measurements</strong>When configured and available, the PageSpeed Insights integration adds Lighthouse performance and SEO category scores. The integration also requests accessibility data, but the current implementation does not convert individual Lighthouse accessibility audits into findings. If the request is unavailable, it adds an informational notice and the standard static checks continue.</li>
+        <li><strong>JS-rendering awareness</strong>Uses the amount of text in the initial HTML as a heuristic for possible client-side rendering. When the initial response contains little text, the audit adds an informational notice recommending browser review. It does not automatically downgrade or correct the other findings.</li>
+        <li><strong>Prioritization score</strong>Findings contribute to a bounded site-health score and letter grade. Notices about audit coverage are designed to be treated separately from site defects. The scoring implementation and proprietary deduction criteria are intentionally withheld from this public source, so the exact calculation is not independently inspectable here.</li>
+        <li><strong>Lead tracking &amp; comparisons</strong>Recorded runs are stored in a local SQLite database with score, grade, and finding snapshots. A later run can identify findings that disappeared, newly appeared, or persisted. A finding disappearing from a report does not prove the underlying issue was fixed.</li>
+        <li><strong>Outreach draft generation</strong>Generates a promotional outreach draft alongside the PDF. It is not sent automatically and is intended for human review. The draft includes sender and promotional-message details plus reply-based opt-out language; a missing mailing address triggers a warning and placeholder rather than a complete legal-compliance determination.</li>
       </ul>
     </section>
 
     <section>
       <div class="s-label"><span>how it works</span><span class="rule"></span></div>
       <p>Most automated site-audit tools fall into one of two traps: they guess with no admission of uncertainty, or they require a full headless-browser stack just to run once. Static HTML parsing is fast and honest about <em>what</em> it measured, but it can be flatly wrong against a JavaScript-rendered shell, reporting "no H1, no content" against a site that's actually fine once rendered is a false, credibility-damaging finding.</p>
-      <p>The scoring model separates site findings from notes about the audit itself. Static checks can run by default, while browser-based measurements add context when available. A limitation in the audit should not lower the client's score.</p>
+      <p>The intended scoring model distinguishes site findings from notices about the audit's own coverage. Static checks run against the initial HTML, while optional Lighthouse category scores can add limited browser-rendered context when available. The public source omits the proprietary scoring implementation, so its exact treatment of every finding cannot be verified from this publication.</p>
     </section>
 
     <section>
       <div class="s-label"><span>engineering detail</span><span class="rule"></span></div>
-      <h2>Scoring that separates caveats from defects</h2>
-      <p>An early real run against a JS-heavy site surfaced a concrete bug: the audit's own "site appears JavaScript-rendered" disclosure, a note about the tool's confidence, not a defect on the site, was eating 7 points from the score just for existing. The fix is a single flag on the shared <code>Finding</code> model.</p>
+      <h2>Scoring that distinguishes site findings from audit notices</h2>
+      <p>An early run against a JavaScript-heavy site exposed a scoring-design issue: a notice about the audit's own coverage is not itself a defect on the audited site. The shared <code>Finding</code> model includes an <code>is_meta</code> flag to distinguish such notices. The scoring implementation is intentionally redacted from this public repository, so the precise calculation cannot be inspected here.</p>
 
-      <div class="code-label">scoring.py, meta findings never cost points</div>
-      <div class="code"><span class="c2">def</span> compute_score(findings):
-    score = <span class="c3">100</span>
-    <span class="c2">for</span> f <span class="c2">in</span> findings:
-        <span class="c1"># is_meta findings are notices about the audit itself</span>
-        <span class="c1"># (JS-rendering caveat, "PageSpeed not run," etc.) --</span>
-        <span class="c1"># never a site defect, so they should never cost points.</span>
-        <span class="c2">if</span> f.is_meta:
-            <span class="c2">continue</span>
-        score -= SEVERITY_PENALTY.get(f.severity, <span class="c3">0</span>)
-    <span class="c2">return</span> max(<span class="c3">0</span>, min(<span class="c3">100</span>, score))</div>
+      <div class="callout"><p><strong>Publication boundary:</strong> the original scoring implementation and its proprietary deduction criteria are deliberately withheld. The public source retains the finding model and orchestration relationship, but does not expose enough code to reproduce or independently verify the score calculation.</p></div>
 
-      <p>The same discipline runs through the outreach-email generator: an <code>is_meta</code> finding is explicitly barred from being picked as a "hook" bullet in a cold pitch, true, but a bad look to sell as a reason to hire someone.</p>
+      <p>The outreach generator also excludes metadata notices from its substantive finding summaries, so a limitation of the audit itself is not presented as a reason for a prospect to hire someone.</p>
     </section>
 
     <section style="border-bottom:none;">
