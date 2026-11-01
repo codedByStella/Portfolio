@@ -77,100 +77,30 @@
 </style>
 </head>
 <body>
-
-  <div class="statusbar">
-    <div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border); margin:0 6px;">/</span><span class="path">StellaScrapes</span></div>
-    <div><span class="dot"></span>online</div>
-  </div>
-
-  <div class="wrap">
-    <div class="head">
-      <div class="status-tag">● FUNCTIONAL MVP · commercialization on hold</div>
-      <h1>Make public records easier to search and use</h1>
-      <p class="lede">StellaScrapes turns supported municipal open-data records into structured results that can be reviewed, cleaned, and exported. Search by location, record type, trade, or date range without building a separate API request for every dataset. The current MVP retrieves data through Socrata; broader coverage and commercialization remain on hold pending proof of sale.</p>
-      <div class="tags">
-        <span class="tag">Python</span>
-        <span class="tag">Socrata Open Data API</span>
-        <span class="tag">Registry-driven search</span>
-        <span class="tag">CSV and Excel export</span>
-      </div>
-    </div>
-
-    <section>
-      <div class="s-label"><span>how it works</span><span class="rule"></span></div>
-      <p>Use the local browser interface for quick searches and exports, or the Python command-line interface for search, catalog maintenance, and discovery tasks. The browser app is a local tool, not a hosted multi-user service.</p>
-      <div class="code-label">query syntax</div>
-      <div class="code"><span class="c1">[trade] [data type] in [city]</span>   <span class="c2">→</span> hvac permits in seattle
-<span class="c1">[trade] [city] last [N] days</span>    <span class="c2">→</span> roofing chicago last 30 days
-<span class="c1">[city] [data type]</span>              <span class="c2">→</span> austin foreclosures
-<span class="c1">[city] [trade]</span>                  <span class="c2">→</span> los angeles electrical
-
-data types:  permits, foreclosures, code_violations,
-             business_licenses, tax_liens, evictions</div>
-
-      <div class="code-label">example commands</div>
-      <div class="code">$ python main.py search <span class="c2">"hvac permits in seattle"</span>
-$ python main.py discover        <span class="c1"># find all US Socrata domains</span>
-$ python main.py catalog         <span class="c1"># map datasets per domain</span>
-$ python main.py cities          <span class="c1"># list registry coverage</span></div>
-
-      <div class="code-label">illustrative output (synthetic records)</div>
-      <div class="code"> LEAD  DATE        ADDRESS                     TYPE              CONTRACTOR
- ★★★  2026-06-26  9525 N Example Hwy Unit 331  Building Permit   <span class="c1"> -  open opportunity  - </span>
- ★★    2026-06-26  4102 Sample Rd               Mechanical Permit <span class="c2">Example HVAC LLC</span>
- ★★    2026-06-26  711 Riverside Dr             Building Permit   <span class="c2">Placeholder Construction Co</span>
- ★     2026-06-26  2902 W 44th St Bldg 1         Plumbing Permit   <span class="c1"> -  open opportunity  - </span>
-
- 4 records · sorted by lead_score · full export → CSV + Excel</div>
-    </section>
-
-    <section>
-      <div class="s-label"><span>the problem</span><span class="rule"></span></div>
-      <p>Public records can be useful for market research, but each publishing agency organizes its datasets differently. Field names, dataset identifiers, and update practices vary, making it difficult to compare or reuse records across locations.</p>
-      <p>StellaScrapes interprets a plain-English query, resolves it against a configurable dataset registry, and retrieves records from supported Socrata sources. Separate discovery tools catalog potential datasets for review. Finding a dataset does not automatically make it supported, so new sources still need validation and integration.</p>
-    </section>
-
-    <section>
-      <div class="s-label"><span>business use</span><span class="rule"></span></div>
-      <p>For research teams and businesses, the value is less time spent finding datasets and cleaning inconsistent records. Permit data can support local construction research or give a team records to review for potential leads. A score helps sort results; it does not establish that a record is a qualified prospect.</p>
-      <p>The registry separates much of the source configuration from the search logic. That gives the project a path to expand coverage without writing an entirely separate search implementation for every location. It does not mean every city or record category is currently supported.</p>
-    </section>
-
-    <section>
-      <div class="s-label"><span>what it helps with</span><span class="rule"></span></div>
-      <ul class="feature-list">
-        <li><strong>Plain-English search</strong>Queries such as <code>hvac permits in seattle</code> are parsed into location, record type, trade, and date filters, then resolved against configured datasets.</li>
-        <li><strong>Dataset discovery</strong>Cataloging tools inspect Socrata domains and dataset metadata to identify potential sources for later review. Discovery is a starting point, not automatic proof of support.</li>
-        <li><strong>Central registry</strong>A JSON registry maps locations and record categories to dataset IDs and candidate field names, keeping source configuration separate from query handling.</li>
-        <li><strong>Permit cleaning and prioritization</strong>Cleaning rules normalize selected fields, remove duplicates, and assign a rules-based priority score to help people review records. Scores are not validated predictions of buyer intent or revenue.</li>
-        <li><strong>Portable exports</strong>Search and cleaning workflows can produce CSV and formatted Excel files for analysis or handoff.</li>
-      </ul>
-      <p style="margin-top:20px;">The browser interface is built with Express and standard HTML, CSS, and JavaScript. A separate Python CLI exposes search, discovery, cataloging, tests, and the preliminary prospecting workflow. Both interfaces remain local and depend on the current registry and supported retrieval paths.</p>
-    </section>
-
-    <section style="border-bottom:none;">
-      <div class="s-label"><span>status and limits</span><span class="rule"></span></div>
-      <div class="result">
-        <p><strong>Functional MVP; further development and commercialization are on hold pending proof of sale.</strong> Socrata is the operationally implemented retrieval platform in the inspected search paths. Four additional platform types appear in configuration but do not have retrieval adapters. The directory-based buyer-prospecting module is parked after the target source blocked requests during checks in July 2026.</p><p>Project documentation advertises 66 cities and 15 data types, but those figures describe intended or configured coverage, not a guarantee that every combination works. Discovery and field mapping are heuristic and require verification. The Node.js Socrata path has a 5,000-record request limit and a 30-second timeout.</p><p>Previously recorded test runs reported 37 JavaScript checks passing, plus 43 Python passes and three warnings. These are historical results, not a fresh test run or proof of end-to-end reliability.</p>
-      </div>
-
-      <div class="crossref">
-        <div class="cr-label">related project</div>
-        <p>The focus on configurable data workflows also appears in <a href="StellaSnipes.html">StellaSnipes</a>, which tracks changes across large domain datasets. Both projects separate repeatable processing from source-specific configuration.</p>
-      </div>
-    </section>
-  </div>
-
-  <footer>
-    <a href="StellaSnipes.html">← StellaSnipes.pipeline</a>
-    <a href="mailto:codedbystella@gmail.com">codedbystella@gmail.com</a>
-    <a href="StellaStudios.html">StellaStudios.pipeline →</a>
-  </footer>
-
-  <div class="tech-sticky">
-    <span class="hint">WANT THE IMPLEMENTATION DETAILS?</span>
-    <a href="StellaScrapes-Technical.html">Read the technical review ↗</a>
-  </div>
-
+<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border);margin:0 6px;">/</span><span class="path">StellaScrapes</span></div><div><span class="dot"></span>active development</div></div>
+<div class="wrap">
+<div class="head"><div class="status-tag">● MVP ACHIEVED · ACTIVE DEVELOPMENT</div><h1>Make public records easier to find and work with</h1>
+<p class="lede">StellaScrapes is a Python and Node.js public-record data discovery and processing platform. Its original application reached a functional MVP for searching supported Socrata datasets, preparing records, and exporting structured results. The public repository is a deliberately limited portfolio release, not the runnable application.</p>
+<div class="tags"><span class="tag">Python</span><span class="tag">Node.js</span><span class="tag">Socrata Open Data API</span><span class="tag">Dataset discovery</span><span class="tag">CSV / XLSX</span></div></div>
+<section><div class="s-label"><span>project overview</span><span class="rule"></span></div>
+<p>Public-data platforms expose useful records, but datasets differ in structure, field names, identifiers, and update practices. Reusing those records across sources requires more than issuing an API request: candidate datasets need to be found, inspected, mapped, and processed into consistent outputs.</p>
+<p>StellaScrapes was built to bring those steps into a single local workflow. The original MVP combines Socrata data discovery, registry-based source configuration, record retrieval and processing, and structured exports. The project remains in active development; support for a source or record category depends on its actual integration and validation.</p></section>
+<section><div class="s-label"><span>system capabilities</span><span class="rule"></span></div><ul class="feature-list">
+<li><strong>Source discovery</strong>Python utilities inspect Socrata publishing domains and dataset metadata to identify candidate public-data sources for review.</li>
+<li><strong>Registry-driven configuration</strong>Structured configuration associates supported sources with dataset identifiers and source-specific metadata, reducing the need to hard-code every integration into the same workflow.</li>
+<li><strong>Record processing</strong>Processing utilities prepare selected public-record data for consistent review, including normalization, deduplication, and permit-oriented handling where applicable.</li>
+<li><strong>Prioritization</strong>Rules-based scoring can help organize records for manual review. It is not a validated prediction of buyer intent, conversion, or revenue.</li>
+<li><strong>Structured exports</strong>CSV and Excel outputs support further analysis and handoff.</li>
+<li><strong>Multiple interfaces</strong>The original application includes a Python command-line workflow and a local browser interface backed by Node.js and Express.</li>
+</ul></section>
+<section><div class="s-label"><span>public repository</span><span class="rule"></span></div>
+<p>The public repository is intentionally incomplete. It documents the project structure and selected supporting components while withholding proprietary implementation details, including production retrieval, query-routing, dataset-selection, and processing logic. The published code is therefore <strong>not a runnable release</strong> and should not be treated as a deployable application or a complete representation of the private working implementation.</p>
+<div class="result"><p><strong>Portfolio source:</strong> <a href="https://github.com/codedByStella/StellaScrapes" target="_blank" rel="noopener noreferrer">https://github.com/codedByStella/StellaScrapes</a></p><p style="margin-top:10px;">The repository provides an architectural and engineering overview while protecting the implementation that makes the original application operational.</p></div></section>
+<section style="border-bottom:none;"><div class="s-label"><span>development status</span><span class="rule"></span></div>
+<p><strong>MVP achieved; active development continues.</strong> The original application reached a functional MVP, but coverage and reliability depend on individual source integrations. Dataset discovery does not automatically make a dataset supported, and heuristic field mapping requires validation. The portfolio repository is a selectively redacted snapshot rather than the production codebase.</p>
+<div class="crossref"><div class="cr-label">related project</div><p>See also <a href="StellaAudits.html">StellaAudits</a> and <a href="StellaOpsec.html">StellaOpsec</a> for other examples of automation and systems engineering.</p></div></section>
+</div>
+<footer><a href="StellaSnipes.html">← StellaSnipes.pipeline</a><a href="mailto:codedbystella@gmail.com">codedbystella@gmail.com</a><a href="StellaStudios.html">StellaStudios.pipeline →</a></footer>
+<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION OVERVIEW?</span><a href="StellaScrapes-Technical.html">Read the technical review ↗</a></div>
 </body>
 </html>
