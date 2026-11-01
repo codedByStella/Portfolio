@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StellaBot | Persistent AI Desktop Companion</title>
+<title>StellaBot | Desktop Companion Prototype</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMTIxNTFCIi8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyODJGMzkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjQiIHk9IjIzIiBmb250LWZhbWlseT0iJ0lCTSBQbGV4IE1vbm8nLCB1aS1tb25vc3BhY2UsIG1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9IjYwMCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzVGRDRDNCI+Jmd0O188L3RleHQ+Cjwvc3ZnPgo=">
-<meta name="description" content="Autonomous desktop agent  -  a context-aware state machine with OS-level window tracking, visual context capture, and graceful degradation under API failure. Built by codedByStella.">
+<meta name="description" content="Windows-focused Python desktop-companion prototype exploring persistent conversational context, local memory, desktop activity awareness, and proactive initiative. Built by codedByStella.">
 <meta property="og:title" content="StellaBot.service  -  codedByStella">
-<meta property="og:description" content="A localized, multi-threaded AI agent that tracks foreground window activity, maintains short-term visual context, and initiates interaction based on idle thresholds  -  with strict retry logic and local state persistence.">
+<meta property="og:description" content="A Python desktop-companion prototype with local SQLite and JSON persistence, Windows activity awareness, a textual activity timeline, voice integration points, and background initiative routines.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -69,21 +69,21 @@
   footer{padding:56px 32px 70px; max-width:840px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-family:var(--mono); font-size:13px;}
   footer a{color:var(--teal);}
 
-body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:12px;padding:13px 20px;background:rgba(18,21,27,.96);border-top:1px solid var(--border);font-family:var(--mono);font-size:12px}.tech-sticky a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(95,212,196,.35)}.tech-sticky .hint{color:var(--text-faint)}@media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center}}
+body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:12px;padding:13px 20px;background:rgba(18,21,27,.96);border-top:1px solid var(--border);font-family:var(--mono);font-size:12px}.tech-sticky a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(95,212,196,.35)}.tech-sticky a.source-link{color:var(--amber);border-bottom-color:rgba(224,164,88,.4)}.tech-sticky .hint{color:var(--text-faint)}@media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center}}
 </style>
 </head>
 <body>
 
   <div class="statusbar">
     <div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border); margin:0 6px;">/</span><span class="path">StellaBot.service</span></div>
-    <div><span class="dot"></span>online</div>
+    <div>prototype · active development</div>
   </div>
 
   <div class="wrap">
     <div class="head">
-      <div class="status-tag">● ACTIVE DEVELOPMENT</div>
+      <div class="status-tag">● PROTOTYPE · ACTIVE DEVELOPMENT</div>
       <h1>A desktop companion built around continuity</h1>
-      <p class="lede">StellaBot combines persistent memory, personalization, desktop context, visual-frame processing, speech output, and proactive conversation in one Python application. The goal is to make interactions build on previous sessions and relevant activity, rather than starting from zero each time.</p>
+      <p class="lede">StellaBot is a Windows-focused Python desktop-companion prototype exploring persistent conversational identity, local memory, environmental context, voice-related components, and autonomous conversational initiative. The goal is to make interactions build on relevant prior context rather than treating every session as isolated.</p>
       <div class="tags">
         <span class="tag">Python</span>
         <span class="tag">Win32 API (ctypes)</span>
@@ -95,20 +95,20 @@ body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;b
 
     <section>
       <div class="s-label"><span>architecture</span><span class="rule"></span></div>
-      <p>This system is not a simple chat wrapper. It is a background daemon designed to monitor, evaluate, and interact with the local environment without blocking the main thread or crashing on bad data.</p>
+      <p>This is more than a single model-request wrapper. The application separates conversation handling, context assembly, persistence, desktop integration, and background activity into distinct modules. It remains a prototype; the presence of these boundaries does not establish production reliability.</p>
       <ul class="feature-list">
-        <li><strong>OS-level context awareness</strong>Utilizes <code>ctypes</code> and the Win32 API (<code>GetForegroundWindow</code>, <code>GetWindowTextW</code>) to track the user's active application. Captures window state via <code>ImageGrab</code>, handles deduplication using SHA-1 hashing, and maintains a rolling context reel.</li>
-        <li><strong>Asynchronous orchestration</strong>Runs a multi-threaded architecture featuring independent loops for visual capture, idle detection, and autonomous initiative. Uses <code>threading.Event</code> to allow safe user-cancellation of in-flight API requests.</li>
-        <li><strong>Graceful degradation &amp; rate limiting</strong>All external LLM calls are routed through a retry decorator that handles 429/500/503 status codes with exponential backoff. If the API drops, the system catches the exception, preserves state, and fails safely without corrupting the local database.</li>
-        <li><strong>Local state persistence</strong>Maintains conversational continuity and relationship context using a local SQLite database. Handles concurrent reads/writes safely, and utilizes JSON flat-files for tracking rapid state changes (idle timers, window transitions).</li>
-        <li><strong>Persistent TTS subprocess</strong>Spawns and manages a long-running PowerShell subprocess to handle text-to-speech generation, piping Base64-encoded strings to the worker to avoid the overhead of spinning up a new process for every generated response.</li>
+        <li><strong>OS-level context awareness</strong>Uses Windows integration to identify foreground-window activity. Screenshots are captured and managed locally in a rolling visual reel; the model request uses a derived textual activity timeline, not the screenshot pixels.</li>
+        <li><strong>Asynchronous orchestration</strong>Separates interface and background responsibilities, including attention and initiative routines, with lifecycle handling for application shutdown.</li>
+        <li><strong>Graceful degradation &amp; rate limiting</strong>Model-provider communication is separated from conversation and context handling. Runtime behavior still depends on provider availability, configuration, dependencies, and local execution conditions.</li>
+        <li><strong>Local state persistence</strong>Uses local SQLite persistence for structured conversation and companion data, with JSON files for supporting profile, configuration, and runtime state.</li>
+        <li><strong>Voice integration</strong>Voice functionality is separated from the main conversation and interface code. The repository includes integration points and asset structure, but not every voice path is configured or verified.</li>
       </ul>
     </section>
 
     <section>
       <div class="s-label"><span>the problem</span><span class="rule"></span></div>
-      <p>Most chat sessions start with the latest message. StellaBot can also retrieve selected memories and preferences, along with desktop and visual context, before sending a request to the model. The application stores that context locally in SQLite and JSON.</p>
-      <p>The design separates fast local context collection from slower model requests. That helps keep desktop observation and state updates distinct from conversation generation, while the initiative logic is intended to avoid repeated unanswered interruptions.</p>
+      <p>StellaBot can assemble a request from the current message, recent conversation history, selected persistent memory and preferences, and temporary application context. Structured runtime data is stored locally using SQLite and JSON.</p>
+      <p>The design separates local context collection from model requests. Screenshot capture and reel management happen locally; the model receives a textual activity timeline rather than screenshot pixels. This timeline is temporary environmental context, not persistent memory.</p>
     </section>
 
     <section>
@@ -137,12 +137,12 @@ reply = ask_agent(..., initiative=<span class="c3">True</span>)
     <section style="border-bottom:none;">
       <div class="s-label"><span>status</span><span class="rule"></span></div>
       <div class="result">
-        <p><strong>Active development.</strong> The inspected code includes memory and personalization, Windows desktop awareness, visual-context handling, conversation orchestration, Kokoro speech synthesis, and proactive initiative routines. Sustained operation and comprehensive end-to-end testing are constrained by model-inference costs and available local hardware. This review does not establish a continuously running production deployment.</p>
+        <p><strong>Prototype · active development.</strong> The published source includes conversation orchestration, local memory and persistence, context assembly, Windows desktop integration, local visual capture and activity-timeline handling, voice integration points, and background initiative routines. StellaBot has been launched locally on Windows, and selected subsystems have tests. This does not establish complete end-to-end validation or a continuously running production deployment.</p>
       </div>
 
       <div class="crossref">
         <div class="cr-label">same discipline, different domain</div>
-        <p>The project is measured at 4,348 source lines across its project directory, excluding historical backups, environment directories, runtime state, logs, and model weights. This page describes inspected components and their static call relationships, not a guarantee that every behavior has been verified end to end.</p>
+        <p>The repository contains the actual prototype source, organized into a Python package by responsibility. This page describes inspected components and their relationships, not a guarantee that every behavior has been verified end to end.</p>
       </div>
     </section>
   </div>
@@ -153,6 +153,6 @@ reply = ask_agent(..., initiative=<span class="c3">True</span>)
     <a href="StellaAudits.html">StellaAudits.engine →</a>
   </footer>
 
-<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION DETAILS?</span><a href="StellaBot-Technical.html">Read the technical review ↗</a></div>
+<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION DETAILS?</span><a href="StellaBot-Technical.html">Read the technical review ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaBot" target="_blank" rel="noopener noreferrer">Inspect source on GitHub ↗</a></div>
 </body>
 </html>
