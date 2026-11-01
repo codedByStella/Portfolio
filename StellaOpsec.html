@@ -110,7 +110,7 @@
   footer{padding:56px 32px 70px; max-width:840px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-family:var(--mono); font-size:13px;}
   footer a{color:var(--amber);}
 
-body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:12px;padding:13px 20px;background:rgba(18,21,27,.96);border-top:1px solid var(--border);font-family:var(--mono);font-size:12px}.tech-sticky a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(95,212,196,.35)}.tech-sticky .hint{color:var(--text-faint)}@media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center}}
+body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:12px;padding:13px 20px;background:rgba(18,21,27,.96);border-top:1px solid var(--border);font-family:var(--mono);font-size:12px}.tech-sticky a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(95,212,196,.35)} .tech-sticky .hint{color:var(--text-faint)}.tech-sticky a.source-link{color:var(--amber);border-bottom-color:rgba(224,164,88,.4)}.tech-sticky a.source-link:hover{border-bottom-color:var(--amber)}@media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center}}
 </style>
 </head>
 <body>
@@ -127,23 +127,17 @@ body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;b
       <p class="lede">StellaOpsec is a modular PowerShell toolkit for collecting selected Windows, network, web, identity, event-log, and cloud configuration data. It organizes those observations into structured reports so an assessor can review what the available evidence does and does not establish.</p>
       <div class="tags">
         <span class="tag">PowerShell</span>
-        <span class="tag">VM hardening</span>
-        <span class="tag">network isolation</span>
-        <span class="tag">fail-loud verification</span>
+        <span class="tag">Windows / CIM</span>
+        <span class="tag">Active Directory</span>
+        <span class="tag">Azure CLI / gcloud</span>
+        <span class="tag">JSON / HTML / CSV / Excel</span>
       </div>
     </div>
 
     <div class="wrap" style="padding:0;">
-      <div class="redacted-banner">
-        <div class="rb-stripes"></div>
-        <div class="rb-content">
-          <div class="rb-main">[ REDACTED ]</div>
-          <div class="rb-sub">nice try  -  the good stuff's under NDA, not under a &lt;script&gt; tag</div>
-        </div>
-      </div>
       <div class="notice">
         <div class="n-label">scope note</div>
-        <p>The public portfolio describes assessment areas and verification boundaries without publishing sensitive operational details. The project is a dormant prototype, not a currently offered security service or a comprehensive scanner.</p>
+        <p>The public <a href="https://github.com/codedByStella/StellaOpsec" target="_blank" rel="noopener noreferrer">StellaOpsec repository</a> contains the collection and reporting modules described here. This is a dormant personal prototype for selected inventory and configuration checks, not a security service or a comprehensive scanner.</p>
       </div>
     </div>
 
@@ -162,31 +156,19 @@ body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;b
     <section>
       <div class="s-label"><span>what it does</span><span class="rule"></span></div>
       <ul class="feature-list">
-        <li><strong>Hardware identity layer</strong>Randomizes registry-exposed hardware strings  -  GPU descriptor, hardware profile GUID, simulated install date  -  that fingerprinting services commonly check as VM tells.</li>
-        <li><strong>Network layer</strong>Pairs VM-level network isolation with a proxy chain and an independently-verified kill switch, so a VPN/proxy failure can never leak the operator's real egress path mid-engagement.</li>
-        <li><strong>Fail-loud audit script</strong>A standalone PowerShell verification pass checks the environment against ~10 known fingerprinting vectors before it's used operationally  -  MAC OUI against known hypervisor prefixes, GPU descriptor, install-date age, DNS leak test, kill-switch test  -  and refuses to give a quiet pass; anything unconfirmed halts with an explicit <code>[CRITICAL]</code>.</li>
+        <li><strong>Windows inventory</strong>Collects selected operating-system, hardware, account, network, firewall, process, service, scheduled-task, hotfix, software, and SMB information.</li>
+        <li><strong>Network and web checks</strong>Includes reachability and TCP checks, DNS zone-transfer testing, TLS metadata, HTTP response headers, and cookie-attribute inspection.</li>
+        <li><strong>Identity and event-log review</strong>Collects selected credential-protection metadata, event-log summaries, Active Directory account and group indicators, password policies, trusts, and Group Policy Object metadata.</li>
+        <li><strong>Cloud configuration checks</strong>Uses the Google Cloud and Azure CLIs to inspect selected IAM, storage, firewall, role-assignment, and database settings.</li>
+        <li><strong>Structured reporting</strong>Shared finding objects and report helpers organize selected observations for JSON, HTML, CSV, and Excel output. The presence of these components does not establish complete end-to-end automation.</li>
       </ul>
     </section>
 
     <section>
-      <div class="s-label"><span>verification logic</span><span class="rule"></span></div>
-      <h2>The audit is the deliverable, not the evasion</h2>
-      <p>The key design principle is to distinguish an observation from a conclusion. A reachable port does not prove a service is vulnerable, a public-looking policy entry does not alone establish effective exposure, and an inventory result does not prove that a security control is working end to end.</p>
-
-      <div class="code-label">fingerprint verification (illustrative excerpt)</div>
-      <div class="code">$vmwareOUIs = @(<span class="c3">'000C29'</span>, <span class="c3">'000569'</span>, <span class="c3">'001C14'</span>, <span class="c3">'005056'</span>)
-<span class="c2">if</span> ($vmwareOUIs -contains $oui) {
-    $macStatus = <span class="c3">'FAIL - VMware OUI detected'</span>; $flags += <span class="c3">'MAC'</span>
-}
-
-<span class="c2">if</span> ($gpuDesc -like <span class="c3">'*VMware*'</span> -or $gpuDesc -like <span class="c3">'*SVGA*'</span>) {
-    $gpuStatus = <span class="c3">'FAIL - VMware GPU exposed'</span>; $flags += <span class="c3">'GPU'</span>
-}
-
-<span class="c1"># ... network egress, DNS leak, kill-switch, and install-age checks</span>
-<span class="c1"># follow the same pattern: verify with evidence, or flag and halt.</span></div>
-
-      <p>Assessment results can be incomplete when commands fail, required modules are missing, permissions are insufficient, or source data is unavailable. A dependable next version should represent each check as successful, failed, or incomplete, preserve relevant error context, and avoid presenting missing evidence as a clean result.</p>
+      <div class="s-label"><span>what the output means</span><span class="rule"></span></div>
+      <h2>Collected configuration is evidence for review, not a verdict</h2>
+      <p>A reachable port does not prove a service is vulnerable. A public-looking policy entry does not, by itself, establish effective exposure. An inventory result does not prove that a security control is working end to end.</p>
+      <p>Results can be incomplete when commands fail, required modules are missing, permissions are insufficient, or source data is unavailable. Some checks use heuristics or inspect only selected settings. The technical review documents concrete examples, including places where the implementation can overstate what a result proves.</p>
     </section>
 
     <section style="border-bottom:none;">
@@ -208,6 +190,6 @@ body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;b
     <a href="StellaBot.html">StellaBot.service →</a>
   </footer>
 
-<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION DETAILS?</span><a href="StellaOpsec-Technical.html">Read the technical review ↗</a></div>
+<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION DETAILS?</span><a href="StellaOpsec-Technical.html">Read the technical review ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaOpsec" target="_blank" rel="noopener noreferrer">Inspect repository on GitHub ↗</a></div>
 </body>
 </html>
