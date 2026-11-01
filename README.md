@@ -10,4 +10,4 @@ These are working business applications, not mockups. The live portfolio include
 
 **[View the live portfolio](https://codedbystella.github.io/Portfolio/)**
 
-Source code is available on request. I redact business-sensitive logic and anything restricted by third-party platform terms. Email codedbystella@gmail.com if you want to discuss a project or walk through the code.
+Public source repositories are linked from their respective project pages. Some implementations are deliberately redacted to protect business-sensitive logic and anything restricted by third-party platform terms. StellaAudits is available as a public, heavily redacted, intentionally non-runnable inspection repository: https://github.com/codedByStella/StellaAudits. Email codedbystella@gmail.com if you want to discuss a project or walk through additional implementation details.
