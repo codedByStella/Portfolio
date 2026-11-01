@@ -34,7 +34,7 @@
 </header>
 
 <section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
-<p>StellaAudits retrieves a supplied website, runs a collection of accessibility, search-engine optimization, local visibility, and passive security checks, then turns the results into a scored report. Each finding can carry a category, severity, explanation, business relevance, recommended action, reference, and supporting evidence.</p>
+<p>StellaAudits retrieves a supplied website, runs selected accessibility, search-engine optimization, local-visibility, and passive security checks, then turns the results into a scored report. The shared finding model supports a category, severity, explanation, business relevance, recommended action, reference, and supporting evidence. The public repository deliberately redacts the proprietary security checks, scoring implementation, and finding-identification logic; those parts of the original application cannot be independently verified from this publication.</p>
 <p>The same workflow records audit history, compares later runs, tracks lead status, and prepares a personalized outreach draft. The central design goal is to make automated checks useful in a small service workflow without removing human review from commercial outreach.</p>
 <div class="callout"><p><strong>Scope note:</strong> this is a working MVP, not a certification service. A generated score summarizes the checks that ran. It does not prove legal compliance, complete accessibility, security, search performance, or business results.</p></div>
 </section>
@@ -54,7 +54,7 @@
 
 <section id="accessibility"><div class="s-label"><span>03 / accessibility</span><span class="rule"></span></div>
 <p>Static checks inspect common accessibility-related HTML structures, including image alternative text, form labels, document language and title, heading hierarchy, unnamed links, duplicate IDs, table-header structure, and embedded-frame titles.</p>
-<p>When PageSpeed integration is available, Lighthouse can add browser-rendered findings such as color contrast and other structural issues. Findings are organized around relevant WCAG criteria and include explanations and suggested fixes where supported.</p>
+<p>The PageSpeed integration requests Lighthouse accessibility, performance, and SEO categories. In the published implementation, only the performance and SEO category scores are converted into findings, and only when the score is below the configured threshold. Although accessibility data is requested, individual Lighthouse accessibility audits, such as color contrast, are not currently extracted into findings by this module. The static accessibility checks are limited to the initial HTML.</p>
 <p><strong>Limit:</strong> automated checks cannot independently establish ADA compliance or replace keyboard testing, assistive-technology testing, and manual accessibility review.</p>
 </section>
 
@@ -66,19 +66,19 @@
 </section>
 
 <section id="security"><div class="s-label"><span>05 / security checks</span><span class="rule"></span></div>
-<p>The security module is passive. It inspects transport-security configuration, response headers, potential technology-version disclosure, mixed-content references, and selected insecure form conditions. Findings include evidence and remediation guidance where available.</p>
-<div class="callout"><p><strong>Deliberate boundary:</strong> this is not a vulnerability scanner or penetration-testing framework. It does not perform authenticated testing or exploitation. Passing an individual check does not establish that a site is secure.</p></div>
+<p>The original application includes a passive security-checking module. Its implementation, detection criteria, and classification logic are deliberately redacted from this public repository. The specific checks performed by the original module therefore cannot be independently verified from the published source.</p>
+<div class="callout"><p><strong>Deliberate boundary:</strong> StellaAudits is not presented as a vulnerability scanner or penetration-testing framework. The public publication does not expose the proprietary security implementation, and passing any individual check would not establish that a site is secure.</p></div>
 </section>
 
 <section id="rendering"><div class="s-label"><span>06 / rendering awareness</span><span class="rule"></span></div>
-<p>Some sites return an initial HTML document with little content, then populate the page after JavaScript executes. StellaAudits uses initial-page content and framework indicators to estimate when static checks may be operating on an incomplete page.</p>
-<p>When it detects a possible blind spot, the audit can add a confidence notice and adjust selected unconfirmed structural findings. Available browser-rendered PageSpeed data can provide additional evidence.</p>
-<p>This detector is heuristic. It does not guarantee that all affected findings are corrected or independently verified.</p>
+<p>Some sites return an initial HTML document with little content, then populate the page after JavaScript executes. StellaAudits estimates this possibility using the amount of visible text in the initial HTML response. It does not inspect framework indicators or execute the page's JavaScript.</p>
+<p>When the heuristic indicates that the initial response contains little text, the runner adds an informational notice recommending manual browser review. It does not automatically adjust the severity of other findings. Optional PageSpeed measurements are separate and do not change that detector's result.</p>
+<p>This simple text-length heuristic can produce false positives and false negatives. It does not establish whether a site is fully or partially client-rendered.</p>
 </section>
 
 <section id="scoring"><div class="s-label"><span>07 / scoring model</span><span class="rule"></span></div>
-<p>Findings receive severity labels and contribute fixed deductions to a bounded site-health score, which is mapped to a letter grade. Informational metadata about the audit itself is excluded from the penalty calculation.</p>
-<div class="table-wrap"><table><thead><tr><th>Severity</th><th>Score deduction</th><th>Use</th></tr></thead><tbody><tr><td>High</td><td>15 points</td><td>Higher-priority finding under the configured model.</td></tr><tr><td>Medium</td><td>7 points</td><td>Moderate-priority finding.</td></tr><tr><td>Low</td><td>2 points</td><td>Lower-priority finding.</td></tr><tr><td>Metadata</td><td>0 points</td><td>Notices about audit coverage or confidence, not site defects.</td></tr></tbody></table></div>
+<p>The original application assigns severity labels and calculates a bounded site-health score mapped to a letter grade. The shared finding model includes an <code>is_meta</code> field for notices about the audit itself.</p>
+<div class="callout"><p><strong>Scoring source boundary:</strong> the scoring module and proprietary deduction criteria are deliberately redacted from this publication. The public source therefore does not disclose the exact deductions, grade thresholds, or full calculation, and this page does not reproduce them.</p></div>
 <p>The score is an internal prioritization and presentation mechanism, not an independently validated measure of website quality, legal exposure, security, or business performance. Its meaning depends on which checks ran and how accurate their findings are.</p>
 </section>
 
@@ -89,18 +89,18 @@
 <li>Track lead states such as new, contacted, responded, client, not interested, and failed.</li>
 <li>Filter lead lists, add optional notes, update statuses, and retrieve generated reports or outreach drafts.</li>
 </ul>
-<p>Comparisons depend on the available history and stable finding identifiers. A finding disappearing from a later report does not prove the underlying issue was fully fixed.</p>
+<p>Comparisons depend on available history and stable finding identifiers. The identifier implementation is deliberately redacted in the public source, so the matching logic cannot be independently inspected here. A finding disappearing from a later report does not prove the underlying issue was fully fixed.</p>
 </section>
 
 <section id="reporting"><div class="s-label"><span>09 / reporting and outreach</span><span class="rule"></span></div>
 <p>Jinja2 templates and xhtml2pdf produce downloadable reports containing the target URL, audit date, score, grade, finding totals, category sections, and recommended actions. Historical comparison information can be included when an earlier audit is available.</p>
 <p>The outreach subsystem selects a limited set of substantive findings for a draft email and avoids using internal confidence notices as sales arguments. It does not send email automatically.</p>
-<p>The draft includes promotional-message disclosure, sender details, and reply-based opt-out language. If the physical mailing address is missing from configuration, the application raises a warning and marks the draft do not send. This is a safeguard for one configuration requirement, not a complete legal-compliance determination. Human review remains necessary.</p>
+<p>The draft includes promotional-message disclosure, sender details, and reply-based opt-out language. If the mailing address is missing from configuration, the generator inserts a placeholder and returns a warning for review. It does not prevent draft generation or establish legal compliance. Human review remains necessary, including verification of all applicable requirements before sending.</p>
 </section>
 
 <section id="interface"><div class="s-label"><span>10 / local interface</span><span class="rule"></span></div>
 <p>Flask connects the audit services to a local browser interface for running audits and managing leads. The reviewed feature set includes single-URL audits, batch submissions of up to 100 URLs, sequential processing with a delay between items, batch-progress polling, lead filtering and status updates, and downloads for reports and drafts.</p>
-<p>Batch processing continues after individual URL failures. The app binds to the loopback interface by default. Completed audit records persist in SQLite, while batch-progress state is held in memory.</p>
+<p>The batch worker records individual URL failures and continues its normal loop when the per-audit helper returns a result. The app binds to the loopback interface by default. Completed audit records persist in SQLite, while batch-progress state is held in memory. An unexpected exception escaping the worker could interrupt the batch before its finished flag is set.</p>
 <p>This is a local single-user workflow, not an established multi-user hosted service. Authentication, deployment hardening, and persistent background-job infrastructure are not established by the reviewed implementation.</p>
 </section>
 
@@ -122,9 +122,9 @@
 <p>The reviewed source establishes these integration paths:</p>
 <ul>
 <li>The runner coordinates specialized detection modules and collects their findings.</li>
-<li>The JavaScript-rendering detector informs confidence notices and selected severity adjustments.</li>
-<li>The optional PageSpeed integration supplies browser-rendered measurements and reports whether data was obtained.</li>
-<li>The shared finding model feeds scoring, report generation, and historical comparison.</li>
+<li>The JavaScript-rendering detector uses initial-HTML text length to inform an informational coverage notice; it does not adjust other finding severities.</li>
+<li>The optional PageSpeed integration requests Lighthouse accessibility, performance, and SEO categories; the published module converts performance and SEO category scores into findings, but does not extract individual accessibility audits.</li>
+<li>The shared finding model feeds scoring, report generation, and historical comparison. Proprietary scoring and finding-identification implementations are redacted from the public source.</li>
 <li>The database stores audit summaries and finding snapshots.</li>
 <li>The report generator combines results, configuration, and available historical context into a PDF.</li>
 <li>The outreach generator prepares a draft from substantive findings for a person to review.</li>
@@ -134,8 +134,8 @@
 </section>
 
 <section id="verification"><div class="s-label"><span>13 / verification and limits</span><span class="rule"></span></div>
-<p>This review is based on project documentation and inspected application and audit-module source, including the runner, finding model, scoring, persistence, fetching, accessibility, SEO, local SEO, security, PageSpeed, JavaScript-rendering detection, and outreach modules.</p>
-<p>The review verifies the described architectural relationships at source level. It does not establish comprehensive end-to-end test coverage, production reliability, accuracy for every generated finding, or commercial results. Automated checks can produce false positives and miss issues requiring browser interaction or human judgment. External PageSpeed measurements depend on API access.</p>
+<p>This review is based on project documentation and inspected application and audit-module source, including the runner, finding model, persistence, fetching, accessibility, SEO, local SEO, PageSpeed, JavaScript-rendering detection, and outreach modules. The security and scoring modules and the finding-identification implementation are intentionally redacted; claims about their proprietary internals are descriptions of the original application, not independently verifiable details in this publication.</p>
+<p>The review verifies the inspectable architectural relationships at source level. It does not establish comprehensive end-to-end test coverage, production reliability, accuracy for every generated finding, or commercial results. Automated checks can produce false positives and miss issues requiring browser interaction or human judgment. External PageSpeed measurements depend on API access. Because core security checks, scoring logic, and stable finding-identification logic are redacted, the public repository is intentionally incomplete and is not a runnable distribution of the original application.</p>
 <div class="callout"><p><strong>Summary:</strong> StellaAudits is a working MVP that connects automated website checks to scoring, history, PDF reporting, lead tracking, and human-reviewed outreach. Its value is the repeatable workflow. Its reports remain bounded by detection coverage and require review before being treated as evidence of remediation or compliance.</p></div>
 </section>
 </main>
