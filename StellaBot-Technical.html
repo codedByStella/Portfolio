@@ -15,13 +15,13 @@
 <div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span style="color:var(--border);margin:0 6px">/</span><span class="path">StellaBot / technical-review</span></div><div>IMPLEMENTATION NOTES</div></div>
 <main class="wrap">
 <header class="head">
-<div class="status-tag">TECHNICAL REVIEW / ACTIVE DEVELOPMENT</div>
+<div class="status-tag">TECHNICAL REVIEW / PROTOTYPE</div>
 <h1>StellaBot: Persistent AI Desktop Companion</h1>
-<p class="lede">A source-level review of a Python desktop companion connecting persistent memory, relationship and preference context, Windows activity awareness, visual-frame processing, model orchestration, speech synthesis, and proactive initiative.</p>
+<p class="lede">A source-level review of a Windows-focused Python desktop-companion prototype connecting local memory, context assembly, desktop activity awareness, local visual capture, model orchestration, voice integration points, and proactive initiative.</p>
 <div class="tags"><span class="tag">Python</span><span class="tag">PowerShell</span><span class="tag">SQLite</span><span class="tag">JSON</span><span class="tag">OpenAI Python client</span><span class="tag">Tkinter</span><span class="tag">Pillow</span><span class="tag">ONNX</span><span class="tag">Windows APIs</span></div>
 <div class="meta-grid">
-<div><div class="k">Status</div><div class="v">Active development</div></div>
-<div><div class="k">Measured source</div><div class="v">4,348 lines</div></div>
+<div><div class="k">Status</div><div class="v">Prototype · active development</div></div>
+<div><div class="k">Publication</div><div class="v">Actual prototype source</div></div>
 <div><div class="k">Persistence</div><div class="v">SQLite and JSON</div></div>
 <div><div class="k">Interface</div><div class="v">Tkinter desktop UI</div></div>
 <div><div class="k">Speech</div><div class="v">Kokoro synthesis path and ONNX assets</div></div>
@@ -29,8 +29,8 @@
 </div>
 </header>
 <section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
-<p>StellaBot is a personal AI desktop companion designed around continuity rather than isolated chat turns. It combines persistent memory, relationship and preference modeling, desktop activity signals, visual context, language-model orchestration, speech output, and proactive interaction routines.</p>
-<p>The application connects these subsystems through context-building and conversation workflows. SQLite stores persistent memory, while JSON files hold several categories of runtime state and profile information. The project is under active development; inference costs and available hardware constrain sustained operation and comprehensive testing.</p>
+<p>StellaBot is a Windows-focused Python desktop-companion prototype designed around continuity rather than isolated chat turns. It combines local memory, preference and companion context, desktop activity signals, local visual-context handling, language-model orchestration, voice-related components, and proactive interaction routines.</p>
+<p>The application connects these subsystems through context-building and conversation workflows. SQLite stores structured local data, while JSON files hold supporting state and configuration. The repository documents a prototype that has been launched locally on Windows and includes tests for selected subsystems; this is not complete end-to-end validation.</p>
 <div class="callout"><p><strong>Scope note:</strong> this review describes components and relationships found through source inspection and a static call graph. It does not independently verify every behavior, runtime reliability, or complete end-to-end coverage.</p></div></section>
 <section id="memory"><div class="s-label"><span>02 / persistent memory</span><span class="rule"></span></div>
 <p>The memory layer includes initialization, retrieval and storage, memory-selection logic, relationship-history tracking, significant-moment recording, preference learning, companion self-memory, belief extraction, and retrieval of contextual information for model requests.</p>
@@ -42,8 +42,8 @@
 <p>Windows integration includes foreground-window detection, idle-time detection, attention classification, state updates, situational-context construction, and background capture or initiative loops. These signals give the application a way to consider desktop activity in addition to the latest chat message.</p>
 <p>Foreground-window and idle signals are contextual inputs, not a complete understanding of user intent. Their reliability depends on the implementation, available permissions, timing, and the range of application states encountered.</p></section>
 <section id="visual"><div class="s-label"><span>05 / visual context</span><span class="rule"></span></div>
-<p>The visual subsystem includes screenshot acquisition, image decoding and encoding, hashing, visual-frame recording, visual-reel capture, snapshot management, storyboard construction, and textual visual-timeline generation. The conversation workflow invokes storyboard and timeline processing and records visual frames.</p>
-<p>This creates a path for visual desktop context to contribute to a conversation. It does not by itself establish the accuracy of any interpretation made from a screenshot or prove that all capture and retrieval scenarios have been tested.</p></section>
+<p>The visual subsystem includes local screenshot acquisition, frame handling, rolling visual-reel management, storyboard construction, and textual activity-timeline generation. The application uses local screenshots to derive a timeline from desktop activity metadata.</p>
+<p>Screenshot capture and reel management happen locally. The conversational model receives a textual activity timeline, not screenshot pixels; a storyboard is a local diagnostic artifact and is not automatically attached to the model request. Window metadata can indicate which application was active, but cannot establish the text, objects, or events visible inside it.</p></section>
 <section id="conversation"><div class="s-label"><span>06 / model orchestration</span><span class="rule"></span></div>
 <p>The conversation engine prepares context from memory, relationship and preference systems, state, and companion-identity information. It coordinates model requests, recent conversation history, retries and cancellation, response extraction and cleanup, state updates, memory handling, and exchange recording.</p>
 <p>Supporting routines include similarity checks for repetitive openings, potential information-leak detection, and diagnostic logging. These should be understood as implemented safeguards and heuristics, not guarantees that repetition or information leakage will always be detected.</p></section>
@@ -60,14 +60,15 @@
 <ul><li><strong>Context building:</strong> combines memory, relationship, preference, state, and companion-identity information.</li><li><strong>Conversation flow:</strong> links model requests with visual processing, state inference, memory operations, and exchange recording.</li><li><strong>Visual capture:</strong> connects screenshot acquisition to frame recording and image processing.</li><li><strong>Initiative:</strong> coordinates idle detection, scheduling, visual-reel state, and conversational turns.</li><li><strong>Speech:</strong> routes general speech requests to the Kokoro synthesis path.</li></ul>
 <p>These connections are based on the inspected static call graph. They demonstrate structural integration, but do not prove that every path completes successfully under all runtime conditions.</p></section>
 <section id="constraints"><div class="s-label"><span>11 / development constraints</span><span class="rule"></span></div>
-<p>The project is actively developed, but sustained operation and broad end-to-end verification are constrained in part by model-inference costs and the hardware available for local execution. This affects how continuously the system can be run and tested; it does not mean development has stopped.</p>
-<p>The source inventory reports 4,348 lines across the project directory, excluding historical backups, environment directories, runtime state, logs, and model weights. The line count measures source volume, not product maturity or reliability.</p></section>
+<p>StellaBot is a prototype under active development. The repository documents local Windows launches and tests for selected subsystems, but runtime behavior still depends on local configuration, provider credentials, installed dependencies, Windows integration, and external services. Not every API-dependent feature or long-running behavior has been verified across environments.</p>
+<p>The original monolithic <code>companion.py</code> implementation grew to approximately 5,500 lines before the project was reorganized into a package of modules grouped by responsibility. Source volume is not a measure of product maturity or reliability.</p></section>
 <section id="priorities"><div class="s-label"><span>12 / engineering priorities</span><span class="rule"></span></div>
 <p>Useful next steps include clearer boundaries for desktop capture and retained visual context, repeatable tests for memory selection and retrieval, checks for incorrect or stale context, and explicit handling of interrupted model or speech operations. Testing should also cover initiative backoff, cancellation, and state consistency across restarts.</p>
 <p>These are sensible validation priorities for a system with several persistent and background subsystems. They are not claims that the current implementation already provides comprehensive guarantees in these areas.</p></section>
 <section id="scope"><div class="s-label"><span>13 / verification and scope</span><span class="rule"></span></div>
 <p>This review is based on the function inventory and static call graph. It establishes the presence of described components and their connections, but it does not independently verify every behavior, runtime reliability, or comprehensive end-to-end test coverage.</p>
-<p>The source code is private. A redacted copy is available on request. Runtime state, logs, backups, and model weights are excluded from the reported source-line total.</p>
+<p>The public repository contains substantial, genuine source from the StellaBot prototype for portfolio inspection. Runtime databases, live conversation histories, credentials, and private personal data are not intended to be included as working user data. The published README documents the runtime layout, provider data flow, and verification limits.
+<p><a href="https://github.com/codedByStella/StellaBot" target="_blank" rel="noopener noreferrer">Inspect the StellaBot source repository on GitHub ↗</a></p></p>
 <div class="back"><a href="StellaBot.html">← Back to StellaBot overview</a></div></section>
 </main>
 </body>
