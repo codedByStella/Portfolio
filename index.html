@@ -522,7 +522,7 @@
     <div class="s-label-inline">the pattern underneath all seven</div>
     <p style="max-width:680px; margin-top:16px;">Look across these seven projects and the tech stacks don't overlap much, Python, Node, PowerShell, ffmpeg, Discord's API, Socrata's API, Google's PageSpeed API. What <em>does</em> overlap is the design discipline: every one of them treats "the outside world will fail, lie, or go silent" as the default case, not the exception.</p>
     <ul class="pattern-list">
-      <li><strong>Verify, don't assume.</strong> The OSRS daemon won't trust a price without checking it against recent history first. StellaSnipes won't call a domain "clean" without an evidence trail behind that verdict. The red-team toolkit fails loud, <code>[CRITICAL]</code>, rather than giving a silent pass on an unconfirmed check.</li>
+      <li><strong>Verify, don't assume.</strong> The OSRS daemon won't trust a price without checking it against recent history first. StellaSnipes won't call a domain "clean" without an evidence trail behind that verdict. StellaOpsec keeps selected configuration observations separate from conclusions, rather than treating inventory as proof of security.</li>
       <li><strong>Degrade gracefully, don't crash.</strong> Every external dependency across these projects, a price API, a domain-health service, a generative model, gets a timeout and a fallback path, so one flaky upstream service never takes the whole system down with it.</li>
       <li><strong>Keep a human in the loop where it actually matters.</strong> StellaStudios holds finished output for review before publishing. StellaSnipes routes unverifiable domains to a review queue instead of guessing. Automation that removes judgment entirely isn't more valuable, it's just wrong faster.</li>
     </ul>
@@ -658,15 +658,16 @@
 
     <a class="proc" href="StellaOpsec.html">
       <div class="proc-status dormant">● DORMANT</div>
-      <div class="proc-thumb proc-thumb-redacted">
-        <div class="ptr-stripes"></div>
-        <div class="ptr-text">REDACTED<span class="ptr-sub">nice try though</span></div>
+      <div class="proc-thumb proc-thumb-code">
+        <div class="ptc-dim">Windows / network / cloud</div>
+        <div class="ptc-teal">→ selected configuration</div>
+        <div class="ptc-dim">PowerShell · structured reports</div>
       </div>
       <div>
         <div class="proc-name">StellaOpsec<span class="ext">.toolkit</span></div>
-        <div class="proc-desc">Operator environment hardening &amp; verification toolkit for authorized red-team engagements requiring detection-resistant test infrastructure.</div>
-        <div class="proc-stat"><span>10-point</span> fingerprint audit · fail-loud verification · PowerShell</div>
-        <div class="proc-usecase">same shape as: adversarial simulation, detection-stack QA, pre-engagement audits</div>
+        <div class="proc-desc">Dormant PowerShell prototype for selected Windows, network, web, identity, event-log, and cloud configuration checks, with structured report output.</div>
+        <div class="proc-stat"><span>Modular</span> inventory and configuration collectors · JSON / HTML / CSV / Excel</div>
+        <div class="proc-usecase">same shape as: security-aware automation, configuration review, assessment support</div>
       </div>
       <div class="proc-arrow">inspect →</div>
     </a>
