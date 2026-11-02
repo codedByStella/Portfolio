@@ -71,6 +71,7 @@
 
 body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:12px;padding:13px 20px;background:rgba(18,21,27,.96);border-top:1px solid var(--border);font-family:var(--mono);font-size:12px}.tech-sticky a{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(95,212,196,.35)}
   .tech-sticky .source-unavailable{color:var(--amber);}.tech-sticky a.source-link{color:var(--amber);border-bottom-color:rgba(224,164,88,.4)}.tech-sticky .hint{color:var(--text-faint)}@media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center}}
+@media(max-width:560px){.tech-sticky{flex-wrap:wrap;justify-content:center;gap:8px}.tech-sticky .hint{display:none}.tech-sticky a[href*="-Technical.html"]{font-size:0}.tech-sticky a[href*="-Technical.html"]::after{content:"Technical";font-size:10px}.tech-sticky a.source-link{font-size:0}.tech-sticky a.source-link::after{content:"GitHub Source";font-size:10px}.tech-sticky .source-unavailable{font-size:0}.tech-sticky .source-unavailable::after{content:"Source N/A";font-size:10px}.tech-sticky a:last-child:not(.source-link){font-size:0}.tech-sticky a:last-child:not(.source-link)::after{content:"Next →";font-size:10px}}
 </style>
 </head>
 <body>
@@ -148,11 +149,7 @@ reply = ask_agent(..., initiative=<span class="c3">True</span>)
     </section>
   </div>
 
-  <footer>
-    <a href="index.html">codedbystella@portfolio</a>
-    <a href="mailto:codedbystella@gmail.com">codedbystella@gmail.com</a>
-    <a href="StellaAudits.html">See the next project →</a>
-  </footer>
+  
 
 <div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION DETAILS?</span><a href="StellaBot-Technical.html">Read the technical review ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaBot" target="_blank" rel="noopener noreferrer">Inspect source on GitHub ↗</a><a href="StellaAudits.html">See the next project →</a></div>
 </body>
