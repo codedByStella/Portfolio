@@ -2,13 +2,13 @@
   --bg:#12151B;
   --surface:#1B2028;
   --surface-hi:#212832;
-  --hi:#212832;
+  --hi:var(--surface-hi);
   --border:#282F39;
   --text:#E8EAED;
   --text-dim:#8B93A1;
-  --dim:#8B93A1;
+  --dim:var(--text-dim);
   --text-faint:#89929F;
-  --faint:#89929F;
+  --faint:var(--text-faint);
   --teal:#5FD4C4;
   --amber:#E0A458;
   --red:#E2665B;
