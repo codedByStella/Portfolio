@@ -159,3 +159,15 @@ body:has(.tech-sticky) .wrap .stage-desc {
   .statusbar > div:last-child { flex:0 0 auto; font-size:inherit; letter-spacing:-0.04em; }
   .statusbar .breadcrumb-separator { margin:0 2px; }
 }
+
+/* Final mobile override: compact the terminal breadcrumb and align footer labels. */
+@media (max-width: 760px) {
+  .statusbar { display:flex; flex-wrap:nowrap; align-items:center; gap:5px; white-space:nowrap; font-size:clamp(5px, 1.7vw, 9px); line-height:1.2; padding:8px 10px; }
+  .statusbar > div { display:flex; flex-wrap:nowrap; align-items:center; min-width:0; white-space:nowrap; gap:3px; }
+  .statusbar > div:first-child { flex:1 1 auto; overflow:hidden; }
+  .statusbar > div:last-child { flex:0 0 auto; font-size:inherit; letter-spacing:-.045em; }
+  .statusbar .breadcrumb-separator { flex:0 0 auto; margin:0 1px; }
+  .tech-sticky { flex-wrap:nowrap; align-items:center; justify-content:center; gap:clamp(4px, 1.5vw, 8px); padding:8px 6px; }
+  .tech-sticky .hint { display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; min-height:32px; margin:0; padding:0 4px; line-height:1.2; vertical-align:middle; }
+  .tech-sticky a, .tech-sticky .source-unavailable { display:inline-flex; align-items:center; justify-content:center; flex:0 1 auto; min-width:0; min-height:32px; white-space:nowrap; line-height:1.2; padding:5px clamp(4px, 1.5vw, 9px); font-size:clamp(8px, 2.25vw, 10px); }
+}
