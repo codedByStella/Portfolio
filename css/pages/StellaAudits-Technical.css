@@ -73,3 +73,80 @@ body:has(.tech-sticky) .wrap .stage-desc {
   max-width:none;
   box-sizing:border-box;
 }
+
+
+/* Compact mobile navigation and keep the technical breadcrumb on one line. */
+@media (max-width: 560px) {
+  .tech-sticky {
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    gap: clamp(4px, 1.5vw, 8px);
+    padding: 9px 6px;
+    font-size: clamp(8px, 2.25vw, 10px);
+    white-space: nowrap;
+  }
+  .tech-sticky > * {
+    flex: 0 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+  }
+  .tech-sticky a {
+    font-size: inherit;
+    line-height: 1.2;
+  }
+  .tech-sticky a[href*="-Technical.html"] {
+    font-size: 0;
+  }
+  .tech-sticky a[href*="-Technical.html"]::after {
+    content: "Technical";
+    font-size: inherit;
+  }
+  .tech-sticky a.source-link {
+    font-size: 0;
+  }
+  .tech-sticky a.source-link::after {
+    content: "GitHub";
+    font-size: inherit;
+  }
+  .tech-sticky a:last-child:not(.source-link) {
+    font-size: 0;
+  }
+  .tech-sticky a:last-child:not(.source-link)::after {
+    content: "Next →";
+    font-size: inherit;
+  }
+  .tech-sticky .source-unavailable {
+    font-size: 0;
+  }
+  .tech-sticky .source-unavailable::after {
+    content: "Source N/A";
+    font-size: inherit;
+  }
+  .statusbar {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 8px;
+    font-size: clamp(6px, 1.95vw, 9px);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .statusbar > div {
+    min-width: 0;
+    flex: 0 1 auto;
+    white-space: nowrap;
+  }
+  .statusbar > div:first-child {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: clip;
+  }
+  .statusbar > div:last-child {
+    flex: 0 0 auto;
+    font-size: inherit;
+    letter-spacing: -0.04em;
+  }
+  .statusbar .breadcrumb-separator {
+    margin: 0 2px;
+  }
+}
