@@ -71,3 +71,45 @@
 .breadcrumb-separator{color:var(--border);margin:0 6px}
 .section--no-border{border-bottom:none}
 .code-label--spaced{margin-top:22px}
+
+/* Horizontal fill contract: page content and description boxes use the available parent width. */
+body:has(.tech-sticky) .wrap,
+body:has(.meta-grid) .wrap {
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+}
+body:has(.tech-sticky) .wrap > .head,
+body:has(.meta-grid) .wrap > .head,
+body:has(.tech-sticky) .wrap > section,
+body:has(.meta-grid) .wrap > section,
+body:has(.tech-sticky) .wrap .meta-grid,
+body:has(.meta-grid) .wrap .meta-grid,
+body:has(.tech-sticky) .wrap .steps,
+body:has(.meta-grid) .wrap .steps,
+body:has(.tech-sticky) .wrap .shot-grid,
+body:has(.meta-grid) .wrap .shot-grid,
+body:has(.tech-sticky) .wrap .sample,
+body:has(.tech-sticky) .wrap .stat-grid,
+body:has(.tech-sticky) .wrap .callout,
+body:has(.meta-grid) .wrap .callout,
+body:has(.tech-sticky) .wrap .result,
+body:has(.meta-grid) .wrap .result,
+body:has(.tech-sticky) .wrap .crossref,
+body:has(.tech-sticky) .wrap .table-wrap,
+body:has(.meta-grid) .wrap .table-wrap {
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+}
+body:has(.tech-sticky) .wrap .head h1,
+body:has(.meta-grid) .wrap .head h1,
+body:has(.tech-sticky) .wrap .head .lede,
+body:has(.meta-grid) .wrap .head .lede,
+body:has(.tech-sticky) .wrap > section p,
+body:has(.meta-grid) .wrap > section p,
+body:has(.tech-sticky) .wrap .stage-desc {
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+}
