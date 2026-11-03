@@ -9,7 +9,7 @@
 
   .project--audits .sample div {
     background: var(--surface);
-    padding: 16px;
+    padding: 10px 12px;
   }
 
   .project--audits .sample .n {
