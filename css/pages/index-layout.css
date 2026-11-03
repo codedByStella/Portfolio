@@ -1,0 +1,361 @@
+/* Homepage layout system.
+   Loaded after index.css. Vertical rhythm is controlled by .home-stack gap,
+   while section padding controls only the distance between framed sections. */
+
+:root{
+  --home-frame:1080px;
+  --home-gutter:32px;
+  --home-flow-gap:20px;
+  --home-panel-pad:clamp(22px,3vw,34px);
+}
+
+.home-stack{
+  display:flex;
+  flex-direction:column;
+  gap:var(--stack-gap,var(--home-flow-gap));
+}
+.home-stack>*{margin-block:0}
+
+/* Shared page frame and opening hero. */
+.hero{
+  width:100%;
+  max-width:var(--home-frame);
+  padding-inline:var(--home-gutter);
+}
+.hero--intro{
+  padding-top:24px;
+  padding-bottom:6px;
+  --stack-gap:20px;
+  --hero-heading-width:100%;
+}
+.hero--intro .eyebrow{margin-bottom:0}
+.hero--intro h1{
+  width:var(--hero-heading-width);
+  max-width:var(--hero-heading-width);
+  font-size:clamp(26px,2.6vw,32px);
+  line-height:1.18;
+}
+.hero--intro p{
+  max-width:680px;
+  margin:0;
+  font-size:17px;
+  line-height:1.75;
+}
+.hero--intro .hero-meta{
+  margin:0;
+  gap:40px;
+}
+
+/* The shared principles are one framed section, not loose copy above the project list. */
+.hero--principles{
+  padding-top:6px;
+  padding-bottom:18px;
+}
+.pattern-inner{
+  border:1px solid var(--border);
+  border-radius:3px;
+  background:var(--surface);
+  padding:16px var(--home-panel-pad);
+  --stack-gap:14px;
+}
+
+/* Override the more-specific shared .hero p margin inside this stack. */
+.pattern-inner>p{margin:0}
+.pattern-inner .s-label-inline{
+  border:0;
+  padding:0;
+  color:var(--teal);
+}
+.pattern-inner .pattern-intro,
+.pattern-inner .pattern-conclusion{
+  max-width:850px;
+  font-size:15px;
+  line-height:1.8;
+}
+.pattern-inner .pattern-list{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-auto-rows:1fr;
+  align-items:stretch;
+  gap:12px;
+  width:100%;
+  max-width:none;
+  margin:0;
+}
+.pattern-inner .pattern-list li{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  height:100%;
+  padding:20px;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text-dim);
+  font-size:14px;
+  line-height:1.75;
+}
+.pattern-inner .pattern-list li::before{content:none}
+.pattern-inner .pattern-list li strong{
+  display:block;
+  margin-bottom:10px;
+  color:var(--teal);
+  font-family:var(--mono);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.04em;
+}
+
+/* The methodology label keeps the same total 37px of surrounding space,
+   redistributed to 20px above and 17px below. No extra section padding. */
+.processes{
+  max-width:var(--home-frame);
+  margin-bottom:0;
+  gap:2px;
+}
+.section-label--methodology{
+  margin-top:20px;
+  margin-bottom:17px;
+}
+.ai-approach{padding-top:0}
+.ai-approach-inner{border-radius:3px}
+.ai-approach-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.ai-approach-item{border-radius:2px}
+.credentials-inner,.outputs-callout-inner{border-radius:3px}
+
+/* Project list: preserve the larger evidence treatment without competing overrides. */
+.proc{
+  grid-template-columns:minmax(0,42%) minmax(0,1fr) auto;
+  gap:26px;
+  padding:24px;
+  align-items:center;
+  border-radius:3px;
+}
+.proc:hover{
+  transform:translateY(-2px);
+  border-color:rgba(95,212,196,.42);
+  box-shadow:0 12px 30px rgba(0,0,0,.16);
+}
+.proc-usecase{line-height:1.6}
+.proc-arrow{padding:10px 0 10px 10px}
+.proc-thumb{
+  width:100%;
+  height:100%;
+  min-height:220px;
+  max-height:300px;
+  align-self:stretch;
+}
+.proc-thumb img{object-fit:cover;object-position:center}
+.proc-thumb-code{
+  min-height:220px;
+  padding:22px;
+  font-size:12px;
+  gap:10px;
+}
+.proc-name{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:12px;
+}
+.proc-name .proc-status{
+  display:inline-flex;
+  align-items:center;
+  padding:4px 8px;
+  font-size:9px;
+  line-height:1.2;
+}
+.proc-desc{max-width:none}
+
+/* Keep nested labels aligned to their already-inset parent content. */
+.outputs-callout>.section-label,
+.credentials>.section-label{
+  max-width:none;
+  padding:0;
+}
+
+/* Compact contact footer; retain its two-column desktop arrangement. */
+footer{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,420px);
+  align-items:end;
+  gap:18px;
+  padding:28px 32px 32px;
+}
+footer .closing{max-width:none;font-size:14px;line-height:1.65}
+
+@media(max-width:900px){
+  .pattern-inner .pattern-list{grid-template-columns:1fr}
+}
+@media(max-width:850px){
+  .proc{
+    grid-template-columns:minmax(0,38%) minmax(0,1fr) auto;
+    gap:18px;
+    padding:20px;
+  }
+  .proc-thumb{
+    grid-column:auto;
+    grid-row:auto;
+    width:100%;
+    height:100%;
+    min-height:190px;
+    max-height:260px;
+  }
+  .proc>div:nth-child(2){grid-column:auto;grid-row:auto}
+  .proc-arrow{grid-column:auto;grid-row:auto}
+}
+@media(max-width:720px){
+  :root{--home-gutter:20px;--home-panel-pad:20px}
+  .hero--intro{padding-top:28px;padding-bottom:6px}
+  .hero--intro h1{font-size:clamp(25px,6.5vw,29px)}
+  .hero--intro .hero-meta{gap:22px}
+  .hero--principles{padding-top:6px;padding-bottom:16px}
+  .pattern-inner{--stack-gap:12px}
+  .pattern-inner .pattern-list{grid-template-columns:1fr}
+  .ai-approach-grid{grid-template-columns:1fr}
+  .proc{grid-template-columns:1fr;padding:18px;gap:14px}
+  .proc-thumb{
+    grid-column:1;
+    grid-row:auto;
+    width:100%;
+    height:auto;
+    min-height:0;
+    max-height:none;
+    aspect-ratio:16/9;
+  }
+  .proc-thumb-code{min-height:0;padding:24px;font-size:12px}
+  .proc>div:nth-child(2),.proc-arrow{grid-column:1;grid-row:auto}
+  .proc-arrow{text-align:left;padding:0}
+  .credentials-inner{flex-direction:column;gap:18px;padding:20px}
+  .credentials-list{min-width:0}
+  .outputs-callout-inner{align-items:flex-start;flex-direction:column}
+  footer{grid-template-columns:1fr;padding:22px 20px 26px;gap:12px}
+}
+
+
+/* Center the opening statement and make its reading breaks explicit. */
+.hero--intro{
+  align-items:center;
+  text-align:center;
+}
+.hero--intro .eyebrow{
+  justify-content:center;
+  text-align:center;
+}
+.hero--intro h1{
+  width:100%;
+  margin-inline:auto;
+  text-align:center;
+}
+
+.hero--intro .hero-divider{
+  display:block;
+  flex:0 0 auto;
+  align-self:center;
+  width:var(--hero-heading-width);
+  max-width:var(--hero-heading-width);
+  height:2px;
+  min-height:2px;
+  margin:0;
+  padding:0;
+  border:0;
+  background:var(--teal);
+  opacity:.8;
+}
+.hero--intro p{
+  margin-inline:auto;
+  text-align:center;
+}
+.hero--intro .hero-meta{
+  justify-content:center;
+  text-align:center;
+}
+.hero--intro .hero-meta>div{text-align:center}
+
+
+/* Give the portfolio identity a matching teal marker treatment. */
+.hero--intro .eyebrow{
+  color:var(--teal);
+  gap:12px;
+}
+.hero--intro .eyebrow::before,
+.hero--intro .eyebrow::after{
+  content:"";
+  display:block;
+  flex:0 0 24px;
+  width:24px;
+  height:2px;
+  margin:0;
+  background:var(--teal);
+  opacity:.8;
+}
+
+/* The principles section now uses the same numbered, left-aligned label as the rest of the page. */
+.section-label--pattern{
+  margin:18px auto 14px;
+}
+.hero--principles{padding-top:0}
+
+
+/* Compact the final sign-off while preserving its deliberate horizontal asymmetry. */
+.ai-approach{margin-bottom:28px}
+
+.outputs-callout{margin-bottom:24px}
+.outputs-callout>.section-label{margin-bottom:8px}
+.outputs-callout-inner{
+  padding:16px 20px;
+  gap:20px;
+}
+
+.credentials{margin-bottom:22px}
+.credentials>.section-label{margin-bottom:8px}
+.credentials-inner{
+  padding:16px 20px;
+  gap:22px;
+}
+
+footer{padding:20px 32px 24px}
+@media(max-width:720px){
+  .outputs-callout>.section-label,
+  .credentials>.section-label{margin-bottom:8px}
+  .outputs-callout-inner{padding:16px 18px}
+  .credentials-inner{padding:16px 18px;gap:14px}
+  footer{padding:18px 20px 22px}
+}
+
+
+/* Standardize project rows and their evidence frames as one set. */
+.proc{
+  height:280px;
+  min-height:280px;
+}
+.proc-thumb,
+.proc-thumb-code{
+  height:100%;
+  min-height:0;
+  max-height:none;
+}
+.proc>div:nth-child(2){
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+  height:100%;
+}
+@media(max-width:720px){
+  .proc{
+    height:auto;
+    min-height:0;
+  }
+  .proc-thumb,
+  .proc-thumb-code{
+    height:auto;
+    min-height:0;
+    max-height:none;
+  }
+  .proc-thumb{aspect-ratio:16/9}
+  .proc>div:nth-child(2){height:auto}
+}
