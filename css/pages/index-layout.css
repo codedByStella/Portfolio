@@ -102,7 +102,11 @@
 
 /* The methodology label keeps the same total 37px of surrounding space,
    redistributed to 20px above and 17px below. No extra section padding. */
-.processes{margin-bottom:0}
+.processes{
+  max-width:var(--home-frame);
+  margin-bottom:0;
+  gap:2px;
+}
 .section-label--methodology{
   margin-top:20px;
   margin-bottom:17px;
@@ -110,10 +114,6 @@
 .ai-approach{padding-top:0}
 
 /* Project list: preserve the larger evidence treatment without competing overrides. */
-.processes{
-  max-width:var(--home-frame);
-  gap:2px;
-}
 .proc{
   grid-template-columns:minmax(0,42%) minmax(0,1fr) auto;
   gap:26px;
