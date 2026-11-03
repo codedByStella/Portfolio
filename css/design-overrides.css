@@ -30,16 +30,16 @@ footer{max-width:1120px;padding:54px 32px 90px}
 html{scroll-padding-top:28px}
 body:has(.footer){line-height:1.75}
 body:has(.footer) .wrap{max-width:1080px}
-body:has(.footer) .head{padding-top:82px}
-body:has(.footer) .head h1{max-width:980px}
-body:has(.footer) section{padding:48px 0}
-body:has(.footer) p{max-width:780px}
-body:has(.footer) h2{font-size:23px}
-body:has(.footer) .callout{padding:22px 24px;background:linear-gradient(110deg,rgba(95,212,196,.055),transparent 70%),var(--surface)}
-body:has(.footer) .table-wrap{max-width:100%;border-radius:3px}
-body:has(.footer) th{letter-spacing:.04em}
-body:has(.footer) .meta-grid{border-radius:3px;overflow:hidden}
-body:has(.footer) .steps{gap:12px}
+body:has(.footer) .wrap .head{padding-top:82px}
+body:has(.footer) .wrap .head h1{max-width:980px}
+body:has(.footer) .wrap section{padding:48px 0}
+body:has(.footer) .wrap p{max-width:780px}
+body:has(.footer) .wrap h2{font-size:23px}
+body:has(.footer) .wrap .callout{padding:22px 24px;background:linear-gradient(110deg,rgba(95,212,196,.055),transparent 70%),var(--surface)}
+body:has(.footer) .wrap .table-wrap{max-width:100%;border-radius:3px}
+body:has(.footer) .wrap th{letter-spacing:.04em}
+body:has(.footer) .wrap .meta-grid{border-radius:3px;overflow:hidden}
+body:has(.footer) .wrap .steps{gap:12px}
 body:has(.footer) .step{padding:18px;border-radius:3px}
 body:has(.footer) .footer{padding-left:max(20px,calc((100vw - 1040px)/2));padding-right:max(20px,calc((100vw - 1040px)/2))}
 body:has(.footer) .footer a{padding:7px 9px}
@@ -106,7 +106,7 @@ body:has(.tech-sticky) footer{max-width:1120px}
  .shot img{max-height:480px}
  footer{padding-left:20px;padding-right:20px}
  body:has(.footer) .wrap{padding-left:20px;padding-right:20px}
- body:has(.footer) section{padding:38px 0}
+ body:has(.footer) .wrap section{padding:38px 0}
  body:has(.footer) .footer{padding:10px 12px}
  .tech-sticky{padding:10px 8px}
  .ai-approach-inner{padding:18px}
@@ -125,3 +125,6 @@ body:has(.card) .image img{max-height:680px;object-fit:contain}
 body:has(.card) .card figcaption{padding:16px 18px 19px;line-height:1.6}
 body:has(.card) .head h2{font-size:clamp(22px,2.5vw,28px)}
 @media(max-width:760px){body:has(.card) .four{grid-template-columns:1fr}}
+
+body:has(.card) .head{padding-top:0}
+body:has(.card) .footer{padding:24px 0 0;background:transparent;box-shadow:none;backdrop-filter:none;border-radius:0}
