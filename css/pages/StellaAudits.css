@@ -1,5 +1,29 @@
 /* Page-specific styles for StellaAudits. Shared overview presentation lives in overview.css. */
-.sample{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); margin-top:18px;}
-.sample div{background:var(--surface); padding:16px 14px;}
-.sample .n{font-family:var(--mono); font-size:22px; color:var(--text);}
-.sample .l{font-family:var(--mono); font-size:11px; color:var(--text-faint); margin-top:4px; letter-spacing:0.04em;}
+
+.sample {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  margin-top:18px;
+}
+
+.sample div {
+  background:var(--surface);
+  padding:16px 14px;
+}
+
+.sample .n {
+  font-family:var(--mono);
+  font-size:22px;
+  color:var(--text);
+}
+
+.sample .l {
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--text-faint);
+  margin-top:4px;
+  letter-spacing:0.04em;
+}
