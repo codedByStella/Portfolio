@@ -661,18 +661,25 @@ body:has(.meta-grid) .wrap > .head > :not(.status-tag):not(h1) {
   grid-column: 1;
 }
 
-/* Tablet navigation can wrap before labels collide; reserve room below the
-   fixed bar so its wrapped rows never cover the final content. */
+/* Keep project navigation on one line at desktop/tablet widths.
+   Allow wrapping only when the viewport genuinely needs the extra row. */
 body:has(.tech-sticky) {
   padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
 }
 body:has(.tech-sticky) .tech-sticky {
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+}
+body:has(.tech-sticky) .tech-sticky .hint,
+body:has(.tech-sticky) .tech-sticky a {
+  white-space: nowrap;
 }
 @media (max-width: 760px) {
   body:has(.tech-sticky) {
     padding-bottom: calc(132px + env(safe-area-inset-bottom, 0px));
+  }
+  body:has(.tech-sticky) .tech-sticky {
+    flex-wrap: wrap;
   }
   body:has(.tech-sticky) .wrap > .head,
   body:has(.meta-grid) .wrap > .head {
