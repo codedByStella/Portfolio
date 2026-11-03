@@ -1,5 +1,5 @@
 @layer page-specific {
-  /* StellaStudios' workflow timeline and embedded media. */
+  /* StellaStudios workflow timeline and embedded media. */
 
   .project--studios .dot {
     box-shadow: none;
@@ -9,13 +9,15 @@
   .project--studios .flow {
     display: flex;
     flex-direction: column;
+    margin-top: 8px;
   }
 
   .project--studios .stage {
+    position: relative;
     display: grid;
     grid-template-columns: 32px 1fr;
     gap: 18px;
-    position: relative;
+    padding: 16px 0;
   }
 
   .project--studios .stage-marker {
@@ -27,44 +29,55 @@
   .project--studios .stage-marker .node {
     width: 9px;
     height: 9px;
-    border-radius: 50%;
-    background: var(--teal);
     flex-shrink: 0;
     margin-top: 5px;
+    border-radius: 50%;
+    background: var(--teal);
   }
 
   .project--studios .stage-marker .line {
     width: 1px;
     flex: 1;
-    background: var(--border);
     margin-top: 4px;
+    background: var(--border);
   }
 
-  .project--studios .stage:last-child .line {
-    display: none;
-  }
+  .project--studios .stage:last-child .line { display: none; }
 
   .project--studios .stage-name {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--text);
-    font-weight: 600;
     margin-bottom: 4px;
+    color: var(--text);
+    font: 600 14px var(--mono);
   }
 
   .project--studios .stage-desc {
+    max-width: 600px;
     color: var(--text-dim);
     font-size: 14px;
   }
 
-  .project--studios .stage-gate .stage-name {
-    color: var(--amber);
+  .project--studios .stage-gate .stage-name { color: var(--amber); }
+  .project--studios .stage-gate .node { background: var(--amber); }
+
+  .project--studios .shot-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 22px;
+    margin-top: 24px;
   }
 
-  .project--studios .stage-gate .node {
-    background: var(--amber);
+  .project--studios .shot {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
   }
 
+  .project--studios .shot img,
   .project--studios .media-frame {
     display: block;
     flex: 0 0 280px;
@@ -75,24 +88,27 @@
     box-sizing: border-box;
     border: 1px solid var(--border);
     background: var(--bg);
+  }
+
+  .project--studios .shot img {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .project--studios .media-frame {
     position: relative;
     overflow: hidden;
   }
 
-  .project--studios .video-inner {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
+  .project--studios .video-inner,
   .project--studios .video-inner iframe {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    border: 0;
   }
+
+  .project--studios .video-inner iframe { border: 0; }
 
   .project--studios .shot-cap {
     flex: 0 0 84px;
@@ -102,49 +118,13 @@
     max-height: 84px;
     box-sizing: border-box;
     overflow: hidden;
-    font-family: var(--mono);
-    letter-spacing: 0.02em;
+    padding: 12px 4px 4px;
     color: var(--text-faint);
+    font: 11px/1.5 var(--mono);
+    letter-spacing: .02em;
+  }
+
+  @media(max-width: 720px) {
+    .project--studios .shot-grid { grid-template-columns: 1fr; gap: 16px; }
   }
 }
-
-/* Preserve the original 280px centered crop; this unlayered rule overrides the shared image frame. */
-.project--studios .wrap>section .shot img {
-  display:block;
-  width:100%;
-  height:280px;
-  min-height:280px;
-  max-height:280px;
-  object-fit:cover;
-  object-position:center;
-}
-
-/* Match the original 8px media-card frame. */
-.project--studios .shot{padding:8px}
-
-
-/* Original two-column media cards; keep captions aligned under fixed media. */
-.project--studios .shot-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  align-items:stretch;
-  gap:22px;
-  margin-top:24px;
-}
-.project--studios .shot{
-  display:flex;
-  flex-direction:column;
-  min-width:0;
-  width:100%;
-  padding:8px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  box-sizing:border-box;
-}
-@media(max-width:720px){
-  .project--studios .shot-grid{grid-template-columns:1fr;gap:16px}
-}
-
-/* Preserve original workflow-stage spacing and readable description measure. */
-.project--studios .wrap>section .stage{padding:16px 0}
-.project--studios .wrap>section .stage-desc{max-width:600px}
