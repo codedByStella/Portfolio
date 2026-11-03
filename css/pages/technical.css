@@ -295,11 +295,6 @@ body.page--technical {
   border-bottom-color: var(--amber);
 }
 
-.breadcrumb-separator {
-  margin: 0 6px;
-  color: var(--border);
-}
-
 @media (max-width: 560px) {
   .page--technical .statusbar {
     padding: 12px 18px;
