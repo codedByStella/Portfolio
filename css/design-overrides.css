@@ -85,15 +85,18 @@ body:has(.card) .head{padding-top:0}
 body:has(.card) .footer{padding:24px 0 0;background:transparent;box-shadow:none;backdrop-filter:none;border-radius:0}
 
 
-/* Project headers: align each status label with its page title. */
-.head {
+/* Project headers only: align status labels beside their H1 without
+   changing the separate section-heading layout used by the outputs gallery. */
+body:has(.tech-sticky) .wrap > .head,
+body:has(.meta-grid) .wrap > .head {
   display: grid;
   grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
   align-items: center;
   column-gap: clamp(16px, 2.5vw, 28px);
   row-gap: 18px;
 }
-.head > .status-tag {
+body:has(.tech-sticky) .wrap > .head > .status-tag,
+body:has(.meta-grid) .wrap > .head > .status-tag {
   grid-column: 1;
   grid-row: 1;
   align-self: center;
@@ -101,25 +104,54 @@ body:has(.card) .footer{padding:24px 0 0;background:transparent;box-shadow:none;
   max-width: 100%;
   margin: 0;
 }
-.head > h1 {
+body:has(.tech-sticky) .wrap > .head > h1,
+body:has(.meta-grid) .wrap > .head > h1 {
   grid-column: 2;
   grid-row: 1;
   min-width: 0;
   max-width: none;
   margin: 0;
 }
-.head > :not(.status-tag):not(h1) {
+body:has(.tech-sticky) .wrap > .head > :not(.status-tag):not(h1),
+body:has(.meta-grid) .wrap > .head > :not(.status-tag):not(h1) {
   grid-column: 1 / -1;
 }
+
+/* Tablet navigation can wrap before labels collide; reserve room below the
+   fixed bar so its wrapped rows never cover the final content. */
+body:has(.tech-sticky) {
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+body:has(.tech-sticky) .tech-sticky {
+  flex-wrap: wrap;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+}
 @media (max-width: 760px) {
-  .head {
+  body:has(.tech-sticky) {
+    padding-bottom: calc(132px + env(safe-area-inset-bottom, 0px));
+  }
+  body:has(.tech-sticky) .wrap > .head,
+  body:has(.meta-grid) .wrap > .head {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 18px;
   }
-  .head > .status-tag,
-  .head > h1,
-  .head > :not(.status-tag):not(h1) {
+  body:has(.tech-sticky) .wrap > .head > .status-tag,
+  body:has(.tech-sticky) .wrap > .head > h1,
+  body:has(.tech-sticky) .wrap > .head > :not(.status-tag):not(h1),
+  body:has(.meta-grid) .wrap > .head > .status-tag,
+  body:has(.meta-grid) .wrap > .head > h1,
+  body:has(.meta-grid) .wrap > .head > :not(.status-tag):not(h1) {
     grid-column: 1;
     grid-row: auto;
   }
+}
+
+/* Captions must grow with their text; fixed-height clipping hid content on
+   narrow screens and when users enlarge text. */
+body:has(.tech-sticky) .wrap > section .shot-cap {
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  overflow: visible;
 }
