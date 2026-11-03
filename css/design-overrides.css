@@ -1,0 +1,114 @@
+/* Employer-focused visual pass. Shared identity, stronger evidence, clearer reading rhythm. */
+:root{--measure:760px;--wide:1120px}
+:focus-visible{outline:2px solid var(--amber);outline-offset:4px}
+a{transition:color .16s ease,border-color .16s ease,background-color .16s ease}
+.statusbar{padding:13px clamp(18px,4vw,44px);letter-spacing:.025em}
+.wrap{max-width:1120px}
+.head{padding:clamp(58px,8vw,104px) 0 56px}
+.head h1{font-size:clamp(32px,5vw,50px);line-height:1.12;max-width:900px;letter-spacing:-.035em}
+.lede{font-size:18px;line-height:1.75;max-width:760px}
+.tags{gap:9px}
+.tag{padding:6px 11px;background:rgba(255,255,255,.018)}
+section{padding:clamp(38px,5.2vw,68px) 0}
+.s-label{font-size:11px;letter-spacing:.15em;margin-bottom:24px}
+h2{font-size:clamp(22px,2.4vw,28px);line-height:1.25;letter-spacing:-.02em}
+p{max-width:760px;line-height:1.8}
+.code,.result,.crossref{border-radius:3px}
+.result{padding:28px 30px}
+.crossref{padding:22px 24px;background:rgba(255,255,255,.015)}
+.shot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start;margin-top:24px}
+.shot{min-width:0;width:100%;padding:10px;background:var(--surface);border-radius:3px}
+.shot img{width:100%;height:auto;max-height:620px;object-fit:contain;object-position:top center;background:#0d1117;border-radius:2px}
+.shot-cap{max-width:none;padding:12px 4px 3px;line-height:1.55;font-size:11px}
+footer{max-width:1120px;padding:54px 32px 90px}
+.tech-sticky,.footer{backdrop-filter:blur(16px);background:rgba(18,21,27,.94);box-shadow:0 -10px 32px rgba(0,0,0,.16)}
+.tech-sticky a,.footer a{padding:7px 9px;border:1px solid transparent;border-radius:2px}
+.tech-sticky a:hover,.footer a:hover{background:rgba(95,212,196,.07);border-color:rgba(95,212,196,.24);text-decoration:none}
+.tech-sticky a.source-link,.footer .source-link{color:var(--amber)}
+.tech-sticky a.source-link:hover,.footer .source-link:hover{background:rgba(224,164,88,.07);border-color:rgba(224,164,88,.25)}
+/* Technical pages: documentation measure, not marketing-card width. */
+html{scroll-padding-top:28px}
+body:has(.footer){line-height:1.75}
+body:has(.footer) .wrap{max-width:1080px}
+body:has(.footer) .head{padding-top:82px}
+body:has(.footer) .head h1{max-width:980px}
+body:has(.footer) section{padding:48px 0}
+body:has(.footer) p{max-width:780px}
+body:has(.footer) h2{font-size:23px}
+body:has(.footer) .callout{padding:22px 24px;background:linear-gradient(110deg,rgba(95,212,196,.055),transparent 70%),var(--surface)}
+body:has(.footer) .table-wrap{max-width:100%;border-radius:3px}
+body:has(.footer) th{letter-spacing:.04em}
+body:has(.footer) .meta-grid{border-radius:3px;overflow:hidden}
+body:has(.footer) .steps{gap:12px}
+body:has(.footer) .step{padding:18px;border-radius:3px}
+body:has(.footer) .footer{padding-left:max(20px,calc((100vw - 1040px)/2));padding-right:max(20px,calc((100vw - 1040px)/2))}
+body:has(.footer) .footer a{padding:7px 9px}
+/* Splash pages: prose stays readable while evidence gets room to breathe. */
+body:has(.tech-sticky) .wrap{max-width:1120px}
+body:has(.tech-sticky) .head h1{max-width:900px}
+body:has(.tech-sticky) p{max-width:760px}
+body:has(.tech-sticky) .shot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+body:has(.tech-sticky) .shot img{max-height:620px}
+body:has(.tech-sticky) footer{max-width:1120px}
+/* Homepage: keep the terminal character, improve scan order and project evidence. */
+.hero{max-width:1120px;padding:clamp(70px,9vw,116px) clamp(20px,4vw,44px) 86px}
+.hero h1{max-width:980px;font-size:clamp(34px,5vw,54px);line-height:1.16;letter-spacing:-.035em}
+.hero p{max-width:760px;font-size:18px;line-height:1.8}
+.hero-meta{gap:clamp(22px,4vw,48px)}
+.section-label,.processes,.credentials,.ai-approach,.outputs-callout{max-width:1120px}
+.processes{gap:10px;margin-bottom:104px}
+.proc{grid-template-columns:auto 164px minmax(0,1fr) auto;gap:24px;padding:24px;background:linear-gradient(110deg,rgba(255,255,255,.018),transparent 68%),var(--surface);border-radius:3px}
+.proc:hover{transform:translateY(-2px);border-color:rgba(95,212,196,.42);box-shadow:0 12px 30px rgba(0,0,0,.16)}
+.proc-thumb{width:164px;height:112px}
+.proc-thumb-code{font-size:10px}
+.proc-name{font-size:17px;letter-spacing:-.015em}
+.proc-desc{font-size:14.5px;line-height:1.7}
+.proc-usecase{line-height:1.6}
+.proc-arrow{padding:10px 0 10px 10px}
+.ai-approach{margin-bottom:92px}
+.ai-approach-inner{padding:clamp(24px,4vw,42px);border-color:#35414b;background:linear-gradient(130deg,rgba(95,212,196,.055),transparent 48%),var(--surface);border-radius:3px}
+.ai-approach-header{margin-bottom:18px}
+.ai-approach-header h2{font-size:clamp(18px,2vw,23px)}
+.ai-approach-intro{font-size:15.5px;line-height:1.8;max-width:850px}
+.ai-approach-grid{gap:10px}
+.ai-approach-item{padding:22px;border-radius:2px}
+.ai-approach-item h3{font-size:11px;letter-spacing:.08em}
+.ai-approach-item p{font-size:13.5px;line-height:1.8}
+.ai-approach-conclusion{max-width:850px;line-height:1.8}
+.credentials-inner,.outputs-callout-inner{border-radius:3px;padding:28px}
+@media(max-width:850px){
+ .proc{grid-template-columns:auto minmax(0,1fr) auto;gap:16px}
+ .proc-thumb{grid-column:1/-1;grid-row:2;width:100%;height:170px}
+ .proc-status{grid-column:1;grid-row:1}
+ .proc>div:nth-child(3){grid-column:2;grid-row:1}
+ .proc-arrow{grid-column:3;grid-row:1}
+ .shot-grid{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+ .hero{padding:64px 20px 58px}
+ .hero h1{font-size:clamp(30px,8vw,42px)}
+ .hero p{font-size:16px}
+ .proc{grid-template-columns:1fr;padding:20px}
+ .proc-status,.proc-thumb,.proc>div:nth-child(3),.proc-arrow{grid-column:1;grid-row:auto}
+ .proc-thumb{height:190px}
+ .ai-approach-grid{grid-template-columns:1fr}
+ .ai-approach-item{padding:18px}
+ .credentials-inner{padding:20px}
+}
+@media(max-width:560px){
+ .statusbar{padding:11px 16px}
+ .wrap{padding-left:20px;padding-right:20px}
+ .head{padding-top:52px}
+ .head h1{font-size:clamp(29px,9vw,40px)}
+ section{padding:38px 0}
+ .shot-grid{gap:16px}
+ .shot{padding:7px}
+ .shot img{max-height:480px}
+ footer{padding-left:20px;padding-right:20px}
+ body:has(.footer) .wrap{padding-left:20px;padding-right:20px}
+ body:has(.footer) section{padding:38px 0}
+ body:has(.footer) .footer{padding:10px 12px}
+ .tech-sticky{padding:10px 8px}
+ .ai-approach-inner{padding:18px}
+ .ai-approach-header{flex-wrap:wrap}
+}
