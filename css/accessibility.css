@@ -21,7 +21,8 @@ body :is(.shot-cap, .code-label, .s-label, .tag, .status-tag, .meta-grid .k,
   table, th, td, .muted, .hint, small, summary, summary span, label,
   .card small, .card strong, .card figcaption, .card figcaption a,
   .note, .disclosure, .eyebrow, .head span, .section > .head span,
-  button, input, select, textarea) {
+  button, input, select, textarea, .feature-list li strong,
+  .tech-sticky a, .report-head strong) {
   font-size: max(14px, 1em) !important;
   line-height: 1.55 !important;
 }
