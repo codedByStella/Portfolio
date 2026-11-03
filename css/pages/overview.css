@@ -24,6 +24,7 @@ body {
   color:var(--text);
   font-family:var(--sans);
   line-height:1.65;
+  padding-bottom:78px;
   -webkit-font-smoothing:antialiased;
 }
 
@@ -279,6 +280,3 @@ footer a {
   color:var(--project-accent);
 }
 
-body {
-  padding-bottom:78px;
-}
