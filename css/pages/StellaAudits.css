@@ -1,3 +1,4 @@
+@layer page-specific {
 /* Page-specific styles for StellaAudits. Shared overview presentation lives in overview.css. */
 
 .sample {
@@ -26,4 +27,5 @@
   color:var(--text-faint);
   margin-top:4px;
   letter-spacing:0.04em;
+}
 }
