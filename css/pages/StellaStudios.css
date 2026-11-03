@@ -102,7 +102,7 @@ body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;b
   background:var(--bg);
 }
 .shot img{
-  object-fit: fill;
+  object-fit: cover;
   object-position:center;
 }
 .media-frame{
