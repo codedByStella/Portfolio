@@ -1,7 +1,9 @@
 /* Portfolio stylesheet entry point.
-   Load exactly once from each HTML document. */
+   Explicit layers keep shared rules predictable and page overrides intentional. */
 
-@import url("./tokens.css");
-@import url("./base.css");
-@import url("./components.css");
-@import url("./pages/page-system.css");
+@layer tokens, base, components, page-family, page-system, page-specific;
+
+@import url("./tokens.css") layer(tokens);
+@import url("./base.css") layer(base);
+@import url("./components.css") layer(components);
+@import url("./pages/page-system.css") layer(page-system);
