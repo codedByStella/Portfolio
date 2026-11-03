@@ -1,12 +1,12 @@
 @layer page-specific {
 /* Page-specific styles for StellaFlips. Shared overview presentation lives in overview.css. */
 
-.page--overview.project--flips .dot {
+.dot {
   box-shadow:none;
   animation:none;
 }
 
-.page--overview.project--flips .wrap>section .stat-grid {
+.stat-grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:1px;
@@ -15,7 +15,7 @@
   margin:28px 0;
 }
 
-.page--overview.project--flips .wrap>section .stat {
+.stat {
   background:var(--surface);
   padding:20px 18px;
 }
@@ -34,12 +34,12 @@
 }
 
 @media(max-width:640px) {
-  .page--overview.project--flips .wrap>section .stat-grid {
+  .stat-grid {
     grid-template-columns:1fr 1fr;
   }
 }
 
-.page--overview.project--flips .wrap>section .code {
+.code {
   background:var(--surface);
   border:1px solid var(--border);
   padding:22px 24px;
@@ -51,7 +51,7 @@
   line-height:1.7;
 }
 
-.page--overview.project--flips .wrap>section .shot-grid {
+.shot-grid {
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   align-items:stretch;
@@ -59,7 +59,7 @@
   margin-top:24px;
 }
 
-.page--overview.project--flips .wrap>section .shot {
+.shot {
   display:flex;
   flex-direction:column;
   min-width:0;
@@ -70,7 +70,7 @@
   box-sizing:border-box;
 }
 
-.page--overview.project--flips .wrap>section .shot img,.page--overview.project--flips .wrap>section .media-frame {
+.shot img,.media-frame {
   display:block;
   flex:0 0 280px;
   width:100%;
@@ -82,24 +82,24 @@
   background:var(--bg);
 }
 
-.page--overview.project--flips .wrap>section .shot img {
+.shot img {
   object-fit:contain;
   object-position:center;
 }
 
-.page--overview.project--flips .wrap>section .media-frame {
+.media-frame {
   position:relative;
   overflow:hidden;
 }
 
-.page--overview.project--flips .wrap>section .video-inner {
+.video-inner {
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
 }
 
-.page--overview.project--flips .wrap>section .video-inner iframe {
+.video-inner iframe {
   position:absolute;
   inset:0;
   width:100%;
@@ -107,7 +107,7 @@
   border:0;
 }
 
-.page--overview.project--flips .wrap>section .shot-cap {
+.shot-cap {
   flex:0 0 84px;
   width:100%;
   height:84px;
@@ -124,7 +124,7 @@
 }
 
 @media(max-width:720px) {
-  .page--overview.project--flips .wrap>section .shot-grid {
+  .shot-grid {
     grid-template-columns:1fr;
     gap:16px;
   }
