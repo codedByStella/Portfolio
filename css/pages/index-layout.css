@@ -245,13 +245,19 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   margin-inline:auto;
   text-align:center;
 }
+
 .hero--intro .hero-divider{
-  flex:0 0 1px;
+  display:block;
+  flex:0 0 auto;
   align-self:center;
-  width:100%;
-  max-width:680px;
-  height:1px;
-  background:var(--border);
+  width:min(100%,680px);
+  height:2px;
+  min-height:2px;
+  margin:0;
+  padding:0;
+  border:0;
+  background:var(--teal);
+  opacity:.8;
 }
 .hero--intro p{
   margin-inline:auto;
