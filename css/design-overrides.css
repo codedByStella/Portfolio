@@ -26,7 +26,7 @@ footer{max-width:1120px;padding:54px 32px 90px}
 .tech-sticky a:hover,.footer a:hover{background:rgba(95,212,196,.07);border-color:rgba(95,212,196,.24);text-decoration:none}
 .tech-sticky a.source-link,.footer .source-link{color:var(--amber)}
 .tech-sticky a.source-link:hover,.footer .source-link:hover{background:rgba(224,164,88,.07);border-color:rgba(224,164,88,.25)}
-/* Technical pages: documentation measure, not marketing-card width. */
+/* Overview and technical pages share one consistent content frame. */
 html{scroll-padding-top:28px}
 body:has(.footer){line-height:1.75}
 body:has(.footer) .wrap,body:has(.tech-sticky) .wrap{max-width:1120px}
