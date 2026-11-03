@@ -1,3 +1,4 @@
+@layer page-specific {
 /* Page-specific styles for StellaSnipes. Shared overview presentation lives in overview.css. */
 
 .page--overview.project--snipes .wrap>section .shot-grid {
@@ -37,4 +38,5 @@
     grid-template-columns:1fr;
     gap:16px;
   }
+}
 }
