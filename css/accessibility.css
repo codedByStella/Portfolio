@@ -18,7 +18,10 @@ body :is(p, li, dd, dt, blockquote, figcaption, .lede, .intro, .stage-desc,
 /* Dense supporting text: never fall below 14px. */
 body :is(.shot-cap, .code-label, .s-label, .tag, .status-tag, .meta-grid .k,
   .sample .l, .step .n, .cr-label, .statusbar, .tech-sticky, .footer,
-  table, th, td, .muted, .hint) {
+  table, th, td, .muted, .hint, small, summary, summary span, label,
+  .card small, .card strong, .card figcaption, .card figcaption a,
+  .note, .disclosure, .eyebrow, .head span, .section > .head span,
+  button, input, select, textarea) {
   font-size: max(14px, 1em) !important;
   line-height: 1.55 !important;
 }
@@ -31,8 +34,7 @@ body :is(.meta-grid .v, .sample .n, .stage-name) {
 }
 
 /* Center every project title consistently, including the StellaAudits hero. */
-body .wrap > .head h1,
-body main > h1 {
+body h1 {
   width: 100%;
   max-width: 100% !important;
   margin-inline: auto !important;
