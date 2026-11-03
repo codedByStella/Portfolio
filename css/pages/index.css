@@ -1,5 +1,6 @@
 @import url("../main.css");
 @import url("../design-overrides.css");
+@import url("../design-overrides.css");
 
 *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
