@@ -1,3 +1,4 @@
+@layer page-specific {
 /* Page-specific styles for StellaFlips. Shared overview presentation lives in overview.css. */
 
 .page--overview.project--flips .dot {
@@ -127,4 +128,5 @@
     grid-template-columns:1fr;
     gap:16px;
   }
+}
 }
