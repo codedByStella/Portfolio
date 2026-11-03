@@ -132,8 +132,8 @@ layer_contract = {
 
 main_source = (ROOT / "css" / "main.css").read_text(encoding="utf-8")
 if not re.search(
-    r"@layer\\s+tokens\\s*,\\s*base\\s*,\\s*components\\s*,"
-    r"\\s*page-family\\s*,\\s*page-system\\s*,\\s*page-specific\\s*;",
+    r"@layer\s+tokens\s*,\s*base\s*,\s*components\s*,"
+    r"\s*page-family\s*,\s*page-system\s*,\s*page-specific\s*;",
     main_source,
 ):
     ERRORS.append("css/main.css: expected explicit cascade layer order is missing")
@@ -142,7 +142,7 @@ for relative_path, layer_name in layer_contract.items():
     stylesheet = ROOT / relative_path
     if stylesheet.is_file():
         source = stylesheet.read_text(encoding="utf-8")
-        if not re.search(rf"@layer\\s+{re.escape(layer_name)}\\s*\\{{", source):
+        if not re.search(rf"@layer\s+{re.escape(layer_name)}\s*\{{", source):
             ERRORS.append(f"{relative_path}: stylesheet must be wrapped in @layer {layer_name}")
 
 for css_path in css_files:
