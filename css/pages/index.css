@@ -572,3 +572,20 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   max-width:none;
   padding:0;
 }
+
+/* Compact the homepage opening so the identity, headline, description, and stats read as one unit. */
+.hero:not(.hero--tight-top){
+  padding-top:24px;
+  padding-bottom:16px;
+}
+.hero:not(.hero--tight-top) .eyebrow{margin-bottom:14px}
+.hero:not(.hero--tight-top) h1{
+  font-size:clamp(26px,2.6vw,32px);
+  line-height:1.18;
+}
+.hero:not(.hero--tight-top) p{margin-top:16px}
+.hero:not(.hero--tight-top) .hero-meta{margin-top:16px}
+@media(max-width:720px){
+  .hero:not(.hero--tight-top){padding-top:28px;padding-bottom:16px}
+  .hero:not(.hero--tight-top) h1{font-size:clamp(25px,6.5vw,29px)}
+}
