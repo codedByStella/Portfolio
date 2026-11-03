@@ -112,7 +112,8 @@ for html_path in html_files:
         "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
         "stroke-opacity", "stroke-width", "text-anchor", "text-decoration", "text-rendering",
         "unicode-bidi", "vector-effect", "visibility", "word-spacing", "writing-mode",
-    )    for svg in svg_blocks:
+    )
+    for svg in svg_blocks:
         for attribute in svg_presentation_attributes:
             if re.search(rf"\s{attribute}\s*=", svg, re.IGNORECASE):
                 ERRORS.append(
