@@ -250,7 +250,7 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   display:block;
   flex:0 0 auto;
   align-self:center;
-  width:min(100%,680px);
+  width:min(100%,820px);
   height:2px;
   min-height:2px;
   margin:0;
@@ -268,3 +268,27 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   text-align:center;
 }
 .hero--intro .hero-meta>div{text-align:center}
+
+
+/* Give the portfolio identity a matching teal marker treatment. */
+.hero--intro .eyebrow{
+  color:var(--teal);
+  gap:12px;
+}
+.hero--intro .eyebrow::before,
+.hero--intro .eyebrow::after{
+  content:"";
+  display:block;
+  flex:0 0 24px;
+  width:24px;
+  height:2px;
+  margin:0;
+  background:var(--teal);
+  opacity:.8;
+}
+
+/* The principles section now uses the same numbered, left-aligned label as the rest of the page. */
+.section-label--pattern{
+  margin:12px auto 14px;
+}
+.hero--principles{padding-top:0}
