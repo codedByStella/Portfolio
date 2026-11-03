@@ -153,10 +153,6 @@ html {
   scroll-padding-top:28px;
 }
 
-body.page--technical {
-  line-height:1.75;
-}
-
 body.page--technical .wrap {
   max-width:1080px;
 }
