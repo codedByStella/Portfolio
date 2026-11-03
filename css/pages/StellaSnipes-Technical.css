@@ -1,0 +1,4 @@
+/* StellaSnipes technical metadata retains the original two-column rhythm. */
+.project--snipes.page--technical .meta-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
