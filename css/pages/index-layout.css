@@ -53,7 +53,7 @@
   border:1px solid var(--border);
   border-radius:3px;
   background:var(--surface);
-  padding:var(--home-panel-pad);
+  padding:20px var(--home-panel-pad) 28px;
   --stack-gap:20px;
 }
 .pattern-inner .s-label-inline{
