@@ -1,20 +1,20 @@
 /* Shared project overview foundation. Loaded only by project overview pages. */
 
-body.page--overview {
+.page--overview {
   --project-accent: var(--teal);
   --project-code-accent: var(--teal);
   --project-status-accent: var(--teal);
   --project-status-rgb: 95, 212, 196;
 }
 
-body.project--opsec {
+.project--opsec {
   --project-accent: var(--amber);
   --project-code-accent: var(--red);
   --project-status-accent: var(--amber);
   --project-status-rgb: 224, 164, 88;
 }
 
-body.project--flips,body.project--studios {
+.project--flips,.project--studios {
   --project-status-accent: var(--text-dim);
   --project-status-rgb: 139, 147, 161;
 }
