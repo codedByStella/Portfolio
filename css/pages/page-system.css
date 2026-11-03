@@ -252,6 +252,82 @@
   letter-spacing:.08em;
 }
 
+
+/* Splash-page footer intentionally matches the technical-page footer. */
+.page--overview .tech-sticky{
+  min-height:0;
+  padding:13px 20px;
+  gap:12px;
+  box-shadow:none;
+  backdrop-filter:blur(12px);
+}
+.page--overview .tech-sticky a,
+.page--overview .tech-sticky .source-unavailable{
+  display:inline;
+  min-height:0;
+  padding:0 0 2px;
+  border:0;
+  border-bottom:1px solid rgba(95,212,196,.35);
+  border-radius:0;
+  background:transparent;
+  font-size:12px;
+  text-decoration:none;
+}
+.page--overview .tech-sticky a:hover{
+  border-bottom-color:var(--teal);
+  background:transparent;
+}
+.page--overview .tech-sticky a.source-link{
+  border-bottom:1px solid rgba(224,164,88,.4);
+  background:transparent;
+}
+.page--overview .tech-sticky a.source-link:hover{
+  border-bottom-color:var(--amber);
+  background:transparent;
+}
+.page--overview .tech-sticky .hint{
+  margin-right:0;
+  font-size:12px;
+  letter-spacing:normal;
+}
+@media(max-width:560px){
+  .page--overview .tech-sticky{
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    padding:12px 14px;
+    font-size:10px;
+  }
+  .page--overview .tech-sticky a[href*="-Technical.html"]{font-size:0}
+  .page--overview .tech-sticky a[href*="-Technical.html"]::after{
+    content:"Technical";
+    font-size:10px;
+  }
+  .page--overview .tech-sticky a.source-link{font-size:0}
+  .page--overview .tech-sticky a.source-link::after{
+    content:"GitHub Source";
+    font-size:10px;
+  }
+  .page--overview .tech-sticky .source-unavailable{font-size:0}
+  .page--overview .tech-sticky .source-unavailable::after{
+    content:"Source N/A";
+    font-size:10px;
+  }
+  .page--overview .tech-sticky a:last-child:not(.source-link){font-size:0}
+  .page--overview .tech-sticky a:last-child:not(.source-link)::after{
+    content:"Next →";
+    font-size:10px;
+  }
+}
+
+/* Compact audit sample panel: keep the evidence readable without excess padding. */
+.project--audits .wrap>section:has(.sample){
+  padding:18px;
+}
+.project--audits .wrap>section .sample>div{
+  padding:10px 12px;
+}
+
 /* Technical reviews: documentation width, but framed with the same system. */
 .page--technical .wrap{
   width:100%;
