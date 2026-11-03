@@ -1,6 +1,4 @@
-/* Global foundation.
-   Page-specific visual rules belong in css/pages/.
-   Shared design tokens live in tokens.css. */
+/* Global reset and element-level defaults. */
 
 *,
 *::before,
@@ -29,4 +27,15 @@ select {
 :focus-visible {
   outline: 2px solid var(--amber);
   outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
