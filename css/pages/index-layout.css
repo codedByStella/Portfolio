@@ -295,3 +295,30 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   margin:18px auto 14px;
 }
 .hero--principles{padding-top:0}
+
+
+/* Compact the final sign-off while preserving its deliberate horizontal asymmetry. */
+.ai-approach{margin-bottom:28px}
+
+.outputs-callout{margin-bottom:24px}
+.outputs-callout>.section-label{margin-bottom:8px}
+.outputs-callout-inner{
+  padding:16px 20px;
+  gap:20px;
+}
+
+.credentials{margin-bottom:22px}
+.credentials>.section-label{margin-bottom:8px}
+.credentials-inner{
+  padding:16px 20px;
+  gap:22px;
+}
+
+footer{padding:20px 32px 24px}
+@media(max-width:720px){
+  .outputs-callout>.section-label,
+  .credentials>.section-label{margin-bottom:8px}
+  .outputs-callout-inner{padding:16px 18px}
+  .credentials-inner{padding:16px 18px;gap:14px}
+  footer{padding:18px 20px 22px}
+}
