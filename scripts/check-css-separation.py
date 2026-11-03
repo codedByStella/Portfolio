@@ -101,11 +101,18 @@ for html_path in html_files:
 
     svg_blocks = re.findall(r"<svg\b.*?</svg\s*>", source, re.IGNORECASE | re.DOTALL)
     svg_presentation_attributes = (
-        "fill", "fill-opacity", "fill-rule", "stroke", "stroke-width",
-        "stroke-linecap", "stroke-linejoin", "stroke-opacity", "color",
-        "opacity", "filter", "clip-path", "mask", "stop-color",
-    )
-    for svg in svg_blocks:
+        "alignment-baseline", "baseline-shift", "clip", "clip-path", "clip-rule",
+        "color", "color-interpolation", "color-interpolation-filters", "color-rendering",
+        "cursor", "direction", "display", "dominant-baseline", "fill", "fill-opacity",
+        "fill-rule", "filter", "flood-color", "flood-opacity", "font-family", "font-size",
+        "font-size-adjust", "font-stretch", "font-style", "font-variant", "font-weight",
+        "image-rendering", "letter-spacing", "lighting-color", "marker-end", "marker-mid",
+        "marker-start", "mask", "opacity", "overflow", "paint-order", "pointer-events",
+        "shape-rendering", "stop-color", "stop-opacity", "stroke", "stroke-dasharray",
+        "stroke-dashoffset", "stroke-linecap", "stroke-linejoin", "stroke-miterlimit",
+        "stroke-opacity", "stroke-width", "text-anchor", "text-decoration", "text-rendering",
+        "unicode-bidi", "vector-effect", "visibility", "word-spacing", "writing-mode",
+    )    for svg in svg_blocks:
         for attribute in svg_presentation_attributes:
             if re.search(rf"\s{attribute}\s*=", svg, re.IGNORECASE):
                 ERRORS.append(
