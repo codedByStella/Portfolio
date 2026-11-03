@@ -261,7 +261,8 @@
     white-space:nowrap;
   }
   .proc-status.online{color:var(--teal); border-color:rgba(95,212,196,0.35); background:rgba(95,212,196,0.06);}
-  .proc-status.restricted{color:var(--amber); border-color:rgba(224,164,88,0.35); background:rgba(224,164,88,0.06);}
+    .proc-status.prototype{color:var(--amber); border-color:rgba(224,164,88,0.35); background:rgba(224,164,88,0.06);}
+.proc-status.restricted{color:var(--amber); border-color:rgba(224,164,88,0.35); background:rgba(224,164,88,0.06);}
   .proc-status.dormant{color:var(--text-faint); border-color:var(--border); background:rgba(139,147,161,0.06);}
 
   .proc-name{
