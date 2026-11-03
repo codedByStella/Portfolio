@@ -1,6 +1,6 @@
 /* Page-specific styles for StellaSnipes. Shared overview presentation lives in overview.css. */
 
-.shot-grid {
+.page--overview.project--snipes .wrap>section .shot-grid {
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:22px;
@@ -8,13 +8,13 @@
   margin-top:24px;
 }
 
-.shot {
+.page--overview.project--snipes .wrap>section .shot {
   width:100%;
   min-width:0;
   padding:10px;
 }
 
-.shot img {
+.page--overview.project--snipes .wrap>section .shot img {
   display:block;
   flex:0 0 280px;
   width:100%;
@@ -26,14 +26,14 @@
   object-position:center;
 }
 
-.shot-cap {
+.page--overview.project--snipes .wrap>section .shot-cap {
   max-width:none;
   padding:12px 4px 3px;
   line-height:1.55;
 }
 
 @media(max-width:720px) {
-  .shot-grid {
+  .page--overview.project--snipes .wrap>section .shot-grid {
     grid-template-columns:1fr;
     gap:16px;
   }
