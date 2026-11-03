@@ -362,7 +362,7 @@
 }
 .page--technical .meta-grid{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:1px;
   margin:24px 0 0;
   border-radius:3px;
@@ -370,7 +370,7 @@
 }
 .page--technical .meta-grid>div{
   min-width:0;
-  padding:15px 17px;
+  padding:13px 15px;
   background:var(--surface);
 }
 .page--technical .meta-grid .v{
@@ -420,7 +420,7 @@
 }
 :where(.page--technical .wrap>section) .steps{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:10px;
   margin:18px 0 0;
 }
@@ -670,9 +670,12 @@
     left:14px;
   }
   :where(.page--overview .wrap>section) .sample,
-  :where(.page--overview .wrap>section) .stat-grid,
-  .page--technical .meta-grid{
+  :where(.page--overview .wrap>section) .stat-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .page--technical .meta-grid,
+  :where(.page--technical .wrap>section) .steps{
+    grid-template-columns:1fr;
   }
   .page--overview .tech-sticky{
     flex-wrap:wrap;
