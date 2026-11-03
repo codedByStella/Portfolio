@@ -536,4 +536,4 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
 
 /* Match the vertical inset used by the pattern section on both sides of its transition. */
 .hero.hero--tight-top{padding-bottom:32px}
-.section-label{padding-top:32px}
+.hero--tight-top + .section-label{padding-top:32px}
