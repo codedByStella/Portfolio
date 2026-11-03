@@ -81,7 +81,7 @@ for html_path in html_files:
         r"<script\b[^>]*>[\s\S]*?</script\s*>", source, re.IGNORECASE
     )
     for script in script_blocks:
-        if re.search(
+        if css_declaration.search(script) or re.search(
             r"\.style(?:\.|\s*=)|\.cssText\b|insertRule\s*\(|setProperty\s*\(",
             script,
             re.IGNORECASE,
@@ -90,6 +90,14 @@ for html_path in html_files:
 
     if re.search(r"\bdata-(?:style|styles|css|stylesheet)\s*=", source, re.IGNORECASE):
         ERRORS.append(f"{relative}: CSS-bearing data attribute found")
+
+    for data_attribute in re.finditer(
+        r'\sdata-[\w-]+\s*=\s*(["\'])(.*?)\1',
+        source,
+        re.IGNORECASE | re.DOTALL,
+    ):
+        if css_declaration.search(data_attribute.group(2)):
+            ERRORS.append(f"{relative}: CSS declaration found in a data attribute")
 
     svg_blocks = re.findall(r"<svg\b.*?</svg\s*>", source, re.IGNORECASE | re.DOTALL)
     svg_presentation_attributes = (
