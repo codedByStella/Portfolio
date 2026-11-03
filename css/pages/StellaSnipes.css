@@ -1,0 +1,49 @@
+/* StellaSnipes overview: preserve the original equal-sized evidence cards. */
+.project--snipes .shot-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:stretch;
+  gap:22px;
+  margin-top:24px;
+}
+.project--snipes .shot{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  width:100%;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:3px;
+  background:var(--surface);
+}
+.project--snipes .shot img{
+  display:block;
+  flex:0 0 280px;
+  width:100%;
+  height:280px;
+  min-height:280px;
+  max-height:280px;
+  max-width:100%;
+  object-fit:contain;
+  object-position:center;
+  border:1px solid var(--border);
+  background:var(--bg);
+}
+.project--snipes .shot-cap{
+  flex:0 0 84px;
+  width:100%;
+  height:84px;
+  min-height:84px;
+  max-height:84px;
+  box-sizing:border-box;
+  overflow:hidden;
+  padding:12px 4px 4px;
+  font-family:var(--mono);
+  font-size:11px;
+  line-height:1.5;
+  letter-spacing:.02em;
+  color:var(--text-faint);
+}
+@media(max-width:720px){
+  .project--snipes .shot-grid{grid-template-columns:1fr;gap:16px}
+}
