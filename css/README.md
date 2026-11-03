@@ -4,7 +4,8 @@ HTML is structure and meaning only. **Zero CSS is permitted in HTML.** This is a
 
 - No `<style>` elements.
 - No `style` attributes.
-- No CSS embedded in HTML comments, scripts, SVG markup, or data attributes.
+- No CSS embedded in HTML comments, scripts, or data attributes.
+- No SVG presentation attributes such as `fill`, `stroke`, or `opacity`; keep SVG geometry and accessibility attributes in markup, but move presentation into CSS.
 - Presentation belongs in external stylesheets and semantic classes.
 - Use page-scoped classes for page-specific visual treatments; use IDs only for genuine unique targets such as in-page anchors or script hooks.
 
@@ -52,6 +53,8 @@ Shared page-family rules use these explicit classes. Do not infer page identity 
 - Prefer semantic classes and low-specificity selectors over broad element selectors or deeply nested selectors.
 - Keep responsive and reduced-motion behavior beside the component or page family it affects.
 - Preserve the established visual system; refactoring must not silently redesign a page.
+- Keep the cascade ordered from tokens and base rules through shared components, layout, page-family rules, and finally page-specific rules.
+- Use the existing page-family breakpoints as the shared responsive baseline; add a different breakpoint only when a component's actual layout requires it.
 
 ## Adding a page
 
@@ -60,3 +63,4 @@ Shared page-family rules use these explicit classes. Do not infer page identity 
 3. Add one project stylesheet if the page needs unique presentation.
 4. Add the correct page and project scope classes to `body`.
 5. Keep all presentation in external CSS and verify the zero-CSS-in-HTML rule.
+6. Run `python scripts/check-css-separation.py` before committing.
