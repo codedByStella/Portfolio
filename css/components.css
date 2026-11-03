@@ -11,9 +11,8 @@
 .content-grid--spaced{margin-top:16px}
 
 /* Explicit layout variant for two-column metadata groups. */
-.meta-grid--two-column{grid-template-columns:repeat(2,minmax(0,1fr))}
-
 /* Shared semantic modifiers. */
+.code-label--spaced{margin-top:22px}
 .breadcrumb-separator{margin:0 6px;color:var(--border)}
 .section--no-border{border-bottom:none}
 .page--technical .meta-grid.meta-grid--two-column{grid-template-columns:repeat(2,minmax(0,1fr))}
