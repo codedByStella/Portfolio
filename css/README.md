@@ -11,15 +11,16 @@ HTML is structure and meaning only. **Zero CSS is permitted in HTML.** This is a
 
 ## Stylesheet layers
 
-Every document loads `css/main.css` once. It is the shared entry point and imports:
+Every document loads `css/main.css` once. It establishes the cascade order and imports the shared layers:
 
 1. `tokens.css` — design tokens and CSS custom properties.
 2. `base.css` — global reset and element defaults.
 3. `components.css` — reusable component variants and utilities.
-4. `layout.css` — shared layout primitives and global composition.
-5. `pages/page-system.css` — shared project-page and gallery systems.
+4. `pages/page-system.css` — shared project-page and gallery systems.
 
-Page-family stylesheets are loaded after the shared entry point, only by documents that use them:
+The cascade order is `tokens` → `base` → `components` → `page-family` → `page-system` → `page-specific`. Explicit CSS cascade layers allow family and project styles to override shared rules without escalating selector specificity.
+
+Page-family stylesheets are loaded after the shared entry point, only by documents that use them, inside the `page-family` layer:
 
 | Page family | Stylesheet | Responsibility |
 | --- | --- | --- |
@@ -28,7 +29,7 @@ Page-family stylesheets are loaded after the shared entry point, only by documen
 | Technical review | `pages/technical.css` | Shared technical documentation foundation |
 | Evidence gallery | `pages/outputs.css` | Gallery-specific presentation |
 
-A project page loads its own stylesheet after the family stylesheet only when it has genuine project-specific variations or components. Do not keep empty placeholder stylesheets.
+A project page loads its own stylesheet after the family stylesheet only when it has genuine project-specific variations or components. These files belong in the `page-specific` layer. Do not keep empty placeholder stylesheets.
 
 ## Page identity
 
@@ -49,11 +50,12 @@ Shared page-family rules use these explicit classes. Do not infer page identity 
 - Put reusable patterns and explicit variants in `components.css`.
 - Keep shared page-family structure in its family stylesheet.
 - Keep unique page composition in the relevant page stylesheet.
+- Keep shared project-page and gallery layout rules in `pages/page-system.css`.
 - Avoid duplicating selectors or using later overrides to patch earlier declarations.
 - Prefer semantic classes and low-specificity selectors over broad element selectors or deeply nested selectors.
 - Keep responsive and reduced-motion behavior beside the component or page family it affects.
 - Preserve the established visual system; refactoring must not silently redesign a page.
-- Keep the cascade ordered from tokens and base rules through shared components, layout, page-family rules, and finally page-specific rules.
+- Keep the cascade ordered through the declared CSS layers; do not compensate for incorrect order with selector escalation.
 - Use the existing page-family breakpoints as the shared responsive baseline; add a different breakpoint only when a component's actual layout requires it.
 
 ## Adding a page
