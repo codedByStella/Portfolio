@@ -323,7 +323,7 @@
 
 /* Compact audit sample panel: keep the evidence readable without excess padding. */
 .project--audits .wrap>section:has(.sample){
-  padding:18px;
+  padding:28px 0;
 }
 .project--audits .wrap>section .sample>div{
   padding:10px 12px;
