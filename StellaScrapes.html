@@ -21,10 +21,10 @@
 <div class="head"><div class="status-tag">● MVP ACHIEVED · ACTIVE DEVELOPMENT</div><h1>Make public records easier to find and work with</h1>
 <p class="lede">StellaScrapes is a Python and Node.js public-record data discovery and processing platform. Its original application reached a functional MVP for searching supported Socrata datasets, preparing records, and exporting structured results. The public repository is a deliberately limited portfolio release, not the runnable application.</p>
 <div class="tags"><span class="tag">Python</span><span class="tag">Node.js</span><span class="tag">Socrata Open Data API</span><span class="tag">Dataset discovery</span><span class="tag">CSV / XLSX</span></div></div>
-<section><div class="s-label"><span>project overview</span><span class="rule"></span></div>
+<section><div class="s-label" role="heading" aria-level="2"><span>project overview</span><span class="rule"></span></div>
 <p>Public-data platforms expose useful records, but datasets differ in structure, field names, identifiers, and update practices. Reusing those records across sources requires more than issuing an API request: candidate datasets need to be found, inspected, mapped, and processed into consistent outputs.</p>
 <p>StellaScrapes was built to bring those steps into a single local workflow. The original MVP combines Socrata data discovery, registry-based source configuration, record retrieval and processing, and structured exports. The project remains in active development; support for a source or record category depends on its actual integration and validation.</p></section>
-<section><div class="s-label"><span>system capabilities</span><span class="rule"></span></div><ul class="feature-list">
+<section><div class="s-label" role="heading" aria-level="2"><span>system capabilities</span><span class="rule"></span></div><ul class="feature-list">
 <li><strong>Source discovery</strong>Python utilities inspect Socrata publishing domains and dataset metadata to identify candidate public-data sources for review.</li>
 <li><strong>Registry-driven configuration</strong>Structured configuration associates supported sources with dataset identifiers and source-specific metadata, reducing the need to hard-code every integration into the same workflow.</li>
 <li><strong>Record processing</strong>Processing utilities prepare selected public-record data for consistent review, including normalization, deduplication, and permit-oriented handling where applicable.</li>
@@ -32,10 +32,10 @@
 <li><strong>Structured exports</strong>CSV and Excel outputs support further analysis and handoff.</li>
 <li><strong>Multiple interfaces</strong>The original application includes a Python command-line workflow and a local browser interface backed by Node.js and Express.</li>
 </ul></section>
-<section><div class="s-label"><span>public repository</span><span class="rule"></span></div>
+<section><div class="s-label" role="heading" aria-level="2"><span>public repository</span><span class="rule"></span></div>
 <p>The public repository is intentionally incomplete. It documents the project structure and selected supporting components while withholding proprietary implementation details, including production retrieval, query-routing, dataset-selection, and processing logic. The published code is therefore <strong>not a runnable release</strong> and should not be treated as a deployable application or a complete representation of the private working implementation.</p>
 <div class="result"><p><strong>Portfolio source:</strong> <a href="https://github.com/codedByStella/StellaScrapes" target="_blank" rel="noopener noreferrer">https://github.com/codedByStella/StellaScrapes</a></p><p class="prose--spaced">The repository provides an architectural and engineering overview while protecting the implementation that makes the original application operational.</p></div></section>
-<section class="section--no-border"><div class="s-label"><span>development status</span><span class="rule"></span></div>
+<section class="section--no-border"><div class="s-label" role="heading" aria-level="2"><span>development status</span><span class="rule"></span></div>
 <p><strong>MVP achieved; active development continues.</strong> The original application reached a functional MVP, but coverage and reliability depend on individual source integrations. Dataset discovery does not automatically make a dataset supported, and heuristic field mapping requires validation. The portfolio repository is a selectively redacted snapshot rather than the production codebase.</p>
 <div class="crossref"><div class="cr-label">related project</div><p>See also <a href="StellaAudits.html">StellaAudits</a> and <a href="StellaOpsec.html">StellaOpsec</a> for other examples of automation and systems engineering.</p></div></section>
 </main>
