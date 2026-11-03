@@ -58,6 +58,9 @@
   padding:16px var(--home-panel-pad);
   --stack-gap:14px;
 }
+
+/* Override the more-specific shared .hero p margin inside this stack. */
+.pattern-inner>p{margin:0}
 .pattern-inner .s-label-inline{
   border:0;
   padding:0;
