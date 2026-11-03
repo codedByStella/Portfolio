@@ -66,6 +66,31 @@ for html_path in html_files:
     if re.search(r"\sstyle\s*=", source, re.IGNORECASE):
         ERRORS.append(f"{relative}: inline style attribute found")
 
+    if re.search(r"\s(?:bgcolor|background)\s*=", source, re.IGNORECASE):
+        ERRORS.append(f"{relative}: legacy HTML presentation attribute found")
+
+    css_declaration = re.compile(
+        r"(?:^|[;{]\s*)(?:--[\w-]+|[a-z-]+)\s*:\s*[^;{}]+;",
+        re.IGNORECASE | re.MULTILINE,
+    )
+    for comment in re.findall(r"<!--[\s\S]*?-->", source):
+        if css_declaration.search(comment):
+            ERRORS.append(f"{relative}: CSS declaration found in an HTML comment")
+
+    script_blocks = re.findall(
+        r"<script\b[^>]*>[\s\S]*?</script\s*>", source, re.IGNORECASE
+    )
+    for script in script_blocks:
+        if re.search(
+            r"\.style(?:\.|\s*=)|\.cssText\b|insertRule\s*\(|setProperty\s*\(",
+            script,
+            re.IGNORECASE,
+        ):
+            ERRORS.append(f"{relative}: CSS manipulation found in an inline script")
+
+    if re.search(r"\bdata-(?:style|styles|css|stylesheet)\s*=", source, re.IGNORECASE):
+        ERRORS.append(f"{relative}: CSS-bearing data attribute found")
+
     svg_blocks = re.findall(r"<svg\b.*?</svg\s*>", source, re.IGNORECASE | re.DOTALL)
     svg_presentation_attributes = (
         "fill", "fill-opacity", "fill-rule", "stroke", "stroke-width",
