@@ -1,30 +1,30 @@
 @layer page-specific {
   /* StellaStudios' workflow timeline and embedded media. */
 
-  .dot {
+  .project--studios .dot {
     box-shadow: none;
     animation: none;
   }
 
-  .flow {
+  .project--studios .flow {
     display: flex;
     flex-direction: column;
   }
 
-  .stage {
+  .project--studios .stage {
     display: grid;
     grid-template-columns: 32px 1fr;
     gap: 18px;
     position: relative;
   }
 
-  .stage-marker {
+  .project--studios .stage-marker {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .stage-marker .node {
+  .project--studios .stage-marker .node {
     width: 9px;
     height: 9px;
     border-radius: 50%;
@@ -33,18 +33,18 @@
     margin-top: 5px;
   }
 
-  .stage-marker .line {
+  .project--studios .stage-marker .line {
     width: 1px;
     flex: 1;
     background: var(--border);
     margin-top: 4px;
   }
 
-  .stage:last-child .line {
+  .project--studios .stage:last-child .line {
     display: none;
   }
 
-  .stage-name {
+  .project--studios .stage-name {
     font-family: var(--mono);
     font-size: 14px;
     color: var(--text);
@@ -52,20 +52,20 @@
     margin-bottom: 4px;
   }
 
-  .stage-desc {
+  .project--studios .stage-desc {
     color: var(--text-dim);
     font-size: 14px;
   }
 
-  .stage-gate .stage-name {
+  .project--studios .stage-gate .stage-name {
     color: var(--amber);
   }
 
-  .stage-gate .node {
+  .project--studios .stage-gate .node {
     background: var(--amber);
   }
 
-  .media-frame {
+  .project--studios .media-frame {
     display: block;
     flex: 0 0 280px;
     width: 100%;
@@ -79,14 +79,14 @@
     overflow: hidden;
   }
 
-  .video-inner {
+  .project--studios .video-inner {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
   }
 
-  .video-inner iframe {
+  .project--studios .video-inner iframe {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -94,7 +94,7 @@
     border: 0;
   }
 
-  .shot-cap {
+  .project--studios .shot-cap {
     flex: 0 0 84px;
     width: 100%;
     height: 84px;
