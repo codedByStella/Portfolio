@@ -70,7 +70,7 @@ body:has(.tech-sticky) footer{max-width:1120px}
 .ai-approach-header{margin-bottom:18px}
 .ai-approach-header h2{font-size:clamp(18px,2vw,23px)}
 .ai-approach-intro{font-size:15.5px;line-height:1.8;max-width:850px}
-.ai-approach-grid{gap:10px}
+.ai-approach-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .ai-approach-item{padding:22px;border-radius:2px}
 .ai-approach-item h3{font-size:11px;letter-spacing:.08em}
 .ai-approach-item p{font-size:13.5px;line-height:1.8}
