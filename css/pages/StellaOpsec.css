@@ -1,14 +1,14 @@
 @layer page-specific {
 /* Page-specific styles for StellaOpsec. Shared overview presentation lives in overview.css. */
 
-.notice {
+.project--opsec .notice {
   border:1px solid var(--border);
   border-left:2px solid var(--amber);
   margin:24px 0;
 }
 
 
-.notice .n-label {
+.project--opsec .notice .n-label {
   font-family:var(--mono);
   font-size:11px;
   color:var(--amber);
@@ -17,7 +17,7 @@
   text-transform:uppercase;
 }
 
-.redacted-banner {
+.project--opsec .redacted-banner {
   position:relative;
   height:200px;
   background:#181209;
@@ -29,19 +29,19 @@
   margin:8px 0 32px;
 }
 
-.redacted-banner .rb-stripes {
+.project--opsec .redacted-banner .rb-stripes {
   position:absolute;
   inset:0;
   background:repeating-linear-gradient(135deg, rgba(224,164,88,0.14) 0 10px, transparent 10px 20px);
 }
 
-.redacted-banner .rb-content {
+.project--opsec .redacted-banner .rb-content {
   position:relative;
   text-align:center;
   transform:rotate(-4deg);
 }
 
-.redacted-banner .rb-main {
+.project--opsec .redacted-banner .rb-main {
   font-family:var(--mono);
   font-weight:700;
   font-size:38px;
@@ -50,7 +50,7 @@
   text-shadow:0 0 24px rgba(224,164,88,0.25);
 }
 
-.redacted-banner .rb-sub {
+.project--opsec .redacted-banner .rb-sub {
   font-family:var(--mono);
   font-size:12px;
   color:var(--text-faint);
