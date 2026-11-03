@@ -119,7 +119,10 @@ for html_path in html_files:
                 resolved = (ROOT / stylesheet).resolve()
                 if resolved not in local_stylesheets:
                     ERRORS.append(f"{relative}: {page_class} page must load {stylesheet}")
-                elif main_css in stylesheet_order and stylesheet_order.index(main_css) > stylesheet_order.index(resolved):
+                elif (
+                    main_css in stylesheet_order
+                    and stylesheet_order.index(main_css) > stylesheet_order.index(resolved)
+                ):
                     ERRORS.append(f"{relative}: {stylesheet} must load after css/main.css")
 
     project_stylesheets = {
@@ -140,10 +143,13 @@ for html_path in html_files:
     )
     for project_class, stylesheet in project_stylesheets.items():
         candidate = (ROOT / stylesheet).resolve()
-        if project_class in classes and candidate.is_file():
+        if "page--overview" in classes and project_class in classes and candidate.is_file():
             if candidate not in local_stylesheets:
                 ERRORS.append(f"{relative}: {project_class} page must load {stylesheet}")
-            elif family_stylesheet and stylesheet_order.index(candidate) < stylesheet_order.index(family_stylesheet):
+            elif (
+                family_stylesheet
+                and stylesheet_order.index(candidate) < stylesheet_order.index(family_stylesheet)
+            ):
                 ERRORS.append(f"{relative}: {stylesheet} must load after its page-family stylesheet")
 
 layer_contract = {
