@@ -29,7 +29,7 @@ footer{max-width:1120px;padding:54px 32px 90px}
 /* Technical pages: documentation measure, not marketing-card width. */
 html{scroll-padding-top:28px}
 body:has(.footer){line-height:1.75}
-body:has(.footer) .wrap{max-width:1080px}
+body:has(.footer) .wrap,
 body:has(.footer) .wrap .head{padding-top:82px}
 body:has(.footer) .wrap .head h1{max-width:980px}
 body:has(.footer) .wrap section{padding:48px 0}
