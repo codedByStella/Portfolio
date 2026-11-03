@@ -14,6 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/pages/index.css">
+<link rel="stylesheet" href="css/pages/index-layout.css">
 </head>
 <body>
 
@@ -25,7 +26,7 @@
     </div>
   </div>
 
-  <section class="hero">
+  <section class="hero hero--intro home-stack">
     <div class="eyebrow">codedByStella, freelance engineer in systems &amp; adversarial engineering</div>
     <h1>I build the pipelines, daemons, and simulated adversaries that other people's roadmaps depend on.<span class="cursor"></span></h1>
     <p>Seven projects below, spanning data, media, and security. They range from working tools to prototypes, each documenting a different set of engineering decisions, implementation constraints, and lessons from building software.</p>
@@ -36,15 +37,17 @@
     </div>
   </section>
 
-  <section class="hero hero--tight-top">
-    <div class="s-label-inline">the pattern underneath all seven</div>
-    <p class="prose--narrow prose--spaced">Across these projects, the tech stacks vary: Python, Node, PowerShell, FFmpeg, Discord's API, Socrata's API, and Google's PageSpeed API. The recurring theme is designing around real constraints: external services fail, inputs vary, and uncertain results need to be handled deliberately.</p>
-    <ul class="pattern-list">
-      <li><strong>Verify, don't assume.</strong> The OSRS daemon won't trust a price without checking it against recent history first. StellaSnipes won't call a domain "clean" without an evidence trail behind that verdict. StellaOpsec keeps selected configuration observations separate from conclusions, rather than treating inventory as proof of security.</li>
-      <li><strong>Design for failure.</strong> Several projects use timeout, retry, or fallback handling around external services. The exact safeguards vary by integration; they reduce specific failure risks rather than guaranteeing uninterrupted operation.</li>
-      <li><strong>Keep a human in the loop where it actually matters.</strong> StellaStudios holds finished output for review before publishing. StellaSnipes routes unverifiable domains to a review queue instead of guessing. Automation that removes judgment entirely isn't more valuable, it's just wrong faster.</li>
-    </ul>
-    <p class="prose--narrow">The common thread is practical engineering judgment: choosing what to automate, where to preserve human review, and how to make uncertainty visible rather than hiding it.</p>
+  <section class="hero hero--tight-top hero--principles">
+    <div class="pattern-inner home-stack">
+      <div class="s-label-inline">the pattern underneath all seven</div>
+      <p class="pattern-intro">Across these projects, the tech stacks vary: Python, Node, PowerShell, FFmpeg, Discord's API, Socrata's API, and Google's PageSpeed API. The recurring theme is designing around real constraints: external services fail, inputs vary, and uncertain results need to be handled deliberately.</p>
+      <ul class="pattern-list">
+        <li><strong>Verify, don't assume.</strong> The OSRS daemon won't trust a price without checking it against recent history first. StellaSnipes won't call a domain "clean" without an evidence trail behind that verdict. StellaOpsec keeps selected configuration observations separate from conclusions, rather than treating inventory as proof of security.</li>
+        <li><strong>Design for failure.</strong> Several projects use timeout, retry, or fallback handling around external services. The exact safeguards vary by integration; they reduce specific failure risks rather than guaranteeing uninterrupted operation.</li>
+        <li><strong>Keep a human in the loop where it actually matters.</strong> StellaStudios holds finished output for review before publishing. StellaSnipes routes unverifiable domains to a review queue instead of guessing. Automation that removes judgment entirely isn't more valuable, it's just wrong faster.</li>
+      </ul>
+      <p class="pattern-conclusion">The common thread is practical engineering judgment: choosing what to automate, where to preserve human review, and how to make uncertainty visible rather than hiding it.</p>
+    </div>
   </section>
 
   <div class="section-label"><span class="count">07</span> processes<span class="rule"></span></div>
@@ -147,7 +150,7 @@
   </div>
 
 
-    <div class="section-label"><span class="count">2026</span> modern methodology<span class="rule"></span></div>
+    <div class="section-label section-label--methodology"><span class="count">2026</span> modern methodology<span class="rule"></span></div>
 
   <section class="ai-approach">
     <div class="ai-approach-inner">
