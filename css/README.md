@@ -18,6 +18,18 @@ Each HTML page then loads its own stylesheet from `pages/`.
 
 Page stylesheets contain only page-specific composition and presentation. They must not import `main.css`, tokens, or shared layers. Shared CSS is loaded once by the HTML document.
 
+## Hard separation-of-concerns rule
+
+**HTML must contain zero CSS.** This is a release requirement, not a preference:
+
+- No `<style>` elements.
+- No `style` attributes, including dynamically meaningful presentation values.
+- No CSS embedded in HTML comments, scripts, SVG markup, or data attributes as a styling workaround.
+- All presentation must be expressed through external stylesheets and semantic classes. Use IDs only when an element genuinely needs a unique identifier, such as an in-page anchor or script hook.
+- If a page needs a unique visual treatment, add a page-scoped class and define it in that page's stylesheet. Do not put the rule back into HTML.
+
+This rule applies to every HTML document in the repository, including future pages.
+
 ## Conventions
 
 - Keep colors, typography, and recurring dimensions in custom properties.
