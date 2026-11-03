@@ -140,3 +140,14 @@ body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;b
 @media(max-width:720px){
   .shot-grid{grid-template-columns:1fr;gap:16px}
 }
+
+/* Override the higher-specificity shared page-system image rule on this page. */
+body.studios-page .wrap>section .shot img{
+  display:block;
+  width:100%;
+  height:280px;
+  min-height:280px;
+  max-height:280px;
+  object-fit:cover;
+  object-position:center;
+}
