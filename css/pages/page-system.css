@@ -625,3 +625,17 @@ body:has(.card) main:not(.wrap) .disclosure{
   }
   body:has(.card) main:not(.wrap) .card:hover{transform:none}
 }
+
+/* Technical review frame: equal, intentional gutters on both sides. */
+body:has(.meta-grid) .wrap{
+  box-sizing:border-box;
+  width:100%;
+  padding-left:clamp(32px,4vw,44px);
+  padding-right:clamp(32px,4vw,44px);
+}
+@media(max-width:560px){
+  body:has(.meta-grid) .wrap{
+    padding-left:20px;
+    padding-right:20px;
+  }
+}
