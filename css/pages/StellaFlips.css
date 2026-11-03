@@ -100,3 +100,36 @@
 /* Match the original media-card and metric-cell proportions. */
 .project--flips .shot{padding:8px}
 .project--flips .stat{padding:20px 18px}
+
+
+/* Original two-column evidence cards with equal-height image and caption tracks. */
+.project--flips .shot-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:stretch;
+  gap:22px;
+  margin-top:24px;
+}
+.project--flips .shot{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  width:100%;
+  padding:8px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-sizing:border-box;
+}
+.project--flips .shot img{
+  display:block;
+  flex:0 0 280px;
+  width:100%;
+  height:280px;
+  min-height:280px;
+  max-height:280px;
+  object-fit:contain;
+  object-position:center;
+}
+@media(max-width:720px){
+  .project--flips .shot-grid{grid-template-columns:1fr;gap:16px}
+}
