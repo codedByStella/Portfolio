@@ -534,6 +534,9 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   footer{grid-template-columns:1fr;padding:22px 20px 26px;gap:12px}
 }
 
-/* Match the vertical inset used by the pattern section on both sides of its transition. */
-.hero.hero--tight-top{padding-bottom:32px}
-.hero--tight-top + .section-label{padding-top:32px}
+/* Keep the pattern section as wide as the project collection and tighten its handoff. */
+.hero:not(.hero--tight-top) > p{max-width:none}
+.hero--tight-top .prose--narrow,
+.hero--tight-top .pattern-list{max-width:none}
+.hero.hero--tight-top{padding-bottom:18px}
+.hero--tight-top + .section-label{padding-top:0}
