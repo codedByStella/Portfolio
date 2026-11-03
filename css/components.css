@@ -1,46 +1,11 @@
-/* Reusable component modifiers and layout utilities. */
-
-.breadcrumb-separator {
-  margin: 0 6px;
-  color: var(--border);
-}
-
-.section--no-border {
-  border-bottom: none;
-}
-
-.code-label--spaced {
-  margin-top: 22px;
-}
-
-.screenshot-grid--spaced {
-  margin-top: 32px;
-}
-
-.container--flush {
-  padding: 0;
-}
-
-.prose--spaced {
-  margin-top: 10px;
-}
-
-.hero--tight-top {
-  padding-top: 0;
-  padding-bottom: 60px;
-}
-
-.prose--narrow {
-  max-width: 680px;
-}
-
-.section-kicker {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--text);
-  font-size: 14px;
-}
-
-.content-grid--spaced {
-  margin-top: 16px;
-}
+/* Shared presentation utilities used across portfolio pages. */
+.breadcrumb-separator{color:var(--border);margin:0 6px}
+.section--no-border{border-bottom:none}
+.code-label--spaced{margin-top:22px}
+.screenshot-grid--spaced{margin-top:32px}
+.container--flush{padding:0}
+.prose--spaced{margin-top:10px}
+.hero--tight-top{padding-top:0;padding-bottom:60px}
+.prose--narrow{max-width:680px}
+.section-kicker{color:var(--text);font-size:14px;display:block;margin-bottom:6px}
+.content-grid--spaced{margin-top:16px}
