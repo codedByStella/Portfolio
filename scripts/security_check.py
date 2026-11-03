@@ -3,11 +3,19 @@
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
+import re
+import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 CSP_MARKER = "default-src 'self'"
 YOUTUBE_HOST = "www.youtube-nocookie.com"
+SECRET_PATTERN = (
+    r"(?i)(AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{20,}|github_pat_[A-Za-z0-9_]{20,}"
+    r"|xox[baprs]-[A-Za-z0-9-]{10,}|AIza[0-9A-Za-z_-]{35}|sk_live_[0-9A-Za-z]{24,}"
+    r"|-----BEGIN (?:RSA|EC|OPENSSH|DSA) PRIVATE KEY-----"
+    r"|(?:api[_-]?key|client[_-]?secret|access[_-]?token|password)\\s*[:=]\\s*['\"][^'\"]{12,}['\"])"
+)
 
 class AuditParser(HTMLParser):
     def __init__(self, path):
@@ -48,6 +56,21 @@ class AuditParser(HTMLParser):
             if "noopener" not in rel:
                 self.errors.append("target=_blank link missing noopener noreferrer")
 
+def scan_history():
+    result = subprocess.run(
+        ["git", "log", "--all", "--format=%H", "-G", SECRET_PATTERN, "--name-only", "--", "."],
+        capture_output=True, text=True, check=False,
+    )
+    if result.returncode != 0:
+        return ["Could not scan Git history; ensure checkout fetch-depth is 0"]
+    matches = []
+    for line in result.stdout.splitlines():
+        value = line.strip()
+        if not value or re.fullmatch(r"[0-9a-f]{40,64}", value):
+            continue
+        matches.append(value)
+    return sorted(set(matches))
+
 def main():
     failures = []
     pages = sorted(ROOT.glob("*.html"))
@@ -63,6 +86,9 @@ def main():
         if not parser.csp:
             parser.errors.append("missing restrictive CSP meta policy")
         failures.extend(f"{path.name}: {err}" for err in parser.errors)
+    history_matches = scan_history()
+    if history_matches:
+        failures.append("Potential secret-like changes found in Git history (paths only): " + ", ".join(history_matches))
     if failures:
         print("\n".join(failures))
         return 1
