@@ -144,3 +144,7 @@
 @media(max-width:720px){
   .project--studios .shot-grid{grid-template-columns:1fr;gap:16px}
 }
+
+/* Preserve original workflow-stage spacing and readable description measure. */
+.project--studios .wrap>section .stage{padding:16px 0}
+.project--studios .wrap>section .stage-desc{max-width:600px}
