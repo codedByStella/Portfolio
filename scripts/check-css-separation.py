@@ -119,7 +119,7 @@ for html_path in html_files:
                 resolved = (ROOT / stylesheet).resolve()
                 if resolved not in local_stylesheets:
                     ERRORS.append(f"{relative}: {page_class} page must load {stylesheet}")
-                elif stylesheet_order.index(main_css) > stylesheet_order.index(resolved):
+                elif main_css in stylesheet_order and stylesheet_order.index(main_css) > stylesheet_order.index(resolved):
                     ERRORS.append(f"{relative}: {stylesheet} must load after css/main.css")
 
     project_stylesheets = {
