@@ -565,3 +565,10 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
 .hero-meta{margin-top:24px}
 .hero:not(.hero--tight-top){padding-bottom:24px}
 .hero.hero--tight-top{padding-bottom:12px}
+
+/* Nested section labels share their parent's content inset; don't add it twice. */
+.outputs-callout > .section-label,
+.credentials > .section-label{
+  max-width:none;
+  padding:0;
+}
