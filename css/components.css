@@ -1,67 +1,51 @@
-/* Shared presentation utilities used across portfolio pages. */
+/* Reusable component modifiers and layout utilities. */
 
 .breadcrumb-separator {
-  color:var(--border);
-  margin:0 6px;
+  margin: 0 6px;
+  color: var(--border);
 }
 
 .section--no-border {
-  border-bottom:none;
+  border-bottom: none;
 }
 
 .code-label--spaced {
-  margin-top:22px;
+  margin-top: 22px;
 }
 
 .screenshot-grid--spaced {
-  margin-top:32px;
+  margin-top: 32px;
 }
 
 .container--flush {
-  padding:0;
+  padding: 0;
 }
 
 .prose--spaced {
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 .hero--tight-top {
-  padding-top:0;
-  padding-bottom:60px;
+  padding-top: 0;
+  padding-bottom: 60px;
 }
 
 .prose--narrow {
-  max-width:680px;
+  max-width: 680px;
 }
 
 .section-kicker {
-  color:var(--text);
-  font-size:14px;
-  display:block;
-  margin-bottom:6px;
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 14px;
 }
 
 .content-grid--spaced {
-  margin-top:16px;
+  margin-top: 16px;
 }
 
-/* Explicit layout variant for two-column metadata groups. */
-
-/* Shared semantic modifiers. */
-
-.code-label--spaced {
-  margin-top:22px;
-}
-
-.breadcrumb-separator {
-  margin:0 6px;
-  color:var(--border);
-}
-
-.section--no-border {
-  border-bottom:none;
-}
-
+/* Explicit variant for technical-page metadata grids. */
 .page--technical .meta-grid.meta-grid--two-column {
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
