@@ -118,3 +118,6 @@
   object-fit:cover;
   object-position:center;
 }
+
+/* Match the original 8px media-card frame. */
+.project--studios .shot{padding:8px}
