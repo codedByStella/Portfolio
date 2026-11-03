@@ -694,7 +694,7 @@
   .page--overview .tech-sticky .source-unavailable::after,
   .page--technical .tech-sticky .source-unavailable::after{content:"Source N/A";font-size:10px}
 }
-.project--audits .wrap>section:has(.sample){padding:28px 0}
+.project--audits .wrap>section.section--sample-results{padding:28px 0}
 
 
 @media(max-width:720px){
