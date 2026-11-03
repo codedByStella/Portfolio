@@ -1,0 +1,12 @@
+/* StellaScrapes overview-specific presentation. */
+.project--scrapes .dot{
+  box-shadow:0 0 6px var(--teal);
+  animation:pulse 2.4s ease-in-out infinite;
+}
+.project--scrapes .crossref{
+  margin-top:28px;
+  padding:18px 22px;
+  border:1px dashed var(--border);
+  background:transparent;
+}
+.project--scrapes .prose--spaced{margin-top:10px}
