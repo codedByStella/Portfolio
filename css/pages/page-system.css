@@ -152,6 +152,7 @@
 }
 :where(.page--overview .wrap>section) .sample,
 :where(.page--overview .wrap>section) .stat-grid{
+  display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
   gap:1px;
   border-radius:2px;
@@ -360,6 +361,7 @@
   font-size:10.5px;
 }
 .page--technical .meta-grid{
+  display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:1px;
   margin:24px 0 0;
@@ -417,6 +419,7 @@
   background:var(--bg);
 }
 :where(.page--technical .wrap>section) .steps{
+  display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:10px;
   margin:18px 0 0;
@@ -694,3 +697,73 @@
   .page--overview .tech-sticky a,
   :where(.page--gallery main:not(.wrap)) .card:hover{transform:none}
 }
+
+/* Shared layout primitives must establish their layout mode as well as tracks.
+   These were explicit in the original page stylesheets and must not rely on
+   browser defaults or incidental display rules. */
+.page--overview .sample,
+.page--overview .stat-grid,
+.page--technical .meta-grid,
+.page--technical .steps{
+  display:grid;
+}
+
+/* One footer design across overview and technical pages. */
+.page--overview .tech-sticky,
+.page--technical .tech-sticky{
+  position:fixed;
+  z-index:20;
+  right:0;
+  bottom:0;
+  left:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:13px 20px;
+  border-top:1px solid var(--border);
+  background:rgba(18,21,27,.94);
+  box-shadow:0 -10px 32px rgba(0,0,0,.16);
+  backdrop-filter:blur(16px);
+  font:12px var(--mono);
+}
+.page--overview .tech-sticky a,
+.page--technical .tech-sticky a{
+  padding:7px 9px;
+  border:1px solid transparent;
+  border-radius:2px;
+  color:var(--teal);
+  text-decoration:none;
+}
+.page--overview .tech-sticky a:hover,
+.page--technical .tech-sticky a:hover{
+  background:rgba(95,212,196,.07);
+  border-color:rgba(95,212,196,.24);
+  text-decoration:none;
+}
+.page--overview .tech-sticky a.source-link,
+.page--technical .tech-sticky a.source-link,
+.page--overview .tech-sticky .source-unavailable,
+.page--technical .tech-sticky .source-unavailable{
+  color:var(--amber);
+}
+.page--overview .tech-sticky a.source-link:hover,
+.page--technical .tech-sticky a.source-link:hover{
+  background:rgba(224,164,88,.07);
+  border-color:rgba(224,164,88,.25);
+}
+.page--overview .tech-sticky .hint,
+.page--technical .tech-sticky .hint{
+  color:var(--text-faint);
+}
+@media(max-width:560px){
+  .page--overview .tech-sticky,
+  .page--technical .tech-sticky{
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    padding:12px 14px;
+    font-size:10px;
+  }
+}
+
