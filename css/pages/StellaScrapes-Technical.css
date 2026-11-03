@@ -1,3 +1,1 @@
 /* Project-specific technical review styles for StellaScrapes. */
-/* Four metadata facts use a balanced two-column header layout. */
-header.head .meta-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
