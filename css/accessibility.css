@@ -82,3 +82,22 @@ body :is(.tech-sticky a, .footer a, button, summary) {
     outline: 3px solid Highlight !important;
   }
 }
+
+/* Keyboard users can bypass repeated status/navigation content. */
+.skip-link {
+  position: absolute !important;
+  z-index: 1000 !important;
+  top: 8px !important;
+  left: 8px !important;
+  transform: translateY(-160%) !important;
+  padding: 12px 16px !important;
+  background: var(--text) !important;
+  color: var(--bg) !important;
+  border: 2px solid var(--amber) !important;
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+  text-decoration: none !important;
+}
+.skip-link:focus {
+  transform: translateY(0) !important;
+}
