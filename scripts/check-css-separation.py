@@ -87,6 +87,7 @@ for html_path in html_files:
 
     links = re.findall(r"<link\b[^>]*>", source, re.IGNORECASE)
     local_stylesheets = set()
+    stylesheet_order = []
     for link in links:
         rel = re.search(r'\brel=["\']([^"\']*)["\']', link, re.IGNORECASE)
         href = re.search(r'\bhref=["\']([^"\']*)["\']', link, re.IGNORECASE)
@@ -99,6 +100,7 @@ for html_path in html_files:
             ERRORS.append(f"{relative}: stylesheet not found: {href.group(1)}")
             continue
         local_stylesheets.add(resolved)
+        stylesheet_order.append(resolved)
         REFERENCED_CSS.add(resolved)
 
     main_css = (ROOT / "css" / "main.css").resolve()
@@ -114,8 +116,35 @@ for html_path in html_files:
     for page_class, stylesheets in required.items():
         if page_class in classes:
             for stylesheet in stylesheets:
-                if (ROOT / stylesheet).resolve() not in local_stylesheets:
+                resolved = (ROOT / stylesheet).resolve()
+                if resolved not in local_stylesheets:
                     ERRORS.append(f"{relative}: {page_class} page must load {stylesheet}")
+                elif stylesheet_order.index(main_css) > stylesheet_order.index(resolved):
+                    ERRORS.append(f"{relative}: {stylesheet} must load after css/main.css")
+
+    project_stylesheets = {
+        "project--audits": "css/pages/StellaAudits.css",
+        "project--flips": "css/pages/StellaFlips.css",
+        "project--opsec": "css/pages/StellaOpsec.css",
+        "project--studios": "css/pages/StellaStudios.css",
+    }
+    family_stylesheet = next(
+        (
+            (ROOT / stylesheet).resolve()
+            for page_class, stylesheets in required.items()
+            if page_class in classes
+            for stylesheet in stylesheets
+            if (ROOT / stylesheet).resolve() in local_stylesheets
+        ),
+        None,
+    )
+    for project_class, stylesheet in project_stylesheets.items():
+        candidate = (ROOT / stylesheet).resolve()
+        if project_class in classes and candidate.is_file():
+            if candidate not in local_stylesheets:
+                ERRORS.append(f"{relative}: {project_class} page must load {stylesheet}")
+            elif family_stylesheet and stylesheet_order.index(candidate) < stylesheet_order.index(family_stylesheet):
+                ERRORS.append(f"{relative}: {stylesheet} must load after its page-family stylesheet")
 
 layer_contract = {
     "css/pages/index.css": "page-family",
@@ -126,7 +155,6 @@ layer_contract = {
     "css/pages/StellaAudits.css": "page-specific",
     "css/pages/StellaFlips.css": "page-specific",
     "css/pages/StellaOpsec.css": "page-specific",
-    "css/pages/StellaSnipes.css": "page-specific",
     "css/pages/StellaStudios.css": "page-specific",
 }
 
