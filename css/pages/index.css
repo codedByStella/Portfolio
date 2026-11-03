@@ -521,7 +521,19 @@
 @media(max-width:720px){.processes{margin-bottom:12px}.ai-approach{padding-top:12px}}
 
 
-/* Footer is the quiet sign-off, not another full content section. */
-footer{padding:28px 32px 32px;gap:18px}
-footer .closing{max-width:420px;font-size:14px;line-height:1.65}
-@media(max-width:720px){footer{padding:22px 20px 26px;gap:12px}}
+/* Footer sign-off: keep the contact block and closing paragraph side by side. */
+footer{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,420px);
+  align-items:end;
+  gap:18px;
+  padding:28px 32px 32px;
+}
+footer .closing{max-width:none;font-size:14px;line-height:1.65}
+@media(max-width:720px){
+  footer{grid-template-columns:1fr;padding:22px 20px 26px;gap:12px}
+}
+
+/* Match the vertical inset used by the pattern section on both sides of its transition. */
+.hero.hero--tight-top{padding-bottom:32px}
+.section-label{padding-top:32px}
