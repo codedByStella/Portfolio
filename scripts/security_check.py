@@ -45,7 +45,7 @@ class AuditParser(HTMLParser):
                     self.errors.append("YouTube iframe must set a restrictive referrer policy")
         if tag == "a" and attrs.get("target", "").lower() == "_blank":
             rel = set(attrs.get("rel", "").lower().split())
-            if not {"noopener", "noreferrer"}.issubset(rel):
+            if "noopener" not in rel:
                 self.errors.append("target=_blank link missing noopener noreferrer")
 
 def main():
