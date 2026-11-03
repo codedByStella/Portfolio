@@ -52,8 +52,9 @@ Shared page-family rules use these explicit classes. Do not infer page identity 
 - Keep unique page composition in the relevant page stylesheet.
 - Keep shared project-page and gallery layout rules in `pages/page-system.css`.
 - Avoid duplicating selectors or using later overrides to patch earlier declarations.
-- Prefer semantic classes and low-specificity selectors over broad element selectors or deeply nested selectors.
+- Prefer semantic classes and low-specificity selectors over broad element selectors or deeply nested selectors; use `:where()` for scope-only ancestors.
 - Keep responsive and reduced-motion behavior beside the component or page family it affects.
+- Preserve visible keyboard focus and reduced-motion support; keep normal-size text at a minimum 4.5:1 contrast against its actual surface.
 - Preserve the established visual system; refactoring must not silently redesign a page.
 - Keep the cascade ordered through the declared CSS layers; do not compensate for incorrect order with selector escalation.
 - Use the existing page-family breakpoints as the shared responsive baseline; add a different breakpoint only when a component's actual layout requires it.
