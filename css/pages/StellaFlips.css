@@ -75,3 +75,15 @@
     color: var(--text-faint);
   }
 }
+
+
+/* Retain the original fixed media frame and centered crop. */
+.project--flips .wrap>section .shot img {
+  display:block;
+  width:100%;
+  height:280px;
+  min-height:280px;
+  max-height:280px;
+  object-fit:contain;
+  object-position:center;
+}
