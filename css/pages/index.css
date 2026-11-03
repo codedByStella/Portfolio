@@ -1,3 +1,4 @@
+@layer page-family {
 html {
   scroll-behavior:smooth;
 }
@@ -680,4 +681,5 @@ footer .closing {
   font-size:15px;
   color:var(--text-dim);
   max-width:340px;
+}
 }
