@@ -1,69 +1,39 @@
-# Portfolio CSS Architecture
+# Portfolio CSS Structure
 
-HTML is structure and meaning only. **Zero CSS is permitted in HTML.** This is a release requirement:
+HTML owns document structure and meaning. All presentation belongs in external CSS.
 
+**HTML requirements**
 - No `<style>` elements.
-- No `style` attributes.
-- No CSS embedded in HTML comments, scripts, or data attributes.
-- No SVG presentation attributes such as `fill`, `stroke`, or `opacity`; keep SVG geometry and accessibility attributes in markup, but move presentation into CSS.
-- Presentation belongs in external stylesheets and semantic classes.
-- Use page-scoped classes for page-specific visual treatments; use IDs only for genuine unique targets such as in-page anchors or script hooks.
+- No `style=""` attributes.
+- Keep the document limited to semantic markup, classes, and stylesheet links.
 
-## Stylesheet layers
+## Stylesheet entry points
 
-Every document loads `css/main.css` once. It establishes the cascade order and imports the shared layers:
+Each page loads its original page stylesheet:
 
-1. `tokens.css` — design tokens and CSS custom properties.
-2. `base.css` — global reset and element defaults.
-3. `components.css` — reusable component variants and utilities.
-4. `pages/page-system.css` — shared project-page and gallery systems.
+| Document | Stylesheets |
+| --- | --- |
+| `index.html` | `pages/index.css`, then `pages/index-layout.css` |
+| `outputs.html` | `pages/outputs.css` |
+| Project overview | Its matching `pages/StellaName.css` |
+| Technical review | Its matching `pages/StellaName-Technical.css` |
 
-The cascade order is `tokens` → `base` → `components` → `page-family` → `page-system` → `page-specific`. Explicit CSS cascade layers allow family and project styles to override shared rules without escalating selector specificity.
+Do not add a separate `css/main.css` link to a page stylesheet that already imports it.
 
-Page-family stylesheets are loaded after the shared entry point, only by documents that use them, inside the `page-family` layer:
+## Shared CSS
 
-| Page family | Stylesheet | Responsibility |
-| --- | --- | --- |
-| Homepage | `pages/index.css`, `pages/index-layout.css` | Homepage-specific composition |
-| Project overview | `pages/overview.css` | Shared project overview foundation and responsive layout |
-| Technical review | `pages/technical.css` | Shared technical documentation foundation |
-| Evidence gallery | `pages/outputs.css` | Gallery-specific presentation |
+- `tokens.css` contains the shared design tokens.
+- `components.css` contains reusable presentation utilities.
+- `pages/page-system.css` contains shared project-page and gallery styling.
+- `design-overrides.css` contains the established visual refinements used by the page stylesheets.
+- `main.css` imports the shared tokens, components, and page system.
 
-A project page loads its own stylesheet after the family stylesheet only when it has genuine project-specific variations or components. These files belong in the `page-specific` layer. Do not keep empty placeholder stylesheets.
+The page-level stylesheets import the shared foundation they need. `index-layout.css` is loaded after `index.css` to control the homepage layout.
 
-## Page identity
+## Change rules
 
-Each document's `body` declares semantic scope classes:
-
-- `page--home`
-- `page--overview`
-- `page--technical`
-- `page--gallery`
-- `project--{name}` for project identity
-
-Shared page-family rules use these explicit classes. Do not infer page identity from DOM contents with structural selectors such as `:has()`.
-
-## Conventions
-
-- Keep colors, typography, and recurring dimensions in custom properties.
-- Put global resets and element defaults in `base.css`, never in page stylesheets.
-- Put reusable patterns and explicit variants in `components.css`.
-- Keep shared page-family structure in its family stylesheet.
-- Keep unique page composition in the relevant page stylesheet.
-- Keep shared project-page and gallery layout rules in `pages/page-system.css`.
-- Avoid duplicating selectors or using later overrides to patch earlier declarations.
-- Prefer semantic classes and low-specificity selectors over broad element selectors or deeply nested selectors; use `:where()` for scope-only ancestors.
-- Keep responsive and reduced-motion behavior beside the component or page family it affects.
-- Preserve visible keyboard focus and reduced-motion support; keep normal-size text at a minimum 4.5:1 contrast against its actual surface.
-- Preserve the established visual system; refactoring must not silently redesign a page.
-- Keep the cascade ordered through the declared CSS layers; do not compensate for incorrect order with selector escalation.
-- Use the existing page-family breakpoints as the shared responsive baseline; add a different breakpoint only when a component's actual layout requires it.
-
-## Adding a page
-
-1. Add `css/main.css` in the document head.
-2. Add the appropriate page-family stylesheet.
-3. Add one project stylesheet if the page needs unique presentation.
-4. Add the correct page and project scope classes to `body`.
-5. Keep all presentation in external CSS and verify the zero-CSS-in-HTML rule.
-6. Run `python scripts/check-css-separation.py` before committing.
+- Put shared rules in the existing shared stylesheets.
+- Put project-specific rules in that project's stylesheet.
+- Keep page-specific markup changes separate from visual styling.
+- Preserve the established appearance. A CSS extraction or maintenance pass should not redesign the page.
+- Before committing, confirm every local stylesheet link and CSS import resolves, and verify that every HTML page contains no style block or style attribute.
