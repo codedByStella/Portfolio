@@ -36,13 +36,13 @@
     </div>
 
     <section id="origin">
-      <div class="s-label"><span>why I rebuilt it</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>why I rebuilt it</span><span class="rule"></span></div>
       <p>When Sora released, I was approached to build an automated audiovisual production pipeline, and I accepted the premise. I first experimented with Make and n8n, but found the tooling inefficient for the workflow I needed. The available models and integrations were too constrained, many nodes were simply broken, and required capabilities such as subtitle generation were not practical to implement within those tools.</p>
       <p>Rather than keep fighting the limitations, I rebuilt the pipeline from scratch on Amazon Lightsail, implementing it node by node. I replaced the visual automation dependencies with my own orchestration and processing steps until the system no longer depended on Make and could support the features the project required.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>historical output sample</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>historical output sample</span><span class="rule"></span></div>
       <p>A historical output sample from the original system. It demonstrates the assembled media format, not a currently available or reproducible service:</p>
       <div class="shot-grid">
         <div class="shot">
@@ -61,19 +61,19 @@
     </section>
 
     <section>
-      <div class="s-label"><span>overview</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>overview</span><span class="rule"></span></div>
       <p>Video, narration, and music services return separate assets. StellaStudios passes those assets through subtitle generation, audio mixing, watermarking, and FFmpeg assembly to produce one video file.</p>
       <p>The source separates metadata generation, provider integrations, media processing, assembly, and artifact archiving into distinct stages. The project is retired and non-functional: Sora has closed, so the original video-generation integration cannot currently complete a run.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>why this matters</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>why this matters</span><span class="rule"></span></div>
       <p>The engineering work is in coordinating separate services and local processing stages: metadata is passed between specialized nodes, generated narration and video are handled as separate artifacts, and FFmpeg performs the final media assembly.</p>
       <p>The implementation also includes defensive handling around metadata validation, timeouts, artifact selection, archival, and upload outcomes. Those mechanisms make the code more resilient to common failure cases, but do not make the retired service operational or establish full concurrency isolation.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>pipeline stages</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>pipeline stages</span><span class="rule"></span></div>
       <div class="flow">
         <div class="stage"><div class="stage-marker"><div class="node"></div><div class="line"></div></div><div><div class="stage-name">01 - Creative metadata</div><div class="stage-desc">The GPT node turns a creative preset and brief into structured JSON metadata used by downstream stages.</div></div></div>
         <div class="stage"><div class="stage-marker"><div class="node"></div><div class="line"></div></div><div><div class="stage-name">02 - Soundtrack selection</div><div class="stage-desc">The music node selects and trims an existing track from a local asset pool; it does not generate music from the metadata description.</div></div></div>
@@ -86,7 +86,7 @@
     </section>
 
     <section>
-      <div class="s-label"><span>engineering detail</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>engineering detail</span><span class="rule"></span></div>
       <h2>Separate assets, deterministic assembly</h2>
       <p>Each provider or local stage produces an artifact that is handed to the next node. Subtitle cues are estimated at phrase level by distributing text across the measured narration duration; this is not word-level or phoneme-level alignment. The final assembly therefore combines independently produced media, but subtitle timing remains approximate.</p>
 
@@ -103,7 +103,7 @@
     </section>
 
     <section class="section--no-border">
-      <div class="s-label"><span>status</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>status</span><span class="rule"></span></div>
       <div class="result">
         <p><strong>Operational status:</strong> This is a retired, non-functional system because its Sora video-generation dependency has closed. The video-generation call is isolated in a dedicated node, so the intended reactivation path is to replace that provider/model integration while retaining the surrounding orchestration and media-processing stages. This is a source-level architectural assessment, not a claim that a replacement provider has been integrated or tested.</p>
       </div>
