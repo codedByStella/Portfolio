@@ -360,32 +360,6 @@ body.page--technical .wrap>section th{
 body.page--technical .wrap>section td{
   padding:11px 14px;
 }
-body.page--technical .footer{
-  min-height:54px;
-  padding:9px clamp(16px,calc((100vw - 1040px)/2),48px);
-  gap:10px;
-  background:rgba(18,21,27,.96);
-  box-shadow:0 -10px 32px rgba(0,0,0,.16);
-}
-body.page--technical .footer a,
-body.page--technical .footer .source-unavailable{
-  display:inline-flex;
-  align-items:center;
-  min-height:32px;
-  padding:6px 10px;
-  border:1px solid rgba(95,212,196,.28);
-  border-radius:2px;
-  text-decoration:none;
-}
-body.page--technical .footer a:hover{
-  background:rgba(95,212,196,.08);
-  border-color:rgba(95,212,196,.5);
-}
-body.page--technical .footer a.source-link{
-  border-color:rgba(224,164,88,.3);
-}
-body.page--technical .footer .muted{font-size:10px}
-
 /* Evidence gallery: quiet editorial header, consistent exhibit cards and tables. */
 body.page--gallery .top{
   width:100%;
@@ -597,12 +571,6 @@ body.page--gallery main:not(.wrap) .disclosure{
     gap:7px;
     padding:8px 10px;
   }
-  body.page--technical .footer{
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:7px;
-    padding:8px 10px;
-  }
   body.page--gallery main:not(.wrap)>.eyebrow{
     font-size:10px;
   }
@@ -619,9 +587,5 @@ body.page--gallery main:not(.wrap) .disclosure{
 }
 @media(prefers-reduced-motion:reduce){
   body.page--overview .tech-sticky a,
-  body.page--technical .footer a,
-  body.page--gallery main:not(.wrap) .card{
-    transition:none;
-  }
   body.page--gallery main:not(.wrap) .card:hover{transform:none}
 }
