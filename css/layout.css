@@ -4,7 +4,6 @@
 
 /* Employer-focused visual pass. Shared identity, stronger evidence, clearer reading rhythm. */
 :root{--measure:760px;--wide:1120px}
-:focus-visible{outline:2px solid var(--amber);outline-offset:4px}
 a{transition:color .16s ease,border-color .16s ease,background-color .16s ease}
 .statusbar{padding:13px clamp(18px,4vw,44px);letter-spacing:.025em}
 .wrap{max-width:1120px}
@@ -45,8 +44,6 @@ body.page--technical .wrap th{letter-spacing:.04em}
 body.page--technical .wrap .meta-grid{border-radius:3px;overflow:hidden}
 body.page--technical .wrap .steps{gap:12px}
 body.page--technical .step{padding:18px;border-radius:3px}
-body.page--technical .footer{padding-left:max(20px,calc((100vw - 1040px)/2));padding-right:max(20px,calc((100vw - 1040px)/2))}
-body.page--technical .footer a{padding:7px 9px}
 /* Splash pages: prose stays readable while evidence gets room to breathe. */
 body.page--overview .wrap{max-width:1120px}
 body.page--overview .head h1{max-width:900px}
@@ -68,7 +65,6 @@ body.page--overview footer{max-width:1120px}
  footer{padding-left:20px;padding-right:20px}
  body.page--technical .wrap{padding-left:20px;padding-right:20px}
  body.page--technical .wrap section{padding:38px 0}
- body.page--technical .footer{padding:10px 12px}
  .tech-sticky{padding:10px 8px}
 }
 
