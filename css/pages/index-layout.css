@@ -55,8 +55,8 @@
   border:1px solid var(--border);
   border-radius:3px;
   background:var(--surface);
-  padding:20px var(--home-panel-pad) 28px;
-  --stack-gap:20px;
+  padding:16px var(--home-panel-pad);
+  --stack-gap:14px;
 }
 .pattern-inner .s-label-inline{
   border:0;
@@ -210,7 +210,7 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   .hero--intro h1{font-size:clamp(25px,6.5vw,29px)}
   .hero--intro .hero-meta{gap:22px}
   .hero--principles{padding-top:6px;padding-bottom:16px}
-  .pattern-inner{--stack-gap:16px}
+  .pattern-inner{--stack-gap:12px}
   .pattern-inner .pattern-list{grid-template-columns:1fr}
   .ai-approach-grid{grid-template-columns:1fr}
   .proc{grid-template-columns:1fr;padding:18px;gap:14px}
