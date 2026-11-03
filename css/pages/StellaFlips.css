@@ -1,29 +1,84 @@
 /* Page-specific styles for StellaFlips. Shared overview presentation lives in overview.css. */
-.dot{box-shadow:none;animation:none}
-.stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); margin:28px 0;}
-.stat{background:var(--surface); padding:20px 18px;}
-.stat .n{font-family:var(--mono); font-size:22px; color:var(--teal); font-weight:600;}
-.stat .l{font-size:12px; color:var(--text-faint); margin-top:4px;}
-@media(max-width:640px){
-.stat-grid{grid-template-columns:1fr 1fr;}
+
+.dot {
+  box-shadow:none;
+  animation:none;
 }
-.code{background:var(--surface); border:1px solid var(--border); padding:22px 24px; font-family:var(--mono); font-size:12.8px; color:var(--text-dim); overflow-x:auto; margin:18px 0; line-height:1.7;}
-.container--flush{padding:0}
-.screenshot-grid--spaced{margin-top:32px}
-.shot-grid{display:grid;
+
+.stat-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  margin:28px 0;
+}
+
+.stat {
+  background:var(--surface);
+  padding:20px 18px;
+}
+
+.stat .n {
+  font-family:var(--mono);
+  font-size:22px;
+  color:var(--teal);
+  font-weight:600;
+}
+
+.stat .l {
+  font-size:12px;
+  color:var(--text-faint);
+  margin-top:4px;
+}
+
+@media(max-width:640px) {
+  .stat-grid {
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+.code {
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:22px 24px;
+  font-family:var(--mono);
+  font-size:12.8px;
+  color:var(--text-dim);
+  overflow-x:auto;
+  margin:18px 0;
+  line-height:1.7;
+}
+
+.container--flush {
+  padding:0;
+}
+
+.screenshot-grid--spaced {
+  margin-top:32px;
+}
+
+.shot-grid {
+  display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   align-items:stretch;
   gap:22px;
-  margin-top:24px;}
-.shot{display:flex;
+  margin-top:24px;
+}
+
+.shot {
+  display:flex;
   flex-direction:column;
   min-width:0;
   width:100%;
   padding:8px;
   background:var(--surface);
   border:1px solid var(--border);
-  box-sizing:border-box;}
-.shot img,.media-frame{display:block;
+  box-sizing:border-box;
+}
+
+.shot img,.media-frame {
+  display:block;
   flex:0 0 280px;
   width:100%;
   height:280px;
@@ -31,21 +86,36 @@
   max-height:280px;
   box-sizing:border-box;
   border:1px solid var(--border);
-  background:var(--bg);}
-.shot img{object-fit:contain;
-  object-position:center;}
-.media-frame{position:relative;
-  overflow:hidden;}
-.video-inner{position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;}
-.video-inner iframe{position:absolute;
+  background:var(--bg);
+}
+
+.shot img {
+  object-fit:contain;
+  object-position:center;
+}
+
+.media-frame {
+  position:relative;
+  overflow:hidden;
+}
+
+.video-inner {
+  position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  border:0;}
-.shot-cap{flex:0 0 84px;
+}
+
+.video-inner iframe {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+.shot-cap {
+  flex:0 0 84px;
   width:100%;
   height:84px;
   min-height:84px;
@@ -57,7 +127,12 @@
   font-size:11px;
   line-height:1.5;
   letter-spacing:0.02em;
-  color:var(--text-faint);}
-@media(max-width:720px){
-.shot-grid{grid-template-columns:1fr;gap:16px}
+  color:var(--text-faint);
+}
+
+@media(max-width:720px) {
+  .shot-grid {
+    grid-template-columns:1fr;
+    gap:16px;
+  }
 }
