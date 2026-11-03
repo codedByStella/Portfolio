@@ -115,3 +115,8 @@ body.page--technical {
     font-size: 10px;
   }
 }
+
+/* Explicit two-column variant for selected metadata groups. */
+.page--technical .meta-grid.meta-grid--two-column {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
