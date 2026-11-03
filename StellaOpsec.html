@@ -44,19 +44,19 @@
     </div>
 
     <section>
-      <div class="s-label"><span>overview</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>overview</span><span class="rule"></span></div>
       <p>A security review may involve Windows configuration, network services, web headers, identity settings, event logs, and cloud policies. Running separate scripts for each source makes the results harder to compare and hand off.</p>
       <p>StellaOpsec uses separate PowerShell modules to collect selected configuration data, then combines the results into HTML, JSON, CSV, or Excel reports for review.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>why this matters</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>why this matters</span><span class="rule"></span></div>
       <p>The practical goal is to make collected evidence easier to inspect and communicate. A structured report can help an assessor separate observed configuration from assumptions, identify gaps that need follow-up, and explain which checks were limited by permissions, dependencies, or missing data.</p>
       <p>For a small team, the toolkit offers a repeatable way to run selected checks and prepare a consistent handoff. It does not replace expert interpretation, a penetration test, or a dedicated cloud-security platform.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>what it does</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>what it does</span><span class="rule"></span></div>
       <ul class="feature-list">
         <li><strong>Windows inventory</strong>Collects selected operating-system, hardware, account, network, firewall, process, service, scheduled-task, hotfix, software, and SMB information.</li>
         <li><strong>Network and web checks</strong>Includes reachability and TCP checks, DNS zone-transfer testing, TLS metadata, HTTP response headers, and cookie-attribute inspection.</li>
@@ -67,14 +67,14 @@
     </section>
 
     <section>
-      <div class="s-label"><span>what the output means</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>what the output means</span><span class="rule"></span></div>
       <h2>Collected configuration is evidence for review, not a verdict</h2>
       <p>A reachable port does not prove a service is vulnerable. A public-looking policy entry does not, by itself, establish effective exposure. An inventory result does not prove that a security control is working end to end.</p>
       <p>Results can be incomplete when commands fail, required modules are missing, permissions are insufficient, or source data is unavailable. Some checks use heuristics or inspect only selected settings. The technical review documents concrete examples, including places where the implementation can overstate what a result proves.</p>
     </section>
 
     <section class="section--no-border">
-      <div class="s-label"><span>engagement notes</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>engagement notes</span><span class="rule"></span></div>
       <div class="result">
         <p><strong>Status: prototype / dormant.</strong> The inspected source contains modules for Windows host inventory, network and web checks, credential-related configuration, event-log review, Active Directory, selected Google Cloud and Azure settings, finding generation, and report export. This does not establish broad environment coverage or successful end-to-end execution.</p>
       </div>
