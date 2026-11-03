@@ -2,7 +2,7 @@
 
 :root {
   --project-accent:var(--teal);
-  --project-accent-rgb:95,212,196;
+  
   --project-code-accent:var(--teal);
   --project-status-accent:var(--teal);
   --project-status-rgb:95,212,196;
@@ -10,7 +10,7 @@
 
 body.project--opsec {
   --project-accent:var(--amber);
-  --project-accent-rgb:224,164,88;
+  
   --project-code-accent:var(--red);
   --project-status-accent:var(--amber);
   --project-status-rgb:224,164,88;
@@ -205,7 +205,7 @@ ul.feature-list li strong {
 }
 
 .code .c2 {
-  color:var(--project-accent);
+  color:var(--project-code-accent);
 }
 
 .code .c3 {
