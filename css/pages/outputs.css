@@ -1,3 +1,4 @@
+@layer page-family {
 body {
   background:var(--bg);
   color:var(--text);
@@ -282,4 +283,5 @@ td a {
   .report iframe {
     height:430px;
   }
+}
 }
