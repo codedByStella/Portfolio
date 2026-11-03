@@ -15,8 +15,7 @@ def local_path(url: str, base: Path) -> Path | None:
     parsed = urlparse(url)
     if parsed.scheme or parsed.netloc or not parsed.path:
         return None
-    path = parsed.path.lstrip("/")
-    return (base / path).resolve()
+    return (base / parsed.path.lstrip("/")).resolve()
 
 
 def check_css_balance(path: Path) -> None:
@@ -24,10 +23,11 @@ def check_css_balance(path: Path) -> None:
     depth = 0
     index = 0
     quote = None
+
     while index < len(source):
         char = source[index]
         if quote:
-            if char == "\\\\":
+            if char == "\\":
                 index += 1
             elif char == quote:
                 quote = None
@@ -61,21 +61,21 @@ for html_path in html_files:
     source = html_path.read_text(encoding="utf-8")
     relative = html_path.relative_to(ROOT)
 
-    if re.search(r"<\\s*style\\b", source, re.IGNORECASE):
+    if re.search(r"<\s*style\b", source, re.IGNORECASE):
         ERRORS.append(f"{relative}: inline <style> block found")
-    if re.search(r"\\sstyle\\s*=", source, re.IGNORECASE):
+    if re.search(r"\sstyle\s*=", source, re.IGNORECASE):
         ERRORS.append(f"{relative}: inline style attribute found")
 
-    body = re.search(r"<body\\b[^>]*>", source, re.IGNORECASE)
+    body = re.search(r"<body\b[^>]*>", source, re.IGNORECASE)
     body_tag = body.group(0) if body else ""
-    classes_match = re.search(r'\\bclass=["\']([^"\']*)["\']', body_tag, re.IGNORECASE)
+    classes_match = re.search(r'\bclass=["\']([^"\']*)["\']', body_tag, re.IGNORECASE)
     classes = set(classes_match.group(1).split()) if classes_match else set()
 
-    links = re.findall(r"<link\\b[^>]*>", source, re.IGNORECASE)
+    links = re.findall(r"<link\b[^>]*>", source, re.IGNORECASE)
     local_stylesheets = set()
     for link in links:
-        rel = re.search(r'\\brel=["\']([^"\']*)["\']', link, re.IGNORECASE)
-        href = re.search(r'\\bhref=["\']([^"\']*)["\']', link, re.IGNORECASE)
+        rel = re.search(r'\brel=["\']([^"\']*)["\']', link, re.IGNORECASE)
+        href = re.search(r'\bhref=["\']([^"\']*)["\']', link, re.IGNORECASE)
         if not rel or "stylesheet" not in rel.group(1).lower().split() or not href:
             continue
         resolved = local_path(href.group(1), ROOT)
@@ -106,18 +106,25 @@ for html_path in html_files:
 for css_path in css_files:
     check_css_balance(css_path)
     source = css_path.read_text(encoding="utf-8")
-    for import_url in re.findall(r'@import\\s+(?:url\\()?["\']([^"\']+)["\']\\)?\\s*;', source, re.IGNORECASE):
+    imports = re.findall(
+        r'@import\s+(?:url\()?["\']([^"\']+)["\']\)?\s*;',
+        source,
+        re.IGNORECASE,
+    )
+    for import_url in imports:
         resolved = local_path(import_url, css_path.parent)
         if resolved is None:
             continue
         if not resolved.is_file():
-            ERRORS.append(f"{css_path.relative_to(ROOT)}: imported stylesheet not found: {import_url}")
+            ERRORS.append(
+                f"{css_path.relative_to(ROOT)}: imported stylesheet not found: {import_url}"
+            )
         else:
             REFERENCED_CSS.add(resolved)
 
-orphaned = [path for path in css_files if path.resolve() not in REFERENCED_CSS]
-for path in orphaned:
-    ERRORS.append(f"{path.relative_to(ROOT)}: stylesheet is not linked or imported")
+for path in css_files:
+    if path.resolve() not in REFERENCED_CSS:
+        ERRORS.append(f"{path.relative_to(ROOT)}: stylesheet is not linked or imported")
 
 if ERRORS:
     print("CSS separation checks failed:")
