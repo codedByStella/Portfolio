@@ -83,3 +83,43 @@ body:has(.card) .head h2{font-size:clamp(22px,2.5vw,28px)}
 
 body:has(.card) .head{padding-top:0}
 body:has(.card) .footer{padding:24px 0 0;background:transparent;box-shadow:none;backdrop-filter:none;border-radius:0}
+
+
+/* Project headers: align each status label with its page title. */
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  align-items: center;
+  column-gap: clamp(16px, 2.5vw, 28px);
+  row-gap: 18px;
+}
+.head > .status-tag {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  justify-self: start;
+  max-width: 100%;
+  margin: 0;
+}
+.head > h1 {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+}
+.head > :not(.status-tag):not(h1) {
+  grid-column: 1 / -1;
+}
+@media (max-width: 760px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 18px;
+  }
+  .head > .status-tag,
+  .head > h1,
+  .head > :not(.status-tag):not(h1) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
