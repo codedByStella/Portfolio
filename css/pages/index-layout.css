@@ -50,9 +50,9 @@
   padding-bottom:18px;
 }
 .pattern-inner{
-  border:1px solid #35414b;
+  border:1px solid var(--border);
   border-radius:3px;
-  background:linear-gradient(130deg,rgba(95,212,196,.055),transparent 48%),var(--surface);
+  background:var(--surface);
   padding:var(--home-panel-pad);
   --stack-gap:20px;
 }
@@ -112,6 +112,13 @@
   margin-bottom:17px;
 }
 .ai-approach{padding-top:0}
+.ai-approach-inner{border-radius:3px}
+.ai-approach-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.ai-approach-item{border-radius:2px}
+.credentials-inner,.outputs-callout-inner{border-radius:3px}
 
 /* Project list: preserve the larger evidence treatment without competing overrides. */
 .proc{
@@ -119,7 +126,15 @@
   gap:26px;
   padding:24px;
   align-items:center;
+  border-radius:3px;
 }
+.proc:hover{
+  transform:translateY(-2px);
+  border-color:rgba(95,212,196,.42);
+  box-shadow:0 12px 30px rgba(0,0,0,.16);
+}
+.proc-usecase{line-height:1.6}
+.proc-arrow{padding:10px 0 10px 10px}
 .proc-thumb{
   width:100%;
   height:100%;
@@ -195,6 +210,7 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   .hero--principles{padding-top:6px;padding-bottom:16px}
   .pattern-inner{--stack-gap:16px}
   .pattern-inner .pattern-list{grid-template-columns:1fr}
+  .ai-approach-grid{grid-template-columns:1fr}
   .proc{grid-template-columns:1fr;padding:18px;gap:14px}
   .proc-thumb{
     grid-column:1;
