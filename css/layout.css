@@ -120,29 +120,29 @@ footer {
   padding:54px 32px 90px;
 }
 
-.tech-sticky,.footer {
+.footer {
   backdrop-filter:blur(16px);
   background:rgba(18,21,27,.94);
   box-shadow:0 -10px 32px rgba(0,0,0,.16);
 }
 
-.tech-sticky a,.footer a {
+.footer a {
   padding:7px 9px;
   border:1px solid transparent;
   border-radius:2px;
 }
 
-.tech-sticky a:hover,.footer a:hover {
+.footer a:hover {
   background:rgba(95,212,196,.07);
   border-color:rgba(95,212,196,.24);
   text-decoration:none;
 }
 
-.tech-sticky a.source-link,.footer .source-link {
+.footer .source-link {
   color:var(--amber);
 }
 
-.tech-sticky a.source-link:hover,.footer .source-link:hover {
+.footer .source-link:hover {
   background:rgba(224,164,88,.07);
   border-color:rgba(224,164,88,.25);
 }
@@ -291,9 +291,6 @@ body.page--overview footer {
     padding:38px 0;
   }
 
-  .tech-sticky {
-    padding:10px 8px;
-  }
 }
 
 /* Outputs gallery: curated exhibits, not a thumbnail dump. */
