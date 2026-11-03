@@ -534,9 +534,28 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   footer{grid-template-columns:1fr;padding:22px 20px 26px;gap:12px}
 }
 
-/* Keep the pattern section as wide as the project collection and tighten its handoff. */
-.hero:not(.hero--tight-top) > p{max-width:none}
+/* Homepage intro: use the same frame as the project collection, not a narrow text column. */
+.hero{
+  width:100%;
+  max-width:1120px;
+  padding-left:32px;
+  padding-right:32px;
+}
+.hero h1{max-width:none}
+.hero p{max-width:none}
 .hero--tight-top .prose--narrow,
 .hero--tight-top .pattern-list{max-width:none}
+.hero--tight-top .pattern-list{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:start;
+  column-gap:28px;
+  row-gap:14px;
+}
+.hero--tight-top .pattern-list li{min-width:0}
 .hero.hero--tight-top{padding-bottom:18px}
 .hero--tight-top + .section-label{padding-top:0}
+@media(max-width:720px){
+  .hero{padding-left:20px;padding-right:20px}
+  .hero--tight-top .pattern-list{grid-template-columns:1fr;row-gap:16px}
+}
