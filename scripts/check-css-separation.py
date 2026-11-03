@@ -66,6 +66,20 @@ for html_path in html_files:
     if re.search(r"\sstyle\s*=", source, re.IGNORECASE):
         ERRORS.append(f"{relative}: inline style attribute found")
 
+    svg_blocks = re.findall(r"<svg\b.*?</svg\s*>", source, re.IGNORECASE | re.DOTALL)
+    svg_presentation_attributes = (
+        "fill", "fill-opacity", "fill-rule", "stroke", "stroke-width",
+        "stroke-linecap", "stroke-linejoin", "stroke-opacity", "color",
+        "opacity", "filter", "clip-path", "mask", "stop-color",
+    )
+    for svg in svg_blocks:
+        for attribute in svg_presentation_attributes:
+            if re.search(rf"\s{attribute}\s*=", svg, re.IGNORECASE):
+                ERRORS.append(
+                    f"{relative}: SVG presentation attribute '{attribute}' found; "
+                    "move presentation into an external stylesheet"
+                )
+
     body = re.search(r"<body\b[^>]*>", source, re.IGNORECASE)
     body_tag = body.group(0) if body else ""
     classes_match = re.search(r'\bclass=["\']([^"\']*)["\']', body_tag, re.IGNORECASE)
