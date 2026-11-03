@@ -1,3 +1,4 @@
+@layer page-family {
 /* Homepage layout system.
    Loaded after index.css. Vertical rhythm is controlled by .home-stack gap,
    while section padding controls only the distance between framed sections. */
@@ -420,4 +421,5 @@
   .proc:hover {
     transform: none;
   }
+}
 }
