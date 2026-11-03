@@ -635,7 +635,7 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
 }
 
 /* Balance the methodology label's surrounding whitespace instead of leaving all of it below. */
-.section-label:has(.count:first-child){
+.processes + .section-label{
   margin-top:9px;
   margin-bottom:9px;
 }
