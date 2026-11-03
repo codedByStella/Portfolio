@@ -283,9 +283,3 @@ td a {
     height:430px;
   }
 }
-
-/* Semantic utilities replacing former inline presentation. */
-
-.content-grid--spaced {
-  margin-top:16px;
-}
