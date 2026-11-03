@@ -565,3 +565,43 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
 .hero-meta{margin-top:24px}
 .hero:not(.hero--tight-top){padding-bottom:24px}
 .hero.hero--tight-top{padding-bottom:12px}
+
+
+/* Modern methodology: a standalone section, using the same label and open layout as processes. */
+.ai-approach{
+  max-width:1080px;
+  margin:0 auto 72px;
+  padding:0 32px;
+}
+.ai-approach-inner{
+  border:0;
+  background:transparent;
+  padding:0;
+}
+.ai-approach-header{
+  margin:0 0 18px;
+}
+.ai-approach-header .marker{display:none}
+.ai-approach-intro{
+  max-width:850px;
+  margin-bottom:24px;
+}
+.ai-approach-grid{
+  gap:0 28px;
+}
+.ai-approach-item{
+  padding:18px 0;
+  background:transparent;
+  border:0;
+  border-top:1px solid var(--border);
+}
+.ai-approach-conclusion{
+  border-top:1px solid var(--border);
+  margin-top:18px;
+  padding-top:18px;
+}
+@media(max-width:720px){
+  .ai-approach{padding:0 20px}
+  .ai-approach-grid{grid-template-columns:1fr}
+  .ai-approach-item{padding:16px 0}
+}
