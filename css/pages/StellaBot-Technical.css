@@ -1,0 +1,4 @@
+/* StellaBot technical review: original two-column metadata layout. */
+.project--bot.page--technical .meta-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
