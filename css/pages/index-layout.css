@@ -26,10 +26,12 @@
   padding-top:24px;
   padding-bottom:6px;
   --stack-gap:20px;
+  --hero-heading-width:100%;
 }
 .hero--intro .eyebrow{margin-bottom:0}
 .hero--intro h1{
-  max-width:820px;
+  width:var(--hero-heading-width);
+  max-width:var(--hero-heading-width);
   font-size:clamp(26px,2.6vw,32px);
   line-height:1.18;
 }
@@ -250,7 +252,8 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   display:block;
   flex:0 0 auto;
   align-self:center;
-  width:min(100%,820px);
+  width:var(--hero-heading-width);
+  max-width:var(--hero-heading-width);
   height:2px;
   min-height:2px;
   margin:0;
@@ -289,6 +292,6 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
 
 /* The principles section now uses the same numbered, left-aligned label as the rest of the page. */
 .section-label--pattern{
-  margin:12px auto 14px;
+  margin:18px auto 14px;
 }
 .hero--principles{padding-top:0}
