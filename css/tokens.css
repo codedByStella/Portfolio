@@ -1,7 +1,7 @@
 :root{
   --bg:#12151B;--surface:#1B2028;--surface-hi:#212832;--hi:#212832;--border:#282F39;
   --text:#E8EAED;--text-dim:#B0B8C4;--dim:#B0B8C4;--text-faint:#A3ABB7;--faint:#A3ABB7;
-  --teal:#5FD4C4;--amber:#E0A458;--red:#E2665B;
+  --teal:#5FD4C4;--amber:#E0A458;--red:#EF786E;
   --mono:'IBM Plex Mono',ui-monospace,'SF Mono',monospace;
   --sans:'IBM Plex Sans',-apple-system,Arial,sans-serif;
 }
