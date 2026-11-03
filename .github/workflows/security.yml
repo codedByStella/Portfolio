@@ -1,0 +1,26 @@
+name: Portfolio security checks
+
+on:
+  push:
+    branches: [lab/css-pass]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  static-security:
+    name: Static HTML security policy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+      - name: Run static security regression checks
+        run: python3 scripts/security_check.py
+      - name: Scan repository history for exposed secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
