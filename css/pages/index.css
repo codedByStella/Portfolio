@@ -514,3 +514,8 @@
 /* Match the hero's lower spacing to its 52px top inset; retain the following section's own rhythm. */
 .hero:not(.hero--tight-top){padding-bottom:52px}
 .hero.hero--tight-top{padding-bottom:60px}
+
+/* Close the gap between the project collection and AI methodology. */
+.processes{margin-bottom:12px}
+.ai-approach{padding-top:16px}
+@media(max-width:720px){.processes{margin-bottom:12px}.ai-approach{padding-top:12px}}
