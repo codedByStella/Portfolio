@@ -80,3 +80,12 @@ body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;b
 /* Semantic utilities replacing former inline presentation. */
 .breadcrumb-separator{color:var(--border);margin:0 6px}
 .section--no-border{border-bottom:none}
+
+/* Historical media and interface evidence share one side-by-side exhibit row. */
+.shot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start;margin-top:24px}
+.shot{width:100%;min-width:0;padding:10px}
+.shot img{display:block;width:100%;height:auto;max-width:100%;max-height:620px;object-fit:contain;object-position:top center}
+.media-frame{width:100%;height:auto;max-width:100%;aspect-ratio:9/16;max-height:620px}
+.video-inner{height:100%;width:auto;aspect-ratio:9/16}
+.shot-cap{max-width:none;padding:12px 4px 3px;line-height:1.55}
+@media(max-width:720px){.shot-grid{grid-template-columns:1fr;gap:16px}.media-frame{max-width:380px}}
