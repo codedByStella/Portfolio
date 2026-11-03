@@ -559,3 +559,9 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   .hero{padding-left:20px;padding-right:20px}
   .hero--tight-top .pattern-list{grid-template-columns:1fr;row-gap:16px}
 }
+
+
+/* Tighten the homepage intro-to-pattern handoff without changing content or width. */
+.hero-meta{margin-top:24px}
+.hero:not(.hero--tight-top){padding-bottom:24px}
+.hero.hero--tight-top{padding-bottom:12px}
