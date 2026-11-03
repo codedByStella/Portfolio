@@ -1,3 +1,4 @@
+@layer page-specific {
 /* Page-specific styles for StellaOpsec. Shared overview presentation lives in overview.css. */
 
 .notice {
@@ -67,4 +68,4 @@
 .tech-sticky a.source-link:hover {
   border-bottom-color:var(--amber);
 }
-
+}
