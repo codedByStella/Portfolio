@@ -2,18 +2,11 @@
 /* Page-specific styles for StellaOpsec. Shared overview presentation lives in overview.css. */
 
 .notice {
-  background:var(--surface);
   border:1px solid var(--border);
   border-left:2px solid var(--amber);
-  padding:22px 26px;
   margin:24px 0;
 }
 
-.notice p {
-  margin-bottom:0;
-  color:var(--text-dim);
-  font-size:14px;
-}
 
 .notice .n-label {
   font-family:var(--mono);
@@ -65,7 +58,4 @@
   margin-top:10px;
 }
 
-.tech-sticky a.source-link:hover {
-  border-bottom-color:var(--amber);
-}
 }
