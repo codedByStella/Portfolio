@@ -476,3 +476,9 @@
 .prose--narrow{max-width:680px}
 .section-kicker{color:var(--text);font-size:14px;display:block;margin-bottom:6px}
 .prose--spaced{margin-top:10px}
+
+/* Final layout corrections: balanced AI cards and tighter homepage entry. */
+.ai-approach-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:720px){.ai-approach-grid{grid-template-columns:1fr}}
+.hero:not(.hero--tight-top){padding-top:52px}
+.hero.hero--tight-top{padding-top:0}
