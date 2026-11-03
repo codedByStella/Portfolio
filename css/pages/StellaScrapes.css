@@ -1,2 +1,5 @@
 /* Page-specific styles for StellaScrapes. Shared overview presentation lives in overview.css. */
-.prose--spaced{margin-top:10px}
+
+.prose--spaced {
+  margin-top:10px;
+}
