@@ -28,7 +28,7 @@ Page-family stylesheets are loaded after the shared entry point, only by documen
 | Technical review | `pages/technical.css` | Shared technical documentation foundation |
 | Evidence gallery | `pages/outputs.css` | Gallery-specific presentation |
 
-Each project page then loads its own stylesheet after its family stylesheet. These files contain only genuine project-specific variations and components.
+A project page loads its own stylesheet after the family stylesheet only when it has genuine project-specific variations or components. Do not keep empty placeholder stylesheets.
 
 ## Page identity
 
