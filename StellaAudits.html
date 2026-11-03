@@ -37,7 +37,7 @@
     </div>
 
     <section>
-      <div class="s-label"><span>what it helps with</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>what it helps with</span><span class="rule"></span></div>
       <p>A quick website review can miss accessibility, search, or configuration problems. StellaAudits collects its checks in one report, with the evidence and severity beside each finding so the owner or developer can decide what to investigate first.</p>
       <ul class="feature-list">
         <li><strong>One readable report</strong>Accessibility, SEO, local search, and selected security checks use a shared finding format, then feed a PDF report instead of leaving the owner to sort through separate warning lists.</li>
@@ -50,13 +50,13 @@
     </section>
 
     <section>
-      <div class="s-label"><span>how it works</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>how it works</span><span class="rule"></span></div>
       <p>Most automated site-audit tools fall into one of two traps: they guess with no admission of uncertainty, or they require a full headless-browser stack just to run once. Static HTML parsing is fast and honest about <em>what</em> it measured, but it can be flatly wrong against a JavaScript-rendered shell, reporting "no H1, no content" against a site that's actually fine once rendered is a false, credibility-damaging finding.</p>
       <p>The intended scoring model distinguishes site findings from notices about the audit's own coverage. Static checks run against the initial HTML, while optional Lighthouse category scores can add limited browser-rendered context when available. The public source omits the proprietary scoring implementation, so its exact treatment of every finding cannot be verified from this publication.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>engineering detail</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>engineering detail</span><span class="rule"></span></div>
       <h2>Scoring that distinguishes site findings from audit notices</h2>
       <p>An early run against a JavaScript-heavy site exposed a scoring-design issue: a notice about the audit's own coverage is not itself a defect on the audited site. The shared <code>Finding</code> model includes an <code>is_meta</code> flag to distinguish such notices. The scoring implementation is intentionally redacted from this public repository, so the precise calculation cannot be inspected here.</p>
 
@@ -66,7 +66,7 @@
     </section>
 
     <section class="section--no-border">
-      <div class="s-label"><span>sample results</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>sample results</span><span class="rule"></span></div>
       <div class="result">
         <p>Active, used to generate real client-facing audits. The result below is a sample from a live client engagement, not this site or any property of mine, the client's domain is withheld here for confidentiality.</p>
       </div>
