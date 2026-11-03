@@ -36,10 +36,6 @@ body.page--technical {
 }
 
 .page--technical .statusbar a,
-.page--technical .footer a {
-  text-decoration: none;
-}
-
 .page--technical .wrap {
   box-sizing: border-box;
   width: 100%;
@@ -254,40 +250,6 @@ body.page--technical {
   font-size: 13px;
 }
 
-.page--technical .footer {
-  position: fixed;
-  z-index: 10;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 13px max(20px, calc((100vw - 776px) / 2));
-  border-top: 1px solid var(--border);
-  background: rgba(18, 21, 27, 0.96);
-  backdrop-filter: blur(12px);
-  font: 12px var(--mono);
-}
-
-.page--technical .footer a {
-  color: var(--teal);
-}
-
-.page--technical .footer .source-link,
-.page--technical .footer .source-unavailable {
-  color: var(--amber);
-}
-
-.page--technical .footer a:hover {
-  text-decoration: underline;
-}
-
-.page--technical .footer .muted {
-  color: var(--text-faint);
-}
-
 .page--technical .tech-sticky {
   position: fixed;
   z-index: 20;
@@ -356,7 +318,6 @@ body.page--technical {
     grid-template-columns: 1fr;
   }
 
-  .page--technical .footer,
   .page--technical .tech-sticky {
     flex-wrap: wrap;
     justify-content: center;
@@ -365,45 +326,37 @@ body.page--technical {
     font-size: 10px;
   }
 
-  .page--technical .footer a:first-child,
   .page--technical .tech-sticky a[href*="-Technical.html"] {
     font-size: 0;
   }
 
-  .page--technical .footer a:first-child::after,
   .page--technical .tech-sticky a[href*="-Technical.html"]::after {
     content: "Overview";
     font-size: 10px;
   }
 
-  .page--technical .footer a.source-link,
   .page--technical .tech-sticky a.source-link {
     font-size: 0;
   }
 
-  .page--technical .footer a.source-link::after,
   .page--technical .tech-sticky a.source-link::after {
     content: "GitHub Source";
     font-size: 10px;
   }
 
-  .page--technical .footer .source-unavailable,
   .page--technical .tech-sticky .source-unavailable {
     font-size: 0;
   }
 
-  .page--technical .footer .source-unavailable::after,
   .page--technical .tech-sticky .source-unavailable::after {
     content: "Source N/A";
     font-size: 10px;
   }
 
-  .page--technical .footer a:last-child:not(.source-link),
   .page--technical .tech-sticky a:last-child:not(.source-link) {
     font-size: 0;
   }
 
-  .page--technical .footer a:last-child:not(.source-link)::after,
   .page--technical .tech-sticky a:last-child:not(.source-link)::after {
     content: "Next →";
     font-size: 10px;
