@@ -80,10 +80,10 @@ body:has(.tech-sticky) .wrap .stage-desc {
   .tech-sticky > * { flex:0 1 auto; min-width:0; white-space:nowrap; }
   .tech-sticky a { font-size:inherit; line-height:1.2; }
   .tech-sticky a[href*="-Technical.html"], .tech-sticky a.source-link, .tech-sticky a:last-child:not(.source-link), .tech-sticky .source-unavailable { font-size:0; }
-  .tech-sticky a[href*="-Technical.html"]::after { content:"Technical"; font-size:inherit; }
-  .tech-sticky a.source-link::after { content:"GitHub"; font-size:inherit; }
-  .tech-sticky a:last-child:not(.source-link)::after { content:"Next →"; font-size:inherit; }
-  .tech-sticky .source-unavailable::after { content:"Source N/A"; font-size:inherit; }
+  .tech-sticky a[href*="-Technical.html"]::after { content:"Technical"; font-size:clamp(8px,2.25vw,10px); }
+  .tech-sticky a.source-link::after { content:"GitHub source"; font-size:clamp(8px,2.25vw,10px); }
+  .tech-sticky a:last-child:not(.source-link)::after { content:"Next →"; font-size:clamp(8px,2.25vw,10px); }
+  .tech-sticky .source-unavailable::after { content:"Source N/A"; font-size:clamp(8px,2.25vw,10px); }
   .statusbar { flex-wrap:nowrap; align-items:center; gap:4px; padding:7px 8px; font-size:clamp(6px,1.95vw,9px); line-height:1.2; white-space:nowrap; }
   .statusbar > div { min-width:0; flex:0 1 auto; white-space:nowrap; }
   .statusbar > div:first-child { flex:1 1 auto; overflow:hidden; text-overflow:clip; }
