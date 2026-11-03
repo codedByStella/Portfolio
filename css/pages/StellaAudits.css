@@ -1,24 +1,24 @@
 @layer page-specific {
   /* StellaAudits' sample metrics. Shared grid geometry lives in page-system.css. */
 
-  .sample {
+  .project--audits .sample {
     background: var(--border);
     border: 1px solid var(--border);
     margin-top: 18px;
   }
 
-  .sample div {
+  .project--audits .sample div {
     background: var(--surface);
     padding: 16px;
   }
 
-  .sample .n {
+  .project--audits .sample .n {
     font-family: var(--mono);
     font-size: 22px;
     color: var(--text);
   }
 
-  .sample .l {
+  .project--audits .sample .l {
     font-family: var(--mono);
     font-size: 11px;
     color: var(--text-faint);
