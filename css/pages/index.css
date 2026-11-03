@@ -509,3 +509,8 @@
  .proc>div:nth-child(2),.proc-arrow{grid-column:1;grid-row:auto}
  .proc-arrow{text-align:left;padding:0}
 }
+
+
+/* Match the hero's lower spacing to its 52px top inset; retain the following section's own rhythm. */
+.hero:not(.hero--tight-top){padding-bottom:52px}
+.hero.hero--tight-top{padding-bottom:60px}
