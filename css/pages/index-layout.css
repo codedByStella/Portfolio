@@ -229,3 +229,36 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
   .outputs-callout-inner{align-items:flex-start;flex-direction:column}
   footer{grid-template-columns:1fr;padding:22px 20px 26px;gap:12px}
 }
+
+
+/* Center the opening statement and make its reading breaks explicit. */
+.hero--intro{
+  align-items:center;
+  text-align:center;
+}
+.hero--intro .eyebrow{
+  justify-content:center;
+  text-align:center;
+}
+.hero--intro h1{
+  width:100%;
+  margin-inline:auto;
+  text-align:center;
+}
+.hero--intro .hero-divider{
+  flex:0 0 1px;
+  align-self:center;
+  width:100%;
+  max-width:680px;
+  height:1px;
+  background:var(--border);
+}
+.hero--intro p{
+  margin-inline:auto;
+  text-align:center;
+}
+.hero--intro .hero-meta{
+  justify-content:center;
+  text-align:center;
+}
+.hero--intro .hero-meta>div{text-align:center}
