@@ -103,3 +103,14 @@ body{padding-bottom:78px}.tech-sticky{position:fixed;z-index:20;left:0;right:0;b
   .shot-grid{grid-template-columns:1fr}
   .shot img,.media-frame{height:240px}
 }
+
+/* Shared media and caption geometry for the historical exhibit pair. */
+.shot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:stretch}
+.shot{display:flex;flex-direction:column;width:100%;min-width:0;box-sizing:border-box}
+.shot img,.media-frame{display:block;width:100%;height:auto;aspect-ratio:16/9;max-width:100%;box-sizing:border-box;border:1px solid var(--border)}
+.shot img{object-fit:contain;object-position:center;background:var(--bg)}
+.media-frame{position:relative;overflow:hidden;background:var(--bg)}
+.video-inner{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto}
+.video-inner iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.shot-cap{width:100%;height:72px;min-height:72px;max-height:72px;box-sizing:border-box;overflow:hidden;padding:12px 4px 3px;line-height:1.45}
+@media(max-width:720px){.shot-grid{grid-template-columns:1fr;gap:16px}}
