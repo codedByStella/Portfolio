@@ -499,6 +499,25 @@
   line-height:1.75;
 }
 
+/* Gallery footer links retain the shared footer affordance without leaking globally. */
+.page--gallery .footer a{
+  padding:7px 9px;
+  border:1px solid transparent;
+  border-radius:2px;
+}
+.page--gallery .footer a:hover{
+  background:rgba(95,212,196,.07);
+  border-color:rgba(95,212,196,.24);
+  text-decoration:none;
+}
+.page--gallery .footer .source-link{
+  color:var(--amber);
+}
+.page--gallery .footer .source-link:hover{
+  background:rgba(224,164,88,.07);
+  border-color:rgba(224,164,88,.25);
+}
+
 /* Responsive rhythm: cards stack cleanly and retain legible gutters. */
 @media(max-width:900px){
   .page--overview .wrap>section .sample,
