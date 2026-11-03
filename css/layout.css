@@ -153,77 +153,77 @@ html {
   scroll-padding-top:28px;
 }
 
-body.page--technical .wrap {
+.page--technical .wrap {
   max-width:1080px;
 }
 
-body.page--technical .wrap .head {
+.page--technical .wrap .head {
   padding-top:82px;
 }
 
-body.page--technical .wrap .head h1 {
+.page--technical .wrap .head h1 {
   max-width:980px;
 }
 
-body.page--technical .wrap section {
+.page--technical .wrap section {
   padding:48px 0;
 }
 
-body.page--technical .wrap p {
+.page--technical .wrap p {
   max-width:780px;
 }
 
-body.page--technical .wrap h2 {
+.page--technical .wrap h2 {
   font-size:23px;
 }
 
-body.page--technical .wrap .callout {
+.page--technical .wrap .callout {
   padding:22px 24px;
   background:linear-gradient(110deg,rgba(95,212,196,.055),transparent 70%),var(--surface);
 }
 
-body.page--technical .wrap .table-wrap {
+.page--technical .wrap .table-wrap {
   max-width:100%;
   border-radius:3px;
 }
 
-body.page--technical .wrap th {
+.page--technical .wrap th {
   letter-spacing:.04em;
 }
 
-body.page--technical .wrap .meta-grid {
+.page--technical .wrap .meta-grid {
   border-radius:3px;
   overflow:hidden;
 }
 
-body.page--technical .wrap .steps {
+.page--technical .wrap .steps {
   gap:12px;
 }
 
-body.page--technical .step {
+.page--technical .step {
   padding:18px;
   border-radius:3px;
 }
 
 /* Splash pages: prose stays readable while evidence gets room to breathe. */
 
-body.page--overview .wrap {
+.page--overview .wrap {
   max-width:1120px;
 }
 
-body.page--overview p {
+.page--overview p {
   max-width:760px;
 }
 
-body.page--overview .shot-grid {
+.page--overview .shot-grid {
   grid-template-columns:repeat(2,minmax(0,1fr));
 }
 
-body.page--overview .shot img {
+.page--overview .shot img {
   max-height:620px;
 }
 
-body.page--overview footer {
+.page--overview footer {
   max-width:1120px;
 }
 
@@ -274,12 +274,12 @@ body.page--overview footer {
     padding-right:20px;
   }
 
-  body.page--technical .wrap {
+  .page--technical .wrap {
     padding-left:20px;
     padding-right:20px;
   }
 
-  body.page--technical .wrap section {
+  .page--technical .wrap section {
     padding:38px 0;
   }
 
@@ -287,63 +287,63 @@ body.page--overview footer {
 
 /* Outputs gallery: curated exhibits, not a thumbnail dump. */
 
-body.page--gallery main {
+.page--gallery main {
   max-width:1240px;
   padding-left:clamp(20px,4vw,44px);
   padding-right:clamp(20px,4vw,44px);
 }
 
-body.page--gallery .intro {
+.page--gallery .intro {
   max-width:850px;
   line-height:1.8;
 }
 
-body.page--gallery .section {
+.page--gallery .section {
   margin:58px 0;
 }
 
-body.page--gallery .head {
+.page--gallery .head {
   padding-bottom:16px;
 }
 
-body.page--gallery .grid {
+.page--gallery .grid {
   gap:22px;
 }
 
-body.page--gallery .four {
+.page--gallery .four {
   grid-template-columns:repeat(2,minmax(0,1fr));
 }
 
-body.page--gallery .card {
+.page--gallery .card {
   border-radius:3px;
   box-shadow:0 10px 28px rgba(0,0,0,.12);
 }
 
-body.page--gallery .image img {
+.page--gallery .image img {
   max-height:680px;
   object-fit:contain;
 }
 
-body.page--gallery .card figcaption {
+.page--gallery .card figcaption {
   padding:16px 18px 19px;
   line-height:1.6;
 }
 
-body.page--gallery .head h2 {
+.page--gallery .head h2 {
   font-size:clamp(22px,2.5vw,28px);
 }
 
 @media(max-width:760px) {
-  body.page--gallery .four {
+  .page--gallery .four {
     grid-template-columns:1fr;
   }
 }
 
-body.page--gallery .head {
+.page--gallery .head {
   padding-top:0;
 }
 
-body.page--gallery .footer {
+.page--gallery .footer {
   padding:24px 0 0;
   background:transparent;
   box-shadow:none;
