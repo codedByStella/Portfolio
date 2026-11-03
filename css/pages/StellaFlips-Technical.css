@@ -31,3 +31,5 @@ body{padding-bottom:78px;}
   .tech-sticky a.source-link:hover{border-bottom-color:var(--amber);}
   @media(max-width:560px){.tech-sticky{font-size:10px;padding:12px 10px;gap:8px;text-align:center;}}
 @media(max-width:560px){.tech-sticky{flex-wrap:wrap;justify-content:center;gap:8px}.tech-sticky .hint{display:none}.tech-sticky a[href*="-Technical.html"]{font-size:0}.tech-sticky a[href*="-Technical.html"]::after{content:"Technical";font-size:10px}.tech-sticky a.source-link{font-size:0}.tech-sticky a.source-link::after{content:"GitHub Source";font-size:10px}.tech-sticky .source-unavailable{font-size:0}.tech-sticky .source-unavailable::after{content:"Source N/A";font-size:10px}.tech-sticky a:last-child:not(.source-link){font-size:0}.tech-sticky a:last-child:not(.source-link)::after{content:"Next →";font-size:10px}}
+/* Four project facts: keep the desktop header cards in a balanced 2x2 grid. */
+header.head .meta-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
