@@ -33,6 +33,25 @@ body :is(.meta-grid .v, .sample .n, .stage-name) {
   line-height: 1.55 !important;
 }
 
+
+/* Homepage and project-list microcopy also meets the supporting-text floor. */
+body :is(.section-label, .s-label-inline, .hero-meta, .proc-thumb-code,
+  .proc-thumb-code *, .ptr-text, .ptr-sub, .proc-status, .proc-stat,
+  .proc-usecase, .proc-arrow, .proc-desc, .credentials-title,
+  .credentials-list, .outputs-callout-inner > a, .ai-approach-header .marker,
+  .ai-approach-intro, .ai-approach-item h3, .ai-approach-item p,
+  .ai-approach-conclusion, footer .fmono, footer .closing,
+  .pattern-inner .pattern-list li, .pattern-inner .pattern-list li strong) {
+  font-size: max(14px, min(0.875em, 16px)) !important;
+  line-height: 1.55 !important;
+}
+body h2 {
+  font-size: max(18px, 1em) !important;
+}
+body h3 {
+  font-size: max(16px, 1em) !important;
+}
+
 /* Center every project title consistently, including the StellaAudits hero. */
 body h1 {
   width: 100%;
