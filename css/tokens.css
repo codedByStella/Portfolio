@@ -1,7 +1,17 @@
-:root{
-  --bg:#12151B;--surface:#1B2028;--surface-hi:#212832;--hi:#212832;--border:#282F39;
-  --text:#E8EAED;--text-dim:#8B93A1;--dim:#8B93A1;--text-faint:#525A66;--faint:#69717D;
-  --teal:#5FD4C4;--amber:#E0A458;--red:#E2665B;
+:root {
+  --bg:#12151B;
+  --surface:#1B2028;
+  --surface-hi:#212832;
+  --hi:#212832;
+  --border:#282F39;
+  --text:#E8EAED;
+  --text-dim:#8B93A1;
+  --dim:#8B93A1;
+  --text-faint:#525A66;
+  --faint:#69717D;
+  --teal:#5FD4C4;
+  --amber:#E0A458;
+  --red:#E2665B;
   --mono:'IBM Plex Mono',ui-monospace,'SF Mono',monospace;
   --sans:'IBM Plex Sans',-apple-system,Arial,sans-serif;
 }
