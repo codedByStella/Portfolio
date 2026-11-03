@@ -13,8 +13,7 @@ YOUTUBE_HOST = "www.youtube-nocookie.com"
 SECRET_PATTERN = (
     r"(?i)(AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{20,}|github_pat_[A-Za-z0-9_]{20,}"
     r"|xox[baprs]-[A-Za-z0-9-]{10,}|AIza[0-9A-Za-z_-]{35}|sk_live_[0-9A-Za-z]{24,}"
-    r"|-----BEGIN (?:RSA|EC|OPENSSH|DSA) PRIVATE KEY-----"
-    r"|(?:api[_-]?key|client[_-]?secret|access[_-]?token|password)\\s*[:=]\\s*['\"][^'\"]{12,}['\"])"
+    r"|-----BEGIN (?:RSA|EC|OPENSSH|DSA) PRIVATE KEY-----)"
 )
 
 class AuditParser(HTMLParser):
