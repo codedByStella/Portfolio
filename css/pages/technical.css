@@ -1,124 +1,14 @@
 @layer page-family {
-/* Technical-page additions not covered by the shared page system. */
+  /* Technical-only document behavior not shared with overview pages. */
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 24px;
-}
-
-body.page--technical {
-  padding-bottom: 78px;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-}
-
-.page--technical a {
-  color: inherit;
-}
-
-.page--technical code {
-  color: var(--teal);
-  font-family: var(--mono);
-  font-size: 0.9em;
-}
-
-/* Fixed technical-page navigation. */
-.page--technical .tech-sticky {
-  position: fixed;
-  z-index: 20;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 13px 20px;
-  border-top: 1px solid var(--border);
-  background: rgba(18, 21, 27, 0.96);
-  backdrop-filter: blur(12px);
-  font: 12px var(--mono);
-}
-
-.page--technical .tech-sticky a {
-  padding-bottom: 2px;
-  border-bottom: 1px solid rgba(95, 212, 196, 0.35);
-  color: var(--teal);
-  text-decoration: none;
-}
-
-.page--technical .tech-sticky .source-unavailable {
-  color: var(--amber);
-}
-
-.page--technical .tech-sticky a:hover {
-  border-bottom-color: var(--teal);
-}
-
-.page--technical .tech-sticky .hint {
-  color: var(--text-faint);
-}
-
-.page--technical .tech-sticky a.source-link {
-  border-bottom-color: rgba(224, 164, 88, 0.4);
-  color: var(--amber);
-}
-
-.page--technical .tech-sticky a.source-link:hover {
-  border-bottom-color: var(--amber);
-}
-
-@media (max-width: 560px) {
-  .page--technical .tech-sticky {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 14px;
-    font-size: 10px;
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 24px;
   }
 
-  .page--technical .tech-sticky a[href*="-Technical.html"] {
-    font-size: 0;
+  .page--technical code {
+    color: var(--teal);
+    font-family: var(--mono);
+    font-size: 0.9em;
   }
-
-  .page--technical .tech-sticky a[href*="-Technical.html"]::after {
-    content: "Overview";
-    font-size: 10px;
-  }
-
-  .page--technical .tech-sticky a.source-link {
-    font-size: 0;
-  }
-
-  .page--technical .tech-sticky a.source-link::after {
-    content: "GitHub Source";
-    font-size: 10px;
-  }
-
-  .page--technical .tech-sticky .source-unavailable {
-    font-size: 0;
-  }
-
-  .page--technical .tech-sticky .source-unavailable::after {
-    content: "Source N/A";
-    font-size: 10px;
-  }
-
-  .page--technical .tech-sticky a:last-child:not(.source-link) {
-    font-size: 0;
-  }
-
-  .page--technical .tech-sticky a:last-child:not(.source-link)::after {
-    content: "Next →";
-    font-size: 10px;
-  }
-}
-
-/* Explicit two-column variant for selected metadata groups. */
-.page--technical .meta-grid.meta-grid--two-column {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
 }
