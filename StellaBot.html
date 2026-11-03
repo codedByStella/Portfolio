@@ -37,7 +37,7 @@
     </div>
 
     <section>
-      <div class="s-label"><span>architecture</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>architecture</span><span class="rule"></span></div>
       <p>This is more than a single model-request wrapper. The application separates conversation handling, context assembly, persistence, desktop integration, and background activity into distinct modules. It remains a prototype; the presence of these boundaries does not establish production reliability.</p>
       <ul class="feature-list">
         <li><strong>OS-level context awareness</strong>Uses Windows integration to identify foreground-window activity. Screenshots are captured and managed locally in a rolling visual reel; the model request uses a derived textual activity timeline, not the screenshot pixels.</li>
@@ -49,13 +49,13 @@
     </section>
 
     <section>
-      <div class="s-label"><span>the problem</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>the problem</span><span class="rule"></span></div>
       <p>StellaBot can assemble a request from the current message, recent conversation history, selected persistent memory and preferences, and temporary application context. Structured runtime data is stored locally using SQLite and JSON.</p>
       <p>The design separates local context collection from model requests. Screenshot capture and reel management happen locally; the model receives a textual activity timeline rather than screenshot pixels. This timeline is temporary environmental context, not persistent memory.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>engineering detail</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>engineering detail</span><span class="rule"></span></div>
       <h2>Initiative &amp; backoff</h2>
       <p>Proactive interaction is governed by idle-time and activity-state logic, including a cap on unanswered autonomous messages. These mechanisms are intended to let the companion back off when the user does not engage. Their presence in source code does not establish that every timing or interruption edge case has been validated.</p>
       <p>To prevent the agent from talking to itself endlessly, it implements a hard cap on unanswered autonomous messages. If the user doesn't reply, the agent backs off and returns to silent observation.</p>
@@ -78,7 +78,7 @@ reply = ask_agent(..., initiative=<span class="c3">True</span>)
     </section>
 
     <section class="section--no-border">
-      <div class="s-label"><span>status</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>status</span><span class="rule"></span></div>
       <div class="result">
         <p><strong>Prototype · active development.</strong> The published source includes conversation orchestration, local memory and persistence, context assembly, Windows desktop integration, local visual capture and activity-timeline handling, voice integration points, and background initiative routines. StellaBot has been launched locally on Windows, and selected subsystems have tests. This does not establish complete end-to-end validation or a continuously running production deployment.</p>
       </div>
