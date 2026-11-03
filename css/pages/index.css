@@ -537,7 +537,7 @@ footer .closing{max-width:none;font-size:14px;line-height:1.65}
 /* Homepage intro: use the same frame as the project collection, not a narrow text column. */
 .hero{
   width:100%;
-  max-width:1120px;
+  max-width:1080px;
   padding-left:32px;
   padding-right:32px;
 }
