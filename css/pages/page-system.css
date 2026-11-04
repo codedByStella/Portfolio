@@ -676,10 +676,10 @@ body:has(.tech-sticky) .tech-sticky a {
 }
 @media (max-width: 760px) {
   body:has(.tech-sticky) {
-    padding-bottom: calc(132px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
   }
   body:has(.tech-sticky) .tech-sticky {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
   body:has(.tech-sticky) .wrap > .head,
   body:has(.meta-grid) .wrap > .head {
@@ -696,6 +696,38 @@ body:has(.tech-sticky) .tech-sticky a {
     grid-row: auto;
   }
 }
+
+  body:has(.tech-sticky) .statusbar {
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:center;
+    gap:4px;
+    white-space:nowrap;
+    font-size:clamp(5px, 1.7vw, 9px);
+    line-height:1.2;
+    padding:7px 8px;
+  }
+  body:has(.tech-sticky) .statusbar > div {
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:center;
+    min-width:0;
+    white-space:nowrap;
+    gap:3px;
+  }
+  body:has(.tech-sticky) .statusbar > div:first-child {
+    flex:1 1 auto;
+    overflow:hidden;
+  }
+  body:has(.tech-sticky) .statusbar > div:last-child {
+    flex:0 0 auto;
+    font-size:inherit;
+    letter-spacing:-.045em;
+  }
+  body:has(.tech-sticky) .statusbar .breadcrumb-separator {
+    flex:0 0 auto;
+    margin:0 1px;
+  }
 
 /* Captions must grow with their text; fixed-height clipping hid content on
    narrow screens and when users enlarge text. */
