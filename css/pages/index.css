@@ -470,3 +470,36 @@
     color:var(--text-dim);
     max-width:340px;
   }
+
+/* Mobile terminal: keep the shell command intact and give project status its own line. */
+@media (max-width: 560px) {
+  .statusbar {
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    align-items:center;
+    justify-content:stretch;
+    gap:4px;
+    padding:9px 12px;
+    font-size:clamp(8px,2.4vw,10px);
+    line-height:1.25;
+  }
+  .statusbar > div:first-child {
+    min-width:0;
+    white-space:nowrap;
+    font-size:clamp(7px,2.1vw,9px);
+    letter-spacing:-.035em;
+  }
+  .statusbar-right {
+    display:flex;
+    flex-wrap:nowrap;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    min-width:0;
+    white-space:nowrap;
+    font-size:clamp(7px,2.15vw,9px);
+    letter-spacing:-.025em;
+  }
+  .statusbar .sep { margin:0 3px; }
+  .dot { width:6px; height:6px; margin-right:4px; }
+}
