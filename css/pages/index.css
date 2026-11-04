@@ -668,3 +668,47 @@
   filter: none;
 }
 
+
+
+/* Final responsive terminal treatment: compact before the header can wrap awkwardly. */
+@media (max-width: 900px) {
+  .statusbar {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 10px 18px !important;
+  }
+  .statusbar > div:first-child {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    font-family: var(--mono) !important;
+    font-size: 0 !important;
+    line-height: 1.5 !important;
+  }
+  .statusbar > div:first-child .path {
+    display: inline !important;
+    color: var(--teal) !important;
+    font: 12px/1.5 var(--mono) !important;
+    letter-spacing: normal !important;
+  }
+  .statusbar > div:first-child .sep {
+    display: inline !important;
+    margin: 0 5px 0 0 !important;
+    color: var(--teal) !important;
+    font: 12px/1.5 var(--mono) !important;
+  }
+  .statusbar > div:first-child .sep::after {
+    content: " 7 projects tracked";
+    color: var(--text) !important;
+    font: 12px/1.5 var(--mono) !important;
+    letter-spacing: normal !important;
+  }
+  .statusbar > div:first-child .path::after { content: none !important; }
+  .statusbar > div:first-child > span:not(.path):not(.sep) { display: none !important; }
+  .statusbar-right { display: none !important; }
+}
