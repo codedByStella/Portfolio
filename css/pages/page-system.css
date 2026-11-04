@@ -970,3 +970,17 @@ body:has(.tech-sticky) .wrap > section .shot-cap {
     font-size: 14px !important;
   }
 }
+
+/* Keep the History label in the third grid column, not as a free text node. */
+@media (max-width: 560px) {
+  body:has(.tech-sticky) .statusbar > div:last-child,
+  body:has(.meta-grid) .statusbar > div:last-child {
+    display: block !important;
+    grid-column: 3;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 0 !important;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
