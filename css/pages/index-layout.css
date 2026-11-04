@@ -359,3 +359,30 @@ footer{padding:20px 32px 24px}
   .proc-thumb{aspect-ratio:16/9}
   .proc>div:nth-child(2){height:auto}
 }
+
+
+/* Prevent long contact strings from creating horizontal overflow on mobile. */
+footer,
+footer > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+footer .fmono,
+footer .closing,
+footer .fmono a {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+@media (max-width: 720px) {
+  footer {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+  }
+  footer .fmono,
+  footer .closing {
+    width: 100%;
+    max-width: 100%;
+  }
+}
