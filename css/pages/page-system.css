@@ -781,3 +781,64 @@ body:has(.tech-sticky) .wrap > section .shot-cap {
     font-size: 12px;
   }
 }
+
+
+/* Authoritative compact footer treatment for all project pages.
+   Visible labels stay at the site's 14px supporting-text minimum. */
+@media (max-width: 760px) {
+  body:has(.tech-sticky) .tech-sticky {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(4px, 1.2vw, 8px);
+    width: 100%;
+    max-width: 100%;
+    padding: 7px 8px calc(7px + env(safe-area-inset-bottom, 0px));
+    overflow: visible;
+    white-space: nowrap;
+  }
+  body:has(.tech-sticky) .tech-sticky .hint {
+    display: none;
+  }
+  body:has(.tech-sticky) .tech-sticky a,
+  body:has(.tech-sticky) .tech-sticky .source-unavailable {
+    display: inline-flex;
+    flex: 0 1 auto;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 32px;
+    padding: 5px clamp(5px, 1.5vw, 9px);
+    white-space: nowrap;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+    letter-spacing: normal !important;
+  }
+  body:has(.tech-sticky) .tech-sticky a[href*="-Technical.html"],
+  body:has(.tech-sticky) .tech-sticky a.source-link,
+  body:has(.tech-sticky) .tech-sticky a:last-child:not(.source-link),
+  body:has(.tech-sticky) .tech-sticky .source-unavailable {
+    font-size: 0 !important;
+  }
+  body:has(.tech-sticky) .tech-sticky a[href*="-Technical.html"]::after {
+    content: "TECH";
+    font-size: 14px !important;
+  }
+  body:has(.tech-sticky) .tech-sticky a:not([href*="-Technical.html"]):not(.source-link):first-of-type::after {
+    content: "OVERVIEW";
+    font-size: 14px !important;
+  }
+  body:has(.tech-sticky) .tech-sticky a.source-link::after {
+    content: "CODE";
+    font-size: 14px !important;
+  }
+  body:has(.tech-sticky) .tech-sticky a:last-child:not(.source-link)::after {
+    content: "NEXT →";
+    font-size: 14px !important;
+  }
+  body:has(.tech-sticky) .tech-sticky .source-unavailable::after {
+    content: "NO SOURCE";
+    font-size: 14px !important;
+  }
+}
