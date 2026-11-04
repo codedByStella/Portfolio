@@ -842,3 +842,59 @@ body:has(.tech-sticky) .wrap > section .shot-cap {
     font-size: 14px !important;
   }
 }
+
+
+/* Final mobile status/footer labels: replace original copy, never append to it. */
+@media (max-width: 560px) {
+  body:has(.tech-sticky) .statusbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 4px !important;
+    align-items: start !important;
+    white-space: normal !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+  body:has(.tech-sticky) .statusbar > div {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    letter-spacing: normal !important;
+  }
+  body:has(.tech-sticky) .statusbar > div:first-child > a {
+    font-size: 0 !important;
+  }
+  body:has(.tech-sticky) .statusbar > div:first-child > a::after {
+    content: "codedByStella";
+    font-size: 14px !important;
+  }
+  body:has(.tech-sticky) .statusbar .breadcrumb-separator {
+    display: none !important;
+  }
+  body:has(.tech-sticky) .statusbar .path {
+    overflow-wrap: anywhere;
+    font-size: 14px !important;
+  }
+  body:has(.tech-sticky) .statusbar > div:last-child {
+    font-size: 0 !important;
+    letter-spacing: normal !important;
+  }
+  body:has(.tech-sticky) .statusbar > div:last-child::after {
+    content: "HISTORY";
+    font-size: 14px !important;
+  }
+
+  /* The technical-page Overview anchor must hide its original label before
+     the replacement is drawn. Overview pages keep their TECH label. */
+  body:has(.tech-sticky) .tech-sticky a:first-of-type:not([href*="-Technical.html"]) {
+    font-size: 0 !important;
+  }
+  body:has(.tech-sticky) .tech-sticky a:first-of-type:not([href*="-Technical.html"])::after {
+    content: "OVERVIEW";
+    font-size: 14px !important;
+  }
+}
