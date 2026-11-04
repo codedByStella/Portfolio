@@ -712,3 +712,9 @@
   .statusbar > div:first-child > span:not(.path):not(.sep) { display: none !important; }
   .statusbar-right { display: none !important; }
 }
+
+
+/* If the full terminal command wraps before the compact breakpoint, center both lines. */
+.statusbar > div:first-child {
+  text-align: center;
+}
