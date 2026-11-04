@@ -721,7 +721,7 @@
 
 
 /* Center both status rows as soon as the terminal header wraps onto multiple lines. */
-@media (min-width: 901px) and (max-width: 1100px) {
+@media (min-width: 901px) and (max-width: 1250px) {
   .statusbar {
     justify-content: center !important;
   }
