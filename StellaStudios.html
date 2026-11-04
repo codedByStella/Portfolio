@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; frame-src 'self' https://www.youtube-nocookie.com; connect-src 'self'; upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StellaStudios | Automated Audiovisual Production</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMTIxNTFCIi8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyODJGMzkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjQiIHk9IjIzIiBmb250LWZhbWlseT0iJ0lCTSBQbGV4IE1vbm8nLCB1aS1tb25vc3BhY2UsIG1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9IjYwMCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzVGRDRDNCI+Jmd0O188L3RleHQ+Cjwvc3ZnPgo=">
@@ -12,16 +13,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/pages/StellaStudios.css">
+    <link rel="stylesheet" href="css/pages/StellaStudios.css">
 </head>
 <body class="studios-page">
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
   <div class="statusbar">
-    <div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaStudios.pipeline</span></div>
+    <div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaStudios</span></div>
     <div><span class="dot"></span>retired · non-functional</div>
   </div>
 
-  <div class="wrap">
+  <main class="wrap" id="main-content">
     <div class="head">
       <div class="status-tag">● RETIRED · NON-FUNCTIONAL</div>
       <h1>Turn a creative brief into an assembled video</h1>
@@ -35,19 +37,19 @@
     </div>
 
     <section id="origin">
-      <div class="s-label"><span>why I rebuilt it</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>why I rebuilt it</span><span class="rule"></span></div>
       <p>When Sora released, I was approached to build an automated audiovisual production pipeline, and I accepted the premise. I first experimented with Make and n8n, but found the tooling inefficient for the workflow I needed. The available models and integrations were too constrained, many nodes were simply broken, and required capabilities such as subtitle generation were not practical to implement within those tools.</p>
       <p>Rather than keep fighting the limitations, I rebuilt the pipeline from scratch on Amazon Lightsail, implementing it node by node. I replaced the visual automation dependencies with my own orchestration and processing steps until the system no longer depended on Make and could support the features the project required.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>historical output sample</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>historical output sample</span><span class="rule"></span></div>
       <p>A historical output sample from the original system. It demonstrates the assembled media format, not a currently available or reproducible service:</p>
       <div class="shot-grid">
         <div class="shot">
           <div class="media-frame">
             <div class="video-inner">
-  <iframe src="https://www.youtube.com/embed/jVVJD_SeHT0" title="Media engine sample output" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <iframe src="https://www.youtube-nocookie.com/embed/jVVJD_SeHT0" title="Media engine sample output" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
             </div>
           </div>
           <div class="shot-cap">Historical assembled output  -  narration, subtitles, audio mix, and watermark</div>
@@ -60,19 +62,19 @@
     </section>
 
     <section>
-      <div class="s-label"><span>overview</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>overview</span><span class="rule"></span></div>
       <p>Video, narration, and music services return separate assets. StellaStudios passes those assets through subtitle generation, audio mixing, watermarking, and FFmpeg assembly to produce one video file.</p>
       <p>The source separates metadata generation, provider integrations, media processing, assembly, and artifact archiving into distinct stages. The project is retired and non-functional: Sora has closed, so the original video-generation integration cannot currently complete a run.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>why this matters</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>why this matters</span><span class="rule"></span></div>
       <p>The engineering work is in coordinating separate services and local processing stages: metadata is passed between specialized nodes, generated narration and video are handled as separate artifacts, and FFmpeg performs the final media assembly.</p>
       <p>The implementation also includes defensive handling around metadata validation, timeouts, artifact selection, archival, and upload outcomes. Those mechanisms make the code more resilient to common failure cases, but do not make the retired service operational or establish full concurrency isolation.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>pipeline stages</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>pipeline stages</span><span class="rule"></span></div>
       <div class="flow">
         <div class="stage"><div class="stage-marker"><div class="node"></div><div class="line"></div></div><div><div class="stage-name">01 - Creative metadata</div><div class="stage-desc">The GPT node turns a creative preset and brief into structured JSON metadata used by downstream stages.</div></div></div>
         <div class="stage"><div class="stage-marker"><div class="node"></div><div class="line"></div></div><div><div class="stage-name">02 - Soundtrack selection</div><div class="stage-desc">The music node selects and trims an existing track from a local asset pool; it does not generate music from the metadata description.</div></div></div>
@@ -85,7 +87,7 @@
     </section>
 
     <section>
-      <div class="s-label"><span>engineering detail</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>engineering detail</span><span class="rule"></span></div>
       <h2>Separate assets, deterministic assembly</h2>
       <p>Each provider or local stage produces an artifact that is handed to the next node. Subtitle cues are estimated at phrase level by distributing text across the measured narration duration; this is not word-level or phoneme-level alignment. The final assembly therefore combines independently produced media, but subtitle timing remains approximate.</p>
 
@@ -102,9 +104,9 @@
     </section>
 
     <section class="section--no-border">
-      <div class="s-label"><span>status</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>status</span><span class="rule"></span></div>
       <div class="result">
-        <p><strong>Retired and non-functional.</strong> The original Sora video-generation service has closed, so the published system cannot currently complete its intended video-generation workflow. The video-generation integration is isolated behind its own node; the intended reboot path is to replace that provider/model call while retaining the existing metadata orchestration, downstream artifact handling, and FFmpeg assembly. The intended reboot is a straightforward model/API call replacement at that boundary, not a redesign of the surrounding pipeline. The project is not currently running or maintained as an active service.</p>
+        <p><strong>Operational status:</strong> This is a retired, non-functional system because its Sora video-generation dependency has closed. The video-generation call is isolated in a dedicated node, so the intended reactivation path is to replace that provider/model integration while retaining the surrounding orchestration and media-processing stages. This is a source-level architectural assessment, not a claim that a replacement provider has been integrated or tested.</p>
       </div>
 
       <div class="crossref">
@@ -112,10 +114,10 @@
         <p>StellaStudios is another example of separating orchestration from specialized processing: the creative brief, provider calls, local media operations, and final assembly are distinct responsibilities rather than one monolithic model request.</p>
       </div>
     </section>
-  </div>
+  </main>
 
   
 
-<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION DETAILS?</span><a href="StellaStudios-Technical.html">Read the technical review ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaStudios" target="_blank" rel="noopener noreferrer">Inspect source on GitHub ↗</a><a href="StellaFlips.html">See StellaFlips →</a></div>
+<div class="tech-sticky"><span class="hint">IMPLEMENTATION</span><a href="StellaStudios-Technical.html">Technical review ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaStudios" target="_blank" rel="noopener noreferrer">GitHub source ↗</a><a href="StellaFlips.html">See StellaFlips →</a></div>
 </body>
 </html>

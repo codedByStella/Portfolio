@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; frame-src 'self' https://www.youtube-nocookie.com; connect-src 'self'; upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StellaOpsec | Security Assessment Toolkit</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMTIxNTFCIi8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyODJGMzkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjQiIHk9IjIzIiBmb250LWZhbWlseT0iJ0lCTSBQbGV4IE1vbm8nLCB1aS1tb25vc3BhY2UsIG1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9IjYwMCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzVGRDRDNCI+Jmd0O188L3RleHQ+Cjwvc3ZnPgo=">
@@ -12,16 +13,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/pages/StellaOpsec.css">
+    <link rel="stylesheet" href="css/pages/StellaOpsec.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
   <div class="statusbar">
-    <div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaOpsec.toolkit</span></div>
+    <div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaOpsec</span></div>
     <div><span class="dot"></span>dormant</div>
   </div>
 
-  <div class="wrap">
+  <main class="wrap" id="main-content">
     <div class="head">
       <div class="status-tag">● PROTOTYPE · DORMANT</div>
       <h1>Collect security findings into a reviewable report</h1>
@@ -43,19 +45,19 @@
     </div>
 
     <section>
-      <div class="s-label"><span>overview</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>overview</span><span class="rule"></span></div>
       <p>A security review may involve Windows configuration, network services, web headers, identity settings, event logs, and cloud policies. Running separate scripts for each source makes the results harder to compare and hand off.</p>
       <p>StellaOpsec uses separate PowerShell modules to collect selected configuration data, then combines the results into HTML, JSON, CSV, or Excel reports for review.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>why this matters</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>why this matters</span><span class="rule"></span></div>
       <p>The practical goal is to make collected evidence easier to inspect and communicate. A structured report can help an assessor separate observed configuration from assumptions, identify gaps that need follow-up, and explain which checks were limited by permissions, dependencies, or missing data.</p>
       <p>For a small team, the toolkit offers a repeatable way to run selected checks and prepare a consistent handoff. It does not replace expert interpretation, a penetration test, or a dedicated cloud-security platform.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>what it does</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>what it does</span><span class="rule"></span></div>
       <ul class="feature-list">
         <li><strong>Windows inventory</strong>Collects selected operating-system, hardware, account, network, firewall, process, service, scheduled-task, hotfix, software, and SMB information.</li>
         <li><strong>Network and web checks</strong>Includes reachability and TCP checks, DNS zone-transfer testing, TLS metadata, HTTP response headers, and cookie-attribute inspection.</li>
@@ -66,14 +68,14 @@
     </section>
 
     <section>
-      <div class="s-label"><span>what the output means</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>what the output means</span><span class="rule"></span></div>
       <h2>Collected configuration is evidence for review, not a verdict</h2>
       <p>A reachable port does not prove a service is vulnerable. A public-looking policy entry does not, by itself, establish effective exposure. An inventory result does not prove that a security control is working end to end.</p>
       <p>Results can be incomplete when commands fail, required modules are missing, permissions are insufficient, or source data is unavailable. Some checks use heuristics or inspect only selected settings. The technical review documents concrete examples, including places where the implementation can overstate what a result proves.</p>
     </section>
 
     <section class="section--no-border">
-      <div class="s-label"><span>engagement notes</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>engagement notes</span><span class="rule"></span></div>
       <div class="result">
         <p><strong>Status: prototype / dormant.</strong> The inspected source contains modules for Windows host inventory, network and web checks, credential-related configuration, event-log review, Active Directory, selected Google Cloud and Azure settings, finding generation, and report export. This does not establish broad environment coverage or successful end-to-end execution.</p>
       </div>
@@ -83,10 +85,10 @@
         <p>StellaOpsec also supports my own review workflow around <a href="StellaAudits.html">StellaAudits</a>. Where an audit raises a security question, this separate toolkit can collect additional indicators and produce a report for follow-up. It is a dormant, self-developed toolset, not a security service I offer; I can flag evidence and explain the limits of the checks, then refer issues beyond my expertise to a qualified security professional. The point is to recognize security considerations in software design and make findings easier to hand off, not to claim professional security-engineering credentials.</p>
       </div>
     </section>
-  </div>
+  </main>
 
   
 
-<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION DETAILS?</span><a href="StellaOpsec-Technical.html">Read the technical review ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaOpsec" target="_blank" rel="noopener noreferrer">Inspect source on GitHub ↗</a><a href="StellaStudios.html">See StellaStudios →</a></div>
+<div class="tech-sticky"><span class="hint">IMPLEMENTATION</span><a href="StellaOpsec-Technical.html">Technical review ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaOpsec" target="_blank" rel="noopener noreferrer">GitHub source ↗</a><a href="StellaStudios.html">See StellaStudios →</a></div>
 </body>
 </html>

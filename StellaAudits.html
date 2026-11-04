@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; frame-src 'self' https://www.youtube-nocookie.com; connect-src 'self'; upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StellaAudits, codedByStella</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMTIxNTFCIi8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyODJGMzkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjQiIHk9IjIzIiBmb250LWZhbWlseT0iJ0lCTSBQbGV4IE1vbm8nLCB1aS1tb25vc3BhY2UsIG1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9IjYwMCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzVGRDRDNCI+Jmd0O188L3RleHQ+Cjwvc3ZnPgo=">
@@ -12,16 +13,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/pages/StellaAudits.css">
+    <link rel="stylesheet" href="css/pages/StellaAudits.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
   <div class="statusbar">
     <div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaAudits</span></div>
     <div><span class="dot"></span>online</div>
   </div>
 
-  <div class="wrap">
+  <main class="wrap" id="main-content">
     <div class="head">
       <div class="status-tag">● ONLINE, Compliance &amp; Risk Automation</div>
       <h1>Turn website issues into a clear action plan</h1>
@@ -36,7 +38,7 @@
     </div>
 
     <section>
-      <div class="s-label"><span>what it helps with</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>what it helps with</span><span class="rule"></span></div>
       <p>A quick website review can miss accessibility, search, or configuration problems. StellaAudits collects its checks in one report, with the evidence and severity beside each finding so the owner or developer can decide what to investigate first.</p>
       <ul class="feature-list">
         <li><strong>One readable report</strong>Accessibility, SEO, local search, and selected security checks use a shared finding format, then feed a PDF report instead of leaving the owner to sort through separate warning lists.</li>
@@ -49,13 +51,13 @@
     </section>
 
     <section>
-      <div class="s-label"><span>how it works</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>how it works</span><span class="rule"></span></div>
       <p>Most automated site-audit tools fall into one of two traps: they guess with no admission of uncertainty, or they require a full headless-browser stack just to run once. Static HTML parsing is fast and honest about <em>what</em> it measured, but it can be flatly wrong against a JavaScript-rendered shell, reporting "no H1, no content" against a site that's actually fine once rendered is a false, credibility-damaging finding.</p>
       <p>The intended scoring model distinguishes site findings from notices about the audit's own coverage. Static checks run against the initial HTML, while optional Lighthouse category scores can add limited browser-rendered context when available. The public source omits the proprietary scoring implementation, so its exact treatment of every finding cannot be verified from this publication.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>engineering detail</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>engineering detail</span><span class="rule"></span></div>
       <h2>Scoring that distinguishes site findings from audit notices</h2>
       <p>An early run against a JavaScript-heavy site exposed a scoring-design issue: a notice about the audit's own coverage is not itself a defect on the audited site. The shared <code>Finding</code> model includes an <code>is_meta</code> flag to distinguish such notices. The scoring implementation is intentionally redacted from this public repository, so the precise calculation cannot be inspected here.</p>
 
@@ -65,7 +67,7 @@
     </section>
 
     <section class="section--no-border">
-      <div class="s-label"><span>sample results</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>sample results</span><span class="rule"></span></div>
       <div class="result">
         <p>Active, used to generate real client-facing audits. The result below is a sample from a live client engagement, not this site or any property of mine, the client's domain is withheld here for confidentiality.</p>
       </div>
@@ -83,15 +85,15 @@
         <p>StellaAudits includes selected, basic website-security checks. If a finding warrants a broader look, <a href="StellaOpsec.html">StellaOpsec</a> is a separate, dormant toolkit I have used to collect additional configuration and security indicators into a report. It can help flag questions for follow-up; it is not a service I offer, a comprehensive security audit, or a substitute for a qualified security professional. My role is to report what the tools show and hand off issues beyond my expertise, not to claim credentials or take on remediation work.</p>
       </div>
     </section>
-  </div>
+  </main>
 
   
 
 
   <div class="tech-sticky">
-    <span class="hint">WANT THE IMPLEMENTATION DETAILS?</span>
-    <a href="StellaAudits-Technical.html">Read the technical review ↗</a>
-    <a class="source-link" href="https://github.com/codedByStella/StellaAudits" target="_blank" rel="noopener noreferrer">Inspect source on GitHub ↗</a>
+    <span class="hint">IMPLEMENTATION</span>
+    <a href="StellaAudits-Technical.html">Technical review ↗</a>
+    <a class="source-link" href="https://github.com/codedByStella/StellaAudits" target="_blank" rel="noopener noreferrer">GitHub source ↗</a>
   <a href="StellaSnipes.html">See StellaSnipes →</a></div>
 
 </body>

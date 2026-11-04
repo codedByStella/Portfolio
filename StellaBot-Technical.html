@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; frame-src 'self' https://www.youtube-nocookie.com; connect-src 'self'; upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>StellaBot Technical Review | codedByStella</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/pages/StellaBot-Technical.css">
+    <link rel="stylesheet" href="css/pages/StellaBot-Technical.css">
 </head>
 <body>
-<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaBot / technical-review</span></div><div>IMPLEMENTATION NOTES</div></div>
-<main class="wrap">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaBot</span></div><div>IMPLEMENTATION NOTES</div></div>
+<main class="wrap" id="main-content">
 <header class="head">
 <div class="status-tag">TECHNICAL REVIEW / PROTOTYPE</div>
 <h1>StellaBot: Persistent AI Desktop Companion</h1>
@@ -26,49 +28,49 @@
 <div><div class="k">Review basis</div><div class="v">Function inventory and static call graph</div></div>
 </div>
 </header>
-<section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
+<section id="overview"><div class="s-label" role="heading" aria-level="2"><span>01 / overview</span><span class="rule"></span></div>
 <p>StellaBot is a Windows-focused Python desktop-companion prototype designed around continuity rather than isolated chat turns. It combines local memory, preference and companion context, desktop activity signals, local visual-context handling, language-model orchestration, voice-related components, and proactive interaction routines.</p>
 <p>The application connects these subsystems through context-building and conversation workflows. SQLite stores structured local data, while JSON files hold supporting state and configuration. The repository documents a prototype that has been launched locally on Windows and includes tests for selected subsystems; this is not complete end-to-end validation.</p>
 <div class="callout"><p><strong>Scope note:</strong> this review describes components and relationships found through source inspection and a static call graph. It does not independently verify every behavior, runtime reliability, or complete end-to-end coverage.</p></div></section>
-<section id="memory"><div class="s-label"><span>02 / persistent memory</span><span class="rule"></span></div>
+<section id="memory"><div class="s-label" role="heading" aria-level="2"><span>02 / persistent memory</span><span class="rule"></span></div>
 <p>The memory layer includes initialization, retrieval and storage, memory-selection logic, relationship-history tracking, significant-moment recording, preference learning, companion self-memory, belief extraction, and retrieval of contextual information for model requests.</p>
 <p>SQLite provides a persistent database for memory, while JSON supports profile and runtime state. The purpose is to retain selected context across application sessions and make relevant information available during later conversations. The presence of memory-selection logic does not guarantee that every important detail will be saved or that every retrieved detail will be relevant.</p></section>
-<section id="relationship"><div class="s-label"><span>03 / relationship and identity context</span><span class="rule"></span></div>
+<section id="relationship"><div class="s-label" role="heading" aria-level="2"><span>03 / relationship and identity context</span><span class="rule"></span></div>
 <p>Dedicated routines maintain relationship moments, learned preferences, self-memory, self-belief extraction, social-thread tracking, conversational rhythm, and companionship context. The context builder can combine this information with other memory and state sources before a model request.</p>
 <p>This is application-level personalization: stored records and retrieval logic influence the context presented to the language model. It should not be interpreted as evidence that the model has human-like feelings, persistent subjective experience, or an independently verified internal identity.</p></section>
-<section id="desktop"><div class="s-label"><span>04 / desktop awareness</span><span class="rule"></span></div>
+<section id="desktop"><div class="s-label" role="heading" aria-level="2"><span>04 / desktop awareness</span><span class="rule"></span></div>
 <p>Windows integration includes foreground-window detection, idle-time detection, attention classification, state updates, situational-context construction, and background capture or initiative loops. These signals give the application a way to consider desktop activity in addition to the latest chat message.</p>
 <p>Foreground-window and idle signals are contextual inputs, not a complete understanding of user intent. Their reliability depends on the implementation, available permissions, timing, and the range of application states encountered.</p></section>
-<section id="visual"><div class="s-label"><span>05 / visual context</span><span class="rule"></span></div>
+<section id="visual"><div class="s-label" role="heading" aria-level="2"><span>05 / visual context</span><span class="rule"></span></div>
 <p>The visual subsystem includes local screenshot acquisition, frame handling, rolling visual-reel management, storyboard construction, and textual activity-timeline generation. The application uses local screenshots to derive a timeline from desktop activity metadata.</p>
 <p>Screenshot capture and reel management happen locally. The conversational model receives a textual activity timeline, not screenshot pixels; a storyboard is a local diagnostic artifact and is not automatically attached to the model request. Window metadata can indicate which application was active, but cannot establish the text, objects, or events visible inside it.</p></section>
-<section id="conversation"><div class="s-label"><span>06 / model orchestration</span><span class="rule"></span></div>
+<section id="conversation"><div class="s-label" role="heading" aria-level="2"><span>06 / model orchestration</span><span class="rule"></span></div>
 <p>The conversation engine prepares context from memory, relationship and preference systems, state, and companion-identity information. It coordinates model requests, recent conversation history, retries and cancellation, response extraction and cleanup, state updates, memory handling, and exchange recording.</p>
 <p>Supporting routines include similarity checks for repetitive openings, potential information-leak detection, and diagnostic logging. These should be understood as implemented safeguards and heuristics, not guarantees that repetition or information leakage will always be detected.</p></section>
-<section id="speech"><div class="s-label"><span>07 / speech synthesis</span><span class="rule"></span></div>
+<section id="speech"><div class="s-label" role="heading" aria-level="2"><span>07 / speech synthesis</span><span class="rule"></span></div>
 <p>The application has a general speech-dispatch layer, a Kokoro-specific synthesis routine, model-probing utilities, and local ONNX speech-model assets with configuration. This allows speech output to be handled as a distinct subsystem from conversation generation.</p>
 <p>The model assets are runtime resources rather than authored source code. Their presence does not establish synthesis latency, audio quality, or compatibility across hardware configurations.</p></section>
-<section id="initiative"><div class="s-label"><span>08 / proactive initiative</span><span class="rule"></span></div>
+<section id="initiative"><div class="s-label" role="heading" aria-level="2"><span>08 / proactive initiative</span><span class="rule"></span></div>
 <p>The initiative system coordinates idle detection, scheduling, state resets after activity, screenshot and visual-reel checks, application status, and proactive conversational turns. Its goal is to allow an interaction to begin without requiring every turn to start with a new user message.</p>
 <p>The implementation includes a cap on unanswered autonomous messages and backoff behavior intended to reduce repeated interruptions when the user does not respond. The existence of these controls does not establish that every timing edge case or interruption pattern has been validated in real-world use.</p></section>
-<section id="interface"><div class="s-label"><span>09 / interface and diagnostics</span><span class="rule"></span></div>
+<section id="interface"><div class="s-label" role="heading" aria-level="2"><span>09 / interface and diagnostics</span><span class="rule"></span></div>
 <p>Tkinter supplies the desktop interface. Windows APIs support selected desktop-awareness functions, and Pillow handles image operations. Diagnostic logging records application events, exceptions, response information, and state changes to aid troubleshooting across the connected subsystems.</p>
 <p>Logging can make failures easier to investigate, but it does not replace structured health checks, recovery testing, or a verified deployment and update process.</p></section>
-<section id="integration"><div class="s-label"><span>10 / subsystem integration</span><span class="rule"></span></div>
+<section id="integration"><div class="s-label" role="heading" aria-level="2"><span>10 / subsystem integration</span><span class="rule"></span></div>
 <ul><li><strong>Context building:</strong> combines memory, relationship, preference, state, and companion-identity information.</li><li><strong>Conversation flow:</strong> links model requests with visual processing, state inference, memory operations, and exchange recording.</li><li><strong>Visual capture:</strong> connects screenshot acquisition to frame recording and image processing.</li><li><strong>Initiative:</strong> coordinates idle detection, scheduling, visual-reel state, and conversational turns.</li><li><strong>Speech:</strong> routes general speech requests to the Kokoro synthesis path.</li></ul>
 <p>These connections are based on the inspected static call graph. They demonstrate structural integration, but do not prove that every path completes successfully under all runtime conditions.</p></section>
-<section id="constraints"><div class="s-label"><span>11 / development constraints</span><span class="rule"></span></div>
+<section id="constraints"><div class="s-label" role="heading" aria-level="2"><span>11 / development constraints</span><span class="rule"></span></div>
 <p>StellaBot is a prototype under active development. The repository documents local Windows launches and tests for selected subsystems, but runtime behavior still depends on local configuration, provider credentials, installed dependencies, Windows integration, and external services. Not every API-dependent feature or long-running behavior has been verified across environments.</p>
 <p>The original monolithic <code>companion.py</code> implementation grew to approximately 5,500 lines before the project was reorganized into a package of modules grouped by responsibility. Source volume is not a measure of product maturity or reliability.</p></section>
-<section id="priorities"><div class="s-label"><span>12 / engineering priorities</span><span class="rule"></span></div>
+<section id="priorities"><div class="s-label" role="heading" aria-level="2"><span>12 / engineering priorities</span><span class="rule"></span></div>
 <p>Useful next steps include clearer boundaries for desktop capture and retained visual context, repeatable tests for memory selection and retrieval, checks for incorrect or stale context, and explicit handling of interrupted model or speech operations. Testing should also cover initiative backoff, cancellation, and state consistency across restarts.</p>
 <p>These are sensible validation priorities for a system with several persistent and background subsystems. They are not claims that the current implementation already provides comprehensive guarantees in these areas.</p></section>
-<section id="scope"><div class="s-label"><span>13 / verification and scope</span><span class="rule"></span></div>
+<section id="scope"><div class="s-label" role="heading" aria-level="2"><span>13 / verification and scope</span><span class="rule"></span></div>
 <p>This review is based on the function inventory and static call graph. It establishes the presence of described components and their connections, but it does not independently verify every behavior, runtime reliability, or comprehensive end-to-end test coverage.</p>
 <p>The public repository contains substantial, genuine source from the StellaBot prototype for portfolio inspection. Runtime databases, live conversation histories, credentials, and private personal data are not intended to be included as working user data. The published README documents the runtime layout, provider data flow, and verification limits.
 </p>
 </section>
 </main>
-<div class="tech-sticky"><span class="hint">WANT THE OVERVIEW DETAILS?</span><a href="StellaBot.html">Read the overview ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaBot" target="_blank" rel="noopener noreferrer">Inspect source on GitHub ↗</a><a href="StellaOpsec.html">See StellaOpsec →</a></div>
+<div class="tech-sticky"><span class="hint">OVERVIEW</span><a href="StellaBot.html">Overview ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaBot" target="_blank" rel="noopener noreferrer">GitHub source ↗</a><a href="StellaOpsec.html">See StellaOpsec →</a></div>
 </body>
 </html>

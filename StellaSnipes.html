@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; frame-src 'self' https://www.youtube-nocookie.com; connect-src 'self'; upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StellaSnipes | Domain Data Acquisition and Monitoring</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMTIxNTFCIi8+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyODJGMzkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjQiIHk9IjIzIiBmb250LWZhbWlseT0iJ0lCTSBQbGV4IE1vbm8nLCB1aS1tb25vc3BhY2UsIG1vbm9zcGFjZSIgZm9udC13ZWlnaHQ9IjYwMCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzVGRDRDNCI+Jmd0O188L3RleHQ+Cjwvc3ZnPgo=">
@@ -12,16 +13,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/pages/StellaSnipes.css">
+    <link rel="stylesheet" href="css/pages/StellaSnipes.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
   <div class="statusbar">
-    <div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaSnipes.pipeline</span></div>
+    <div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaSnipes</span></div>
     <div><span class="dot"></span>online</div>
   </div>
 
-  <div class="wrap">
+  <main class="wrap" id="main-content">
     <div class="head">
       <div class="status-tag">● MVP · active development</div>
       <h1>Acquire, process, and monitor domain data</h1>
@@ -35,7 +37,7 @@
     </div>
 
     <section>
-      <div class="s-label"><span>application interface</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>application interface</span><span class="rule"></span></div>
       <p>The application includes a local web dashboard for reviewing run history, inspecting evaluation results, and viewing scheduler status. These screenshots document the interface; they are not a claim that a production service is currently running.</p>
       <div class="shot-grid">
         <div class="shot">
@@ -58,19 +60,19 @@
     </section>
 
     <section>
-      <div class="s-label"><span>the problem</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>the problem</span><span class="rule"></span></div>
       <p>Large domain-zone datasets are difficult to use directly. They need to be processed, normalized, compared over time, and combined with other sources before they can support useful research or monitoring. Repeating the full workflow unnecessarily can add time, bandwidth, and operating cost.</p>
       <p>StellaSnipes separates acquisition, file processing, snapshot comparison, aggregation, and watched-domain checks into connected stages. Local snapshots let later steps reuse existing data instead of treating every comparison as a fresh download.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>business value</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>business value</span><span class="rule"></span></div>
       <p>For a business working with large, frequently changing domain datasets, the cost is not limited to obtaining the data. It also includes repeatedly downloading, normalizing, reconciling, and evaluating it. StellaSnipes brings those steps into one in-house workflow, giving the business more control over how its data is acquired, processed, retained, and reviewed.</p>
       <p>Reusable local snapshots and incremental comparison can reduce avoidable repeat downloads and processing, while multi-source aggregation creates one consistent working dataset from otherwise separate inputs. That means less dependence on external platforms to perform every processing step and a foundation the business can extend as its data requirements grow. It does not eliminate the need for paid or authoritative sources, and no specific savings or return is claimed without measured operating results.</p>
     </section>
 
     <section>
-      <div class="s-label"><span>core components</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>core components</span><span class="rule"></span></div>
       <ul class="feature-list">
         <li><strong>Ingestion layer</strong>Processes large zone file drops and merges them against multiple concurrent data sources into a single working pool.</li>
         <li><strong>Evaluation pipeline</strong>Runs sequential analysis stages  -  initial scoring, health verification, and valuation  -  each independently cacheable so expensive third-party lookups aren't repeated across runs.</li>
@@ -80,7 +82,7 @@
     </section>
 
     <section>
-      <div class="s-label"><span>implementation detail</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>implementation detail</span><span class="rule"></span></div>
       <h2>Processing large data without repeating every step</h2>
       <p>The main engineering challenge is coordinating external acquisition with local processing of large files. StellaSnipes uses JavaScript for application-level orchestration and Python utilities for incremental file handling and sorted-snapshot comparison.</p>
       <p>Chunk-based processing breaks large inputs into manageable intermediate files. Sorted merging and deduplication produce normalized snapshots, while incremental comparison derives a difference set from existing sorted data. This reduces the need to load an entire dataset into memory for each operation.</p>
@@ -125,7 +127,7 @@
     </section>
 
     <section class="section--no-border">
-      <div class="s-label"><span>status and limits</span><span class="rule"></span></div>
+      <div class="s-label" role="heading" aria-level="2"><span>status and limits</span><span class="rule"></span></div>
       <div class="result">
         <p><strong>MVP under active development.</strong> The reviewed code supports authenticated CZDS acquisition, local snapshot caching, chunk-based normalization, sorted-data comparison, multi-source aggregation, and watched-domain membership checks. The code review does not establish that the application is currently running as a scheduled production service or that every stage has been validated end to end.</p><p>Snapshot freshness depends on acquisition timing. Storage, memory use, processing time, and intermediate-file management remain important operating considerations. No quantified performance, cost savings, or production reliability claims are made.</p>
       </div>
@@ -135,10 +137,10 @@
         <p>The pipeline separates remote acquisition from local processing, so later comparison steps can use saved snapshots instead of requiring a new download each time.</p>
       </div>
     </section>
-  </div>
+  </main>
 
   
 
-<div class="tech-sticky"><span class="hint">WANT THE IMPLEMENTATION DETAILS?</span><a href="StellaSnipes-Technical.html">Read the technical review ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaSnipes" target="_blank" rel="noopener noreferrer">Inspect source on GitHub ↗</a><a href="StellaScrapes.html">See StellaScrapes →</a></div>
+<div class="tech-sticky"><span class="hint">IMPLEMENTATION</span><a href="StellaSnipes-Technical.html">Technical review ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaSnipes" target="_blank" rel="noopener noreferrer">GitHub source ↗</a><a href="StellaScrapes.html">See StellaScrapes →</a></div>
 </body>
 </html>

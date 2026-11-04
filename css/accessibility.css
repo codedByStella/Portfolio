@@ -1,0 +1,123 @@
+/* Site-wide accessibility baseline — WCAG 2.2 AA-oriented defaults. */
+:root {
+  font-size: 100%;
+  color-scheme: dark;
+}
+
+/* Body copy must remain readable even where legacy page rules used tiny type. */
+body {
+  font-size: 16px !important;
+  line-height: 1.7 !important;
+}
+body :is(p, li, dd, dt, blockquote, figcaption, .lede, .intro, .stage-desc,
+  .step p, .crossref p, .result p, .notice p, .callout p) {
+  font-size: max(16px, 1em) !important;
+  line-height: 1.7 !important;
+}
+
+/* Dense supporting text: never fall below 14px. */
+body :is(.shot-cap, .code-label, .s-label, .tag, .status-tag, .meta-grid .k,
+  .sample .l, .step .n, .cr-label, .statusbar, .tech-sticky, .footer,
+  table, th, td, .muted, .hint, small, summary, summary span, label,
+  .card small, .card strong, .card figcaption, .card figcaption a,
+  .note, .disclosure, .eyebrow, .head span, .section > .head span,
+  button, input, select, textarea, .feature-list li strong,
+  .tech-sticky a, .report-head strong) {
+  font-size: max(14px, 1em) !important;
+  line-height: 1.55 !important;
+}
+body :is(.code, pre, code) {
+  font-size: max(14px, 1em) !important;
+  line-height: 1.65 !important;
+}
+body :is(.meta-grid .v, .sample .n, .stage-name) {
+  line-height: 1.55 !important;
+}
+
+
+/* Homepage and project-list microcopy also meets the supporting-text floor. */
+body :is(.section-label, .s-label-inline, .hero-meta, .proc-thumb-code,
+  .proc-thumb-code *, .ptr-text, .ptr-sub, .proc-status, .proc-stat,
+  .proc-usecase, .proc-arrow, .proc-desc, .credentials-title,
+  .credentials-list, .outputs-callout-inner > a, .ai-approach-header .marker,
+  .ai-approach-intro, .ai-approach-item h3, .ai-approach-item p,
+  .ai-approach-conclusion, footer .fmono, footer .closing,
+  .pattern-inner .pattern-list li, .pattern-inner .pattern-list li strong) {
+  font-size: max(14px, min(0.875em, 16px)) !important;
+  line-height: 1.55 !important;
+}
+body h2 {
+  font-size: max(18px, 1em) !important;
+}
+body h3 {
+  font-size: max(16px, 1em) !important;
+}
+
+/* Center every project title consistently, including the StellaAudits hero. */
+body h1 {
+  width: 100%;
+  max-width: 100% !important;
+  margin-inline: auto !important;
+  text-align: center !important;
+  text-wrap: balance;
+}
+body .wrap > .head .status-tag {
+  margin-inline: auto;
+}
+body .wrap > .head .lede {
+  margin-inline: auto !important;
+  text-align: center !important;
+}
+body .wrap > .head .tags {
+  justify-content: center;
+}
+
+/* Clear keyboard focus and comfortable pointer/touch targets. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--amber, #E0A458) !important;
+  outline-offset: 3px !important;
+}
+body :is(.tech-sticky a, .footer a, button, summary) {
+  min-height: 24px;
+}
+@media (pointer: coarse) {
+  body :is(.tech-sticky a, .footer a, button, summary) {
+    min-height: 44px;
+  }
+}
+
+/* Respect user motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Preserve legibility and focus indication in Windows high-contrast modes. */
+@media (forced-colors: active) {
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 3px solid Highlight !important;
+  }
+}
+
+/* Keyboard users can bypass repeated status/navigation content. */
+.skip-link {
+  position: absolute !important;
+  z-index: 1000 !important;
+  top: 8px !important;
+  left: 8px !important;
+  transform: translateY(-160%) !important;
+  padding: 12px 16px !important;
+  background: var(--text) !important;
+  color: var(--bg) !important;
+  border: 2px solid var(--amber) !important;
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+  text-decoration: none !important;
+}
+.skip-link:focus {
+  transform: translateY(0) !important;
+}

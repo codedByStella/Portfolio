@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; frame-src 'self' https://www.youtube-nocookie.com; connect-src 'self'; upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>StellaStudios Technical Review | codedByStella</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/pages/StellaStudios-Technical.css">
+    <link rel="stylesheet" href="css/pages/StellaStudios-Technical.css">
 </head>
 <body>
-<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaStudios / technical-review</span></div><div>IMPLEMENTATION NOTES</div></div>
-<main class="wrap">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaStudios</span></div><div>IMPLEMENTATION NOTES</div></div>
+<main class="wrap" id="main-content">
 <header class="head">
 <div class="status-tag">TECHNICAL REVIEW / RETIRED SYSTEM</div>
 <h1>StellaStudios: Automated Audiovisual Production Pipeline</h1>
@@ -26,35 +28,35 @@
 <div><div class="k">Review basis</div><div class="v">Source and configuration inspection</div></div>
 </div>
 </header>
-<section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
+<section id="overview"><div class="s-label" role="heading" aria-level="2"><span>01 / overview</span><span class="rule"></span></div>
 <p>StellaStudios treats short-form video creation as a multi-stage workflow rather than a single generative request. A GPT node produces structured metadata; specialized nodes select and process a local music asset, synthesize narration, generate phrase-timed subtitles, request video from a provider, assemble the media, and archive artifacts. The video provider integration was built around Sora, which has since closed.</p>
 <p>The architecture separates provider calls from deterministic post-processing. External models supply the creative metadata, video, and narration; Python and FFmpeg handle orchestration, local soundtrack selection, file movement, audio processing, subtitle formatting, encoding, and archival. The soundtrack stage selects an existing local track rather than generating music.</p>
 <p><strong>Project origin:</strong> When Sora released, I was approached to build an automated audiovisual pipeline and accepted the premise. I tested Make and n8n first, but found the tooling inefficient for the requirements: model and integration constraints, broken nodes, and missing practical support for features such as subtitles. I rebuilt the system from scratch on Amazon Lightsail, implementing the workflow node by node until I had removed the Make dependency and implemented the features the project required.</p>
 <div class="callout"><p><strong>Operational status:</strong> this is a retired, non-functional system because its Sora video-generation dependency has closed. The video-generation call is isolated in a dedicated node, so the intended reactivation path is to replace that provider/model integration while retaining the surrounding orchestration and media-processing stages. This is a source-level architectural assessment, not a claim that a replacement provider has been integrated or tested.</p></div></section>
-<section id="metadata"><div class="s-label"><span>02 / creative metadata</span><span class="rule"></span></div>
+<section id="metadata"><div class="s-label" role="heading" aria-level="2"><span>02 / creative metadata</span><span class="rule"></span></div>
 <p>The GPT node calls the OpenAI Chat Completions API in JSON mode and expects five fields: <code>title</code>, <code>description</code>, <code>video</code>, <code>voice</code>, and <code>music</code>. Creative presets provide reusable constraints, while model configuration is managed separately. The environmental preset targets a short vertical scenic clip with coherent motion, consistent lighting, and a calm tone.</p>
 <p>The current validator checks required fields, rejects unexpected keys when the schema disallows them, verifies string values, screens forbidden characters, applies configured word-range checks, and checks hashtag counts. These checks enforce the stored metadata contract more thoroughly than a required-key check alone, but they cannot guarantee that an external model followed every creative instruction in the prompt.</p></section>
-<section id="video"><div class="s-label"><span>03 / video generation</span><span class="rule"></span></div>
+<section id="video"><div class="s-label" role="heading" aria-level="2"><span>03 / video generation</span><span class="rule"></span></div>
 <p>The video node reads production metadata, selects the relevant configuration, submits the scene description to the Sora service, waits for completion, retrieves the result, and saves the video for downstream use. This keeps the creative specification separate from later media assembly. <strong>This integration is retired and no longer functional because Sora has closed.</strong> The provider call is contained in its own node; the intended reboot is a straightforward model/API call replacement at that boundary, not a redesign of the downstream orchestration or FFmpeg pipeline.</p>
 <p>The intended properties include stable perspective, continuous motion, consistent lighting, and no abrupt scene changes. These are prompt goals, not guarantees of the generated footage. Actual quality remains dependent on the service and individual generation.</p></section>
-<section id="voice"><div class="s-label"><span>04 / narration</span><span class="rule"></span></div>
+<section id="voice"><div class="s-label" role="heading" aria-level="2"><span>04 / narration</span><span class="rule"></span></div>
 <p>The narration node sends the generated <code>voice</code> field to an external text-to-speech service, applies configured voice and synthesis parameters, and saves the returned audio artifact. This stage is independent of video rendering and hands the audio file to later stages.</p>
 <p>Prompt constraints specify a brief, understated delivery and fragment structure. The generated text and service output can still vary, so downstream timing and composition must work with the artifacts actually returned.</p></section>
-<section id="music"><div class="s-label"><span>05 / soundtrack processing</span><span class="rule"></span></div>
+<section id="music"><div class="s-label" role="heading" aria-level="2"><span>05 / soundtrack processing</span><span class="rule"></span></div>
 <p>The music node does not generate a soundtrack from the metadata's <code>music</code> description. It selects an existing track from a local collection, inspects its duration, chooses a short segment, and uses FFmpeg to extract it. Loudness normalization and fade processing are applied before the resulting clip is passed to assembly. The selection can be associated with the production slug so the stage can resolve the matching metadata.</p>
 <p>This is a hybrid design: the metadata can describe intended musical character, but the inspected implementation uses a reusable local asset pool rather than conditioning music generation on that description.</p></section>
-<section id="subtitles"><div class="s-label"><span>06 / subtitle generation</span><span class="rule"></span></div>
+<section id="subtitles"><div class="s-label" role="heading" aria-level="2"><span>06 / subtitle generation</span><span class="rule"></span></div>
 <p>The subtitle node removes the whisper marker from narration text, splits the remaining text into phrases, measures the narration duration, and distributes those phrases across the timeline. It writes styled Advanced SubStation Alpha (ASS) subtitles with configured typography, outlines, and fade effects. This is phrase-level duration-based timing, not word-level timestamp alignment.</p>
 <p>Timing is estimated at the phrase level. The implementation does not establish phoneme-level or word-level alignment, so subtitles may not match every spoken word precisely.</p></section>
-<section id="assembly"><div class="s-label"><span>07 / audiovisual assembly</span><span class="rule"></span></div>
+<section id="assembly"><div class="s-label" role="heading" aria-level="2"><span>07 / audiovisual assembly</span><span class="rule"></span></div>
 <p>The stitching stage combines the video, narration, soundtrack segment, and subtitle artifact. FFmpeg handles audio preparation and mixing, source-level adjustments, optional subtitle burn-in, optional text watermarking, and H.264 video with AAC audio encoding.</p>
 <p>Keeping assembly separate from generation allows the system to process available artifacts through a conventional media pipeline. The final result depends on the correct artifacts being associated with the same production run.</p></section>
-<section id="orchestration"><div class="s-label"><span>08 / orchestration and storage</span><span class="rule"></span></div>
+<section id="orchestration"><div class="s-label" role="heading" aria-level="2"><span>08 / orchestration and storage</span><span class="rule"></span></div>
 <p>The coordinator invokes metadata generation, soundtrack processing, speech synthesis, subtitle generation, video generation, stitching, and archiving. A pending directory provides intermediate handoffs, and the archiver organizes artifacts after assembly. Separate uploader daemons handle downstream publishing integrations.</p>
 <p>The current pipeline propagates a production slug into the music, narration, and Sora stages, and those stages can resolve metadata for the requested slug rather than blindly taking the newest record. Pending cleanup avoids deleting shared pending files. However, the project still uses shared staging storage rather than fully isolated per-job workspaces, so concurrent-run interference has not been eliminated.</p></section>
-<section id="operations"><div class="s-label"><span>09 / diagnostics</span><span class="rule"></span></div>
+<section id="operations"><div class="s-label" role="heading" aria-level="2"><span>09 / diagnostics</span><span class="rule"></span></div>
 <p>The project includes logging around configuration, stage execution, artifact handling, and errors, plus bounded timeouts for external media processes and selected external requests. The archiver preflights expected artifacts, avoids overwriting existing destinations, uses exclusive creation/copy behavior, and attempts rollback if a multi-artifact move fails. Uploaders record submission intent and distinguish confirmed rejection from ambiguous outcomes; an uncertain upload is left for manual reconciliation rather than blindly retried. These are concrete failure-containment measures, not a claim of automatic recovery from every failure.</p></section>
-<section id="limits"><div class="s-label"><span>10 / verification and limits</span><span class="rule"></span></div>
+<section id="limits"><div class="s-label" role="heading" aria-level="2"><span>10 / verification and limits</span><span class="rule"></span></div>
 <ul>
 <li><strong>Metadata validation:</strong> required and unexpected keys, string types, forbidden characters, configured word ranges, and hashtag counts are checked. Prompt adherence and creative quality remain outside deterministic validation.</li>
 <li><strong>Visual quality:</strong> prompt constraints express desired output and do not guarantee temporal or geometric consistency.</li>
@@ -64,12 +66,12 @@
 <li><strong>Operational status:</strong> retired and non-functional because the Sora video-generation service has closed. Development concluded after the ongoing generative-credit overhead failed to offer a clear economic payoff. Rebooting was designed around replacing the isolated video-provider/model call while retaining the surrounding pipeline; no replacement provider has been integrated or verified in this publication.</li>
 <li><strong>Testing:</strong> this review is based on source and configuration inspection, not a comprehensive end-to-end test report. It does not establish current service operation or a tested restart with a replacement video model.</li>
 </ul></section>
-<section id="next"><div class="s-label"><span>11 / engineering priorities</span><span class="rule"></span></div>
+<section id="next"><div class="s-label" role="heading" aria-level="2"><span>11 / engineering priorities</span><span class="rule"></span></div>
 <p>The remaining engineering priorities are full per-job workspace isolation, stronger end-to-end artifact association, and automated integration tests for the assembled output. The current code already includes metadata validation, slug-aware media handoffs, process timeouts, collision-aware archiving, and cautious handling of ambiguous upload outcomes; further work should build on those mechanisms rather than imply they are absent.</p></section>
-<section id="summary"><div class="s-label"><span>12 / summary</span><span class="rule"></span></div>
+<section id="summary"><div class="s-label" role="heading" aria-level="2"><span>12 / summary</span><span class="rule"></span></div>
 <p>StellaStudios demonstrates a modular audiovisual workflow that joins external model integrations with conventional media processing. Its engineering substance is in the structured metadata contract, specialized nodes, slug-aware handoffs, FFmpeg assembly, artifact lifecycle handling, and cautious upload-state management. The system is retired and cannot currently complete a run because Sora has closed. Its video-provider boundary was designed to make a model/API replacement the principal reactivation change, while retaining the rest of the pipeline architecture.</p>
 </section>
 </main>
-<div class="tech-sticky"><span class="hint">WANT THE OVERVIEW DETAILS?</span><a href="StellaStudios.html">Read the overview ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaStudios" target="_blank" rel="noopener noreferrer">Inspect source on GitHub ↗</a><a href="StellaFlips.html">See StellaFlips →</a></div>
+<div class="tech-sticky"><span class="hint">OVERVIEW</span><a href="StellaStudios.html">Overview ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaStudios" target="_blank" rel="noopener noreferrer">GitHub source ↗</a><a href="StellaFlips.html">See StellaFlips →</a></div>
 </body>
 </html>

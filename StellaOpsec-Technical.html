@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; frame-src 'self' https://www.youtube-nocookie.com; connect-src 'self'; upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>StellaOpsec Technical Review | codedByStella</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/pages/StellaOpsec-Technical.css">
+    <link rel="stylesheet" href="css/pages/StellaOpsec-Technical.css">
 </head>
 <body>
-<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaOpsec / technical-review</span></div><div>IMPLEMENTATION NOTES</div></div>
-<main class="wrap">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="statusbar"><div><a href="index.html">codedbystella@portfolio</a><span class="breadcrumb-separator">/</span><span class="path">StellaOpsec</span></div><div>IMPLEMENTATION NOTES</div></div>
+<main class="wrap" id="main-content">
 <header class="head">
 <div class="status-tag">TECHNICAL REVIEW / PROTOTYPE</div>
 <h1>StellaOpsec: PowerShell Security Assessment Toolkit</h1>
@@ -26,56 +28,56 @@
 <div><div class="k">Scope</div><div class="v">Configuration checks, not certification</div></div>
 </div>
 </header>
-<section id="overview"><div class="s-label"><span>01 / overview</span><span class="rule"></span></div>
+<section id="overview"><div class="s-label" role="heading" aria-level="2"><span>01 / overview</span><span class="rule"></span></div>
 <p>StellaOpsec separates collection into modules for Windows host configuration, network reachability, web response settings, credential-related metadata, event logs, Active Directory, and selected cloud resources. Supporting functions standardize findings and serialize or present report data.</p>
 <p>The architecture is organized around collectors that return PowerShell objects, aggregation into module-level reports, selected finding generation, and output through JSON, HTML, CSV, or Excel. This provides a common structure for the results without implying every check is comprehensive or every report path has been verified end to end.</p>
 <div class="callout"><p><strong>Scope note:</strong> StellaOpsec is a dormant prototype. It should be described as a set of selected inventory and configuration checks, not a comprehensive vulnerability scanner, penetration-testing framework, compliance certification tool, or full cloud-security posture management platform.</p></div></section>
-<section id="host"><div class="s-label"><span>02 / Windows host inventory</span><span class="rule"></span></div>
+<section id="host"><div class="s-label" role="heading" aria-level="2"><span>02 / Windows host inventory</span><span class="rule"></span></div>
 <p>The host module gathers operating-system and hardware information, installation and boot details, time-zone data, local account and Administrators group membership, network configuration, listening TCP ports, process associations, firewall profiles, installed hotfixes, software registry entries, scheduled tasks, services, and selected SMB share information.</p>
 <p>PowerShell management cmdlets, CIM, and registry queries provide the collection mechanisms. Error handling is intended to let individual checks report failures without necessarily terminating the whole inventory run.</p>
 <p><strong>Interpretation limits:</strong> hotfix inventory is not correlated with CVEs; service-path collection does not prove exploitable permissions; and listing SMB shares does not evaluate all share and filesystem ACLs. Inventory should be treated as evidence for follow-up, not a complete vulnerability verdict.</p></section>
-<section id="network"><div class="s-label"><span>03 / network checks</span><span class="rule"></span></div>
+<section id="network"><div class="s-label" role="heading" aria-level="2"><span>03 / network checks</span><span class="rule"></span></div>
 <p>The network module includes ICMP reachability checks, IPv4 CIDR expansion, TCP port checks, DNS zone-transfer testing, and TLS handshake or certificate metadata collection. These functions offer a limited view of reachability and protocol configuration.</p>
 <p>ICMP filtering can make reachable hosts appear absent, and a reachable TCP port does not establish that the service is vulnerable. DNS zone-transfer conclusions depend on how command output is interpreted. The TLS routines accept certificates through a validation callback, so a successful handshake does not demonstrate certificate trust.</p>
-<p>The source declares Windows PowerShell 5.1 compatibility while using <code>ForEach-Object -Parallel</code>, which requires PowerShell 7 or later. This compatibility mismatch should be resolved or the supported runtime should be stated accurately.</p></section>
-<section id="web"><div class="s-label"><span>04 / web configuration checks</span><span class="rule"></span></div>
+<p>The reviewed source does not use <code>ForEach-Object -Parallel</code>; that PowerShell 7-only feature does not create a Windows PowerShell 5.1 compatibility mismatch in this codebase.</p></section>
+<section id="web"><div class="s-label" role="heading" aria-level="2"><span>04 / web configuration checks</span><span class="rule"></span></div>
 <p>The web module inspects HTTP response headers, cookie attributes, and negotiated TLS metadata for supplied URLs. Checks cover common security headers, server-identification headers, <code>Secure</code>, <code>HttpOnly</code>, and <code>SameSite</code> cookie attributes, and selected protocol and cipher information.</p>
 <p>These checks can flag configuration items for review but do not constitute a full application-security assessment. Header presence does not prove a policy is correct, and protocol negotiation does not establish overall TLS security. The optional certificate-validation bypass and the TLS test's accepting callback mean certificate trust cannot be inferred from a successful result.</p></section>
-<section id="credentials"><div class="s-label"><span>05 / credential-related metadata</span><span class="rule"></span></div>
+<section id="credentials"><div class="s-label" role="heading" aria-level="2"><span>05 / credential-related metadata</span><span class="rule"></span></div>
 <p>The credential-hygiene module inventories selected certificate stores, cached credential-target metadata, an LSA protection registry setting, and selected Device Guard security-service status. It focuses on configuration and metadata rather than retrieving credential secrets.</p>
 <p>Several outputs are indicators rather than definitive conclusions. Subject and issuer equality is only a heuristic for self-signed certificates; selected stores are not exhaustive; and command-output parsing can depend on language and formatting. Registry settings and Device Guard status do not independently prove that all relevant protections are effective.</p></section>
-<section id="events"><div class="s-label"><span>06 / event-log triage</span><span class="rule"></span></div>
+<section id="events"><div class="s-label" role="heading" aria-level="2"><span>06 / event-log triage</span><span class="rule"></span></div>
 <p>The event-log module summarizes selected successful and failed logon events, groups failed logons by account against a configurable threshold, inspects PowerShell script-block logging configuration and selected event 4104 content, and inventories recent file changes in selected locations.</p>
 <p>This is an initial triage view, not a forensic pipeline or SIEM replacement. Coverage depends on retention, audit policy, permissions, and available event data. Failed-logon grouping is not a comprehensive password-spraying detector, and recent file activity alone cannot establish maliciousness.</p></section>
-<section id="ad"><div class="s-label"><span>07 / Active Directory inventory</span><span class="rule"></span></div>
+<section id="ad"><div class="s-label" role="heading" aria-level="2"><span>07 / Active Directory inventory</span><span class="rule"></span></div>
 <p>Using RSAT ActiveDirectory and GroupPolicy modules, the domain module collects selected user attributes and last-logon information, privileged-account indicators, service principal names, recursive membership for selected high-value groups, password policies, domain trust metadata, and Group Policy Object inventory.</p>
 <p>Interpretation requires care: missing last-logon data can affect stale-account classification; <code>AdminCount</code> is not a complete measure of current effective privilege; and an SPN is a review indicator, not proof of a vulnerability. The inspected GPO path inventories metadata but does not enumerate all links or calculate resultant policy. Permissions and module availability can limit coverage.</p></section>
-<section id="gcp"><div class="s-label"><span>08 / Google Cloud checks</span><span class="rule"></span></div>
+<section id="gcp"><div class="s-label" role="heading" aria-level="2"><span>08 / Google Cloud checks</span><span class="rule"></span></div>
 <p>The GCP module uses the Google Cloud CLI to inspect selected Cloud Storage bucket IAM bindings, ingress firewall rules with broad source ranges, project-level Owner and Editor bindings, and Cloud SQL IPv4 and authorized-network settings. The reviewed operations are oriented toward reading configuration rather than changing cloud resources.</p>
 <p>Bucket-level IAM checks do not calculate all effective access, and firewall checks do not cover every possible exposure path. The Cloud SQL output labels the <code>ipv4Enabled</code> property as <code>PublicIpEnabled</code>, which overstates what that field proves. Public exposure and effective reachability require a more precise evaluation.</p>
 <p>The CLI wrapper constructs command strings for <code>Invoke-Expression</code>. This should be replaced with safer argument passing and strict input validation to reduce command-injection risk.</p></section>
-<section id="azure"><div class="s-label"><span>09 / Azure checks</span><span class="rule"></span></div>
+<section id="azure"><div class="s-label" role="heading" aria-level="2"><span>09 / Azure checks</span><span class="rule"></span></div>
 <p>The Azure module uses the Azure CLI to inspect storage-account and container access settings, selected inbound Network Security Group rules, privileged role assignments and scopes, and Azure SQL firewall rules and public-network-access configuration.</p>
 <p>These are posture indicators, not a complete effective-access analysis. The role-assignment checks do not verify MFA status; NSG review does not calculate effective exposure across all applicable rules and controls; and storage or database findings depend on returned configuration and its interpretation.</p>
 <p>The Azure CLI wrapper also uses constructed command strings through <code>Invoke-Expression</code>, creating the same need for safer invocation and input handling as the GCP wrapper.</p></section>
-<section id="findings"><div class="s-label"><span>10 / finding generation and HTML</span><span class="rule"></span></div>
+<section id="findings"><div class="s-label" role="heading" aria-level="2"><span>10 / finding generation and HTML</span><span class="rule"></span></div>
 <p>The report-generation module standardizes findings with severity labels, descriptions, evidence, recommendations, and summary counts. It includes automatic detection for three specific host-configuration patterns and renders severity-colored HTML with collapsible raw report data.</p>
 <p>The automated detection logic is limited to those predefined patterns. Severity labels do not represent a comprehensive risk-scoring model. Most finding fields are HTML-encoded, but the engagement name is inserted without equivalent encoding in the inspected implementation; this should be corrected before rendering untrusted input.</p>
 <p>Reports can contain sensitive inventory and identity data. Storage, access, retention, and distribution need to be handled accordingly.</p></section>
-<section id="exports"><div class="s-label"><span>11 / CSV and Excel export</span><span class="rule"></span></div>
+<section id="exports"><div class="s-label" role="heading" aria-level="2"><span>11 / CSV and Excel export</span><span class="rule"></span></div>
 <p>The export module sorts supplied findings by severity, writes finding fields to CSV, exports report sections separately, and can generate Excel workbooks with filters, frozen headers, conditional formatting, and raw-data sheets. If the optional ImportExcel dependency is unavailable, a CSV fallback is provided.</p>
 <p>Known limitations include nested-object handling, worksheet-name collisions after sanitization or truncation, and differences between CSV and Excel output. The workbook replacement workflow risks deleting an existing report before the replacement is successfully generated.</p></section>
-<section id="architecture"><div class="s-label"><span>12 / integration model</span><span class="rule"></span></div>
+<section id="architecture"><div class="s-label" role="heading" aria-level="2"><span>12 / integration model</span><span class="rule"></span></div>
 <p>The principal data flow is:</p>
 <ul><li><strong>Collection:</strong> modules query host, network, web, identity, event-log, and cloud configuration.</li><li><strong>Structuring:</strong> functions return PowerShell objects that can be aggregated into module reports.</li><li><strong>Finding generation:</strong> selected host conditions become standardized findings.</li><li><strong>Presentation:</strong> report data can be serialized as JSON or rendered as HTML, CSV, or Excel output.</li></ul>
 <p>The integration is based mainly on shared object structures and report aggregation. The presence of these components does not establish a fully automated, end-to-end assessment pipeline.</p></section>
-<section id="priorities"><div class="s-label"><span>13 / engineering priorities</span><span class="rule"></span></div>
+<section id="priorities"><div class="s-label" role="heading" aria-level="2"><span>13 / engineering priorities</span><span class="rule"></span></div>
 <ul><li>Replace constructed CLI command strings with safe argument passing and validate all external inputs.</li><li>Correct runtime compatibility declarations and check dependencies before execution.</li><li>Represent each check explicitly as successful, failed, or incomplete, preserving error context.</li><li>Distinguish observed configuration from effective exposure and verified exploitability.</li><li>Improve HTML encoding, export consistency, and safe replacement of existing reports.</li><li>Test collectors and report outputs against representative Windows, Active Directory, GCP, and Azure environments.</li></ul></section>
-<section id="scope"><div class="s-label"><span>14 / verification and scope</span><span class="rule"></span></div>
+<section id="scope"><div class="s-label" role="heading" aria-level="2"><span>14 / verification and scope</span><span class="rule"></span></div>
 <p>This review is based on the supplied source implementations and declared functionality. It establishes which collection and reporting paths are present in the inspected code, but it does not independently verify successful execution across target environments, complete coverage, or end-to-end reliability.</p>
 <p>StellaOpsec is best presented as a prototype toolkit for selected inventory and configuration checks. It should not be represented as a comprehensive vulnerability scanner, penetration-testing framework, compliance certification tool, or cloud-security posture management platform.</p>
 </section>
 </main>
-<div class="tech-sticky"><span class="hint">WANT THE OVERVIEW DETAILS?</span><a href="StellaOpsec.html">Read the overview ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaOpsec" target="_blank" rel="noopener noreferrer">Inspect source on GitHub ↗</a><a href="StellaStudios.html">See StellaStudios →</a></div>
+<div class="tech-sticky"><span class="hint">OVERVIEW</span><a href="StellaOpsec.html">Overview ↗</a><a class="source-link" href="https://github.com/codedByStella/StellaOpsec" target="_blank" rel="noopener noreferrer">GitHub source ↗</a><a href="StellaStudios.html">See StellaStudios →</a></div>
 </body>
 </html>

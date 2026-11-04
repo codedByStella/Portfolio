@@ -11,6 +11,7 @@
   @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
 
   .wrap{max-width:840px; margin:0 auto; padding:0 32px;}
+  body:has(.tech-sticky) .wrap{max-width:1120px;}
 
   .head{padding:80px 0 50px; border-bottom:1px solid var(--border);}
   .status-tag{display:inline-flex; align-items:center; gap:7px; font-family:var(--mono); font-size:12px; color:var(--text-dim); border:1px solid var(--border); background:rgba(139,147,161,0.07); padding:5px 12px; margin-bottom:24px;}
@@ -150,4 +151,104 @@ body.studios-page .wrap>section .shot img{
   max-height:280px;
   object-fit:cover;
   object-position:center;
+}
+
+/* Horizontal fill contract: page content and description boxes use the available parent width. */
+body:has(.tech-sticky) .wrap,
+body:has(.meta-grid) .wrap {
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+}
+body:has(.tech-sticky) .wrap > .head,
+body:has(.meta-grid) .wrap > .head,
+body:has(.tech-sticky) .wrap > section,
+body:has(.meta-grid) .wrap > section,
+body:has(.tech-sticky) .wrap .meta-grid,
+body:has(.meta-grid) .wrap .meta-grid,
+body:has(.tech-sticky) .wrap .steps,
+body:has(.meta-grid) .wrap .steps,
+body:has(.tech-sticky) .wrap .shot-grid,
+body:has(.meta-grid) .wrap .shot-grid,
+body:has(.tech-sticky) .wrap .sample,
+body:has(.tech-sticky) .wrap .stat-grid,
+body:has(.tech-sticky) .wrap .callout,
+body:has(.meta-grid) .wrap .callout,
+body:has(.tech-sticky) .wrap .result,
+body:has(.meta-grid) .wrap .result,
+body:has(.tech-sticky) .wrap .crossref,
+body:has(.tech-sticky) .wrap .table-wrap,
+body:has(.meta-grid) .wrap .table-wrap {
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+}
+body:has(.tech-sticky) .wrap .head h1,
+body:has(.meta-grid) .wrap .head h1,
+body:has(.tech-sticky) .wrap .head .lede,
+body:has(.meta-grid) .wrap .head .lede,
+body:has(.tech-sticky) .wrap > section p,
+body:has(.meta-grid) .wrap > section p,
+body:has(.tech-sticky) .wrap .stage-desc {
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+}
+
+/* Compact mobile navigation and keep the technical breadcrumb on one line. */
+@media (max-width: 560px) {
+  .tech-sticky { flex-wrap:nowrap; justify-content:space-evenly; gap:clamp(4px,1.5vw,8px); padding:9px 6px; font-size:clamp(8px,2.25vw,10px); white-space:nowrap; }
+  .tech-sticky > * { flex:0 1 auto; min-width:0; white-space:nowrap; }
+  .tech-sticky a { font-size:inherit; line-height:1.2; }
+  .tech-sticky a[href*="-Technical.html"], .tech-sticky a.source-link, .tech-sticky a:last-child:not(.source-link), .tech-sticky .source-unavailable { font-size:0; }
+  .tech-sticky a[href*="-Technical.html"]::after { content:"Technical"; font-size:clamp(8px,2.25vw,10px); }
+  .tech-sticky a.source-link::after { content:"GitHub source"; font-size:clamp(8px,2.25vw,10px); }
+  .tech-sticky a:last-child:not(.source-link)::after { content:"Next →"; font-size:clamp(8px,2.25vw,10px); }
+  .tech-sticky .source-unavailable::after { content:"Source N/A"; font-size:clamp(8px,2.25vw,10px); }
+  .statusbar { flex-wrap:nowrap; align-items:center; gap:4px; padding:7px 8px; font-size:clamp(6px,1.95vw,9px); line-height:1.2; white-space:nowrap; }
+  .statusbar > div { min-width:0; flex:0 1 auto; white-space:nowrap; }
+  .statusbar > div:first-child { flex:1 1 auto; overflow:hidden; text-overflow:clip; }
+  .statusbar > div:last-child { flex:0 0 auto; font-size:inherit; letter-spacing:-0.04em; }
+  .statusbar .breadcrumb-separator { margin:0 2px; }
+}
+
+/* Final mobile override: compact the terminal breadcrumb and align footer labels. */
+@media (max-width: 760px) {
+  .statusbar { display:flex; flex-wrap:nowrap; align-items:center; gap:5px; white-space:nowrap; font-size:clamp(5px, 1.7vw, 9px); line-height:1.2; padding:8px 10px; }
+  .statusbar > div { display:flex; flex-wrap:nowrap; align-items:center; min-width:0; white-space:nowrap; gap:3px; }
+  .statusbar > div:first-child { flex:1 1 auto; overflow:hidden; }
+  .statusbar > div:last-child { flex:0 0 auto; font-size:inherit; letter-spacing:-.045em; }
+  .statusbar .breadcrumb-separator { flex:0 0 auto; margin:0 1px; }
+  .tech-sticky { flex-wrap:nowrap; align-items:center; justify-content:center; gap:clamp(4px, 1.5vw, 8px); padding:8px 6px; }
+  .tech-sticky .hint { display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; min-height:32px; margin:0; padding:0 4px; line-height:1.2; vertical-align:middle; }
+  .tech-sticky a, .tech-sticky .source-unavailable { display:inline-flex; align-items:center; justify-content:center; flex:0 1 auto; min-width:0; min-height:32px; white-space:nowrap; line-height:1.2; padding:5px clamp(4px, 1.5vw, 9px); font-size:clamp(8px, 2.25vw, 10px); }
+}
+
+/* Mobile footer: preserve one row by shrinking the controls, not wrapping them. */
+@media (max-width: 760px) {
+  .tech-sticky { display:flex; flex-flow:row nowrap; align-items:center; justify-content:center; gap:clamp(2px, .8vw, 5px); padding:7px 4px calc(7px + env(safe-area-inset-bottom, 0px)); white-space:nowrap; overflow:hidden; font-size:7px; line-height:1.15; }
+  .tech-sticky > * { flex:0 1 auto; min-width:0; white-space:nowrap; }
+  .tech-sticky .hint { display:inline-flex; flex:0 1 auto; align-items:center; justify-content:center; margin:0; padding:0 2px; font-size:7px; line-height:1.15; letter-spacing:.025em; white-space:nowrap; }
+  .tech-sticky a, .tech-sticky .source-unavailable { display:inline-flex; flex:0 1 auto; align-items:center; justify-content:center; min-width:0; min-height:28px; margin:0; padding:4px 3px; font-size:7px; line-height:1.15; white-space:nowrap; }
+  .tech-sticky a[href*="-Technical.html"], .tech-sticky a.source-link, .tech-sticky a:last-child:not(.source-link), .tech-sticky .source-unavailable { font-size:0; }
+  .tech-sticky a[href*="-Technical.html"]::after { content:"Technical"; font-size:7px; }
+  .tech-sticky a.source-link::after { content:"GitHub"; font-size:7px; }
+  .tech-sticky a:last-child:not(.source-link)::after { content:"Next →"; font-size:7px; }
+  .tech-sticky .source-unavailable::after { content:"Source N/A"; font-size:7px; }
+}
+
+
+/* Final mobile footer override: concise labels at readable size.
+   Kept in each page stylesheet because these pages load their own CSS. */
+@media (max-width: 760px) {
+  .tech-sticky { overflow: visible; gap: 4px; }
+  .tech-sticky .hint, .tech-sticky a, .tech-sticky .source-unavailable {
+    font-size: 12px; line-height: 1.2; letter-spacing: normal;
+  }
+  .tech-sticky a[href*="-Technical.html"], .tech-sticky a.source-link,
+  .tech-sticky a:last-child:not(.source-link), .tech-sticky .source-unavailable { font-size: 0; }
+  .tech-sticky a[href*="-Technical.html"]::after { content: "TECH"; font-size: 12px; }
+  .tech-sticky a.source-link::after { content: "CODE"; font-size: 12px; }
+  .tech-sticky a:last-child:not(.source-link)::after { content: "NEXT →"; font-size: 12px; }
+  .tech-sticky .source-unavailable::after { content: "NO SOURCE"; font-size: 12px; }
 }
