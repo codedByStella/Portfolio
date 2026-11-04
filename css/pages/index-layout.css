@@ -386,3 +386,23 @@ footer .fmono a {
     max-width: 100%;
   }
 }
+
+
+/* Mobile index header: keep the opening identity and headline centered. */
+@media (max-width: 720px) {
+  .hero--intro {
+    align-items: center;
+    text-align: center;
+  }
+  .hero--intro .eyebrow,
+  .hero--intro h1,
+  .hero--intro p,
+  .hero--intro .hero-meta {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+  .hero--intro .eyebrow { justify-content: center; }
+  .hero--intro .hero-meta { justify-content: center; }
+  .hero--intro .hero-meta > div { text-align: center; }
+}
