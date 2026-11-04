@@ -718,3 +718,21 @@
 .statusbar > div:first-child {
   text-align: center;
 }
+
+
+/* Center both status rows as soon as the terminal header wraps onto multiple lines. */
+@media (min-width: 901px) and (max-width: 1000px) {
+  .statusbar {
+    justify-content: center !important;
+  }
+  .statusbar > div:first-child {
+    flex: 0 0 100%;
+    width: 100%;
+    text-align: center !important;
+  }
+  .statusbar-right {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
