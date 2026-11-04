@@ -102,3 +102,60 @@ body:has(.tech-sticky) .wrap .stage-desc {
   .tech-sticky .hint { display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; min-height:32px; margin:0; padding:0 4px; line-height:1.2; vertical-align:middle; }
   .tech-sticky a, .tech-sticky .source-unavailable { display:inline-flex; align-items:center; justify-content:center; flex:0 1 auto; min-width:0; min-height:32px; white-space:nowrap; line-height:1.2; padding:5px clamp(4px, 1.5vw, 9px); font-size:clamp(8px, 2.25vw, 10px); }
 }
+
+/* Mobile footer: preserve one row by shrinking the controls, not wrapping them. */
+@media (max-width: 760px) {
+  .tech-sticky {
+    display:flex;
+    flex-flow:row nowrap;
+    align-items:center;
+    justify-content:center;
+    gap:clamp(2px, .8vw, 5px);
+    padding:7px 4px calc(7px + env(safe-area-inset-bottom, 0px));
+    white-space:nowrap;
+    overflow:hidden;
+    font-size:7px;
+    line-height:1.15;
+  }
+  .tech-sticky > * {
+    flex:0 1 auto;
+    min-width:0;
+    white-space:nowrap;
+  }
+  .tech-sticky .hint {
+    display:inline-flex;
+    flex:0 1 auto;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+    padding:0 2px;
+    font-size:7px;
+    line-height:1.15;
+    letter-spacing:.025em;
+    white-space:nowrap;
+  }
+  .tech-sticky a,
+  .tech-sticky .source-unavailable {
+    display:inline-flex;
+    flex:0 1 auto;
+    align-items:center;
+    justify-content:center;
+    min-width:0;
+    min-height:28px;
+    margin:0;
+    padding:4px 3px;
+    font-size:7px;
+    line-height:1.15;
+    white-space:nowrap;
+  }
+  .tech-sticky a[href*="-Technical.html"],
+  .tech-sticky a.source-link,
+  .tech-sticky a:last-child:not(.source-link),
+  .tech-sticky .source-unavailable {
+    font-size:0;
+  }
+  .tech-sticky a[href*="-Technical.html"]::after { content:"Technical"; font-size:7px; }
+  .tech-sticky a.source-link::after { content:"GitHub"; font-size:7px; }
+  .tech-sticky a:last-child:not(.source-link)::after { content:"Next →"; font-size:7px; }
+  .tech-sticky .source-unavailable::after { content:"Source N/A"; font-size:7px; }
+}
