@@ -587,3 +587,11 @@
     display: none !important;
   }
 }
+
+@media (max-width: 560px) {
+  .statusbar > div:first-child::after {
+    font-family: var(--sans) !important;
+    font-size: 14px !important;
+    letter-spacing: -.035em !important;
+  }
+}
