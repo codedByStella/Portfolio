@@ -898,3 +898,75 @@ body:has(.tech-sticky) .wrap > section .shot-cap {
     font-size: 14px !important;
   }
 }
+
+
+/* Mobile project header: account, project name, and History share one row. */
+@media (max-width: 560px) {
+  body:has(.tech-sticky) .statusbar,
+  body:has(.meta-grid) .statusbar {
+    display: grid !important;
+    grid-template-columns: max-content minmax(0, 1fr) max-content !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+    gap: 8px !important;
+    min-height: 44px !important;
+    padding: 9px 12px !important;
+    white-space: nowrap !important;
+    font-family: var(--sans) !important;
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+    letter-spacing: normal !important;
+  }
+  body:has(.tech-sticky) .statusbar > div:first-child,
+  body:has(.meta-grid) .statusbar > div:first-child,
+  body:has(.tech-sticky) .statusbar > div:last-child,
+  body:has(.meta-grid) .statusbar > div:last-child {
+    display: contents !important;
+  }
+  body:has(.tech-sticky) .statusbar .breadcrumb-separator,
+  body:has(.meta-grid) .statusbar .breadcrumb-separator {
+    display: none !important;
+  }
+  body:has(.tech-sticky) .statusbar > div:first-child > a,
+  body:has(.meta-grid) .statusbar > div:first-child > a {
+    grid-column: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 0 !important;
+    text-align: center;
+  }
+  body:has(.tech-sticky) .statusbar > div:first-child > a::after,
+  body:has(.meta-grid) .statusbar > div:first-child > a::after {
+    content: "codedByStella@portfolio";
+    font-size: 14px !important;
+    white-space: nowrap;
+  }
+  body:has(.tech-sticky) .statusbar .path,
+  body:has(.meta-grid) .statusbar .path {
+    grid-column: 2;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px !important;
+    text-align: center;
+    white-space: nowrap;
+  }
+  body:has(.tech-sticky) .statusbar > div:last-child,
+  body:has(.meta-grid) .statusbar > div:last-child {
+    grid-column: 3;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 0 !important;
+    text-align: center;
+    white-space: nowrap;
+  }
+  body:has(.tech-sticky) .statusbar > div:last-child .dot,
+  body:has(.meta-grid) .statusbar > div:last-child .dot {
+    display: none !important;
+  }
+  body:has(.tech-sticky) .statusbar > div:last-child::after,
+  body:has(.meta-grid) .statusbar > div:last-child::after {
+    content: "History";
+    font-size: 14px !important;
+  }
+}
