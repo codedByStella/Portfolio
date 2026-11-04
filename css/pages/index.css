@@ -650,3 +650,21 @@
     letter-spacing: normal !important;
   }
 }
+
+/* Project-card evidence images: show the complete screenshot without cropping. */
+.proc-thumb-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+}
+
+.proc-thumb-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: none;
+}
+
