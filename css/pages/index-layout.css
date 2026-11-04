@@ -406,3 +406,40 @@ footer .fmono a {
   .hero--intro .hero-meta { justify-content: center; }
   .hero--intro .hero-meta > div { text-align: center; }
 }
+
+/* Mobile finishing: center the terminal identity and separate each hero metric. */
+@media (max-width: 560px) {
+  .statusbar {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .statusbar > div:first-child {
+    width: 100%;
+    text-align: center !important;
+  }
+
+  .hero--intro .hero-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: stretch;
+    gap: 12px;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .hero--intro .hero-meta > div {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    line-height: 1.5;
+    text-align: center;
+  }
+  .hero--intro .hero-meta strong {
+    display: block;
+    margin: 0 0 6px;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+}
+
