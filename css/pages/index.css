@@ -635,3 +635,18 @@
     display: none !important;
   }
 }
+
+
+/* Final mobile index status: one account label and one project count. */
+@media (max-width: 560px) {
+  .statusbar > div:first-child::after {
+    content: none !important;
+    display: none !important;
+  }
+  .statusbar > div:first-child .path::after {
+    content: ": 7 projects tracked" !important;
+    color: var(--text) !important;
+    font: 14px/1.4 var(--sans) !important;
+    letter-spacing: normal !important;
+  }
+}
