@@ -451,3 +451,29 @@ footer .fmono a {
   object-position: center;
 }
 
+
+
+/* Move the three homepage metrics into a clean vertical stack before tablet widths. */
+@media (max-width: 900px) {
+  .hero--intro .hero-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: stretch;
+    gap: 12px;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .hero--intro .hero-meta > div {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    line-height: 1.5;
+    text-align: center;
+  }
+  .hero--intro .hero-meta strong {
+    display: block;
+    margin: 0 0 6px;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+}
