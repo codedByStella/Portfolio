@@ -697,6 +697,8 @@ body:has(.tech-sticky) .tech-sticky a {
   }
 }
 
+@media (max-width: 760px) {
+
   body:has(.tech-sticky) .statusbar {
     display:flex;
     flex-wrap:nowrap;
@@ -728,6 +730,8 @@ body:has(.tech-sticky) .tech-sticky a {
     flex:0 0 auto;
     margin:0 1px;
   }
+
+}
 
 /* Captions must grow with their text; fixed-height clipping hid content on
    narrow screens and when users enlarge text. */
