@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Static security regression checks for the codedByStella portfolio."""
+"""Static security regression checks for the codedByStella portfolio.
+
+NOTE: Automated CI execution is currently unavailable due to GitHub Actions
+billing limits. This checker is intentionally retained to document the
+security checks considered during development; it is not currently running
+as an automated gate. The checks can still be run manually in a local checkout.
+"""
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
