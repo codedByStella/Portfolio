@@ -220,3 +220,19 @@ body:has(.tech-sticky) .wrap .stage-desc {
   .tech-sticky a:last-child:not(.source-link)::after { content:"Next →"; font-size:7px; }
   .tech-sticky .source-unavailable::after { content:"Source N/A"; font-size:7px; }
 }
+
+
+/* Final mobile footer override: concise labels at readable size.
+   Kept in each page stylesheet because these pages load their own CSS. */
+@media (max-width: 760px) {
+  .tech-sticky { overflow: visible; gap: 4px; }
+  .tech-sticky .hint, .tech-sticky a, .tech-sticky .source-unavailable {
+    font-size: 12px; line-height: 1.2; letter-spacing: normal;
+  }
+  .tech-sticky a[href*="-Technical.html"], .tech-sticky a.source-link,
+  .tech-sticky a:last-child:not(.source-link), .tech-sticky .source-unavailable { font-size: 0; }
+  .tech-sticky a[href*="-Technical.html"]::after { content: "TECH"; font-size: 12px; }
+  .tech-sticky a.source-link::after { content: "CODE"; font-size: 12px; }
+  .tech-sticky a:last-child:not(.source-link)::after { content: "NEXT →"; font-size: 12px; }
+  .tech-sticky .source-unavailable::after { content: "NO SOURCE"; font-size: 12px; }
+}
