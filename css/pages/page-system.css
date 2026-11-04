@@ -742,3 +742,42 @@ body:has(.tech-sticky) .wrap > section .shot-cap {
   max-height: none;
   overflow: visible;
 }
+
+
+/* Mobile project footer: preserve the existing control boxes and use concise,
+   readable labels instead of shrinking text below a comfortable size. */
+@media (max-width: 760px) {
+  body:has(.tech-sticky) .tech-sticky {
+    gap: 4px;
+    overflow: visible;
+  }
+  body:has(.tech-sticky) .tech-sticky .hint,
+  body:has(.tech-sticky) .tech-sticky a,
+  body:has(.tech-sticky) .tech-sticky .source-unavailable {
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: normal;
+  }
+  body:has(.tech-sticky) .tech-sticky a[href*="-Technical.html"],
+  body:has(.tech-sticky) .tech-sticky a.source-link,
+  body:has(.tech-sticky) .tech-sticky a:last-child:not(.source-link),
+  body:has(.tech-sticky) .tech-sticky .source-unavailable {
+    font-size: 0;
+  }
+  body:has(.tech-sticky) .tech-sticky a[href*="-Technical.html"]::after {
+    content: "TECH";
+    font-size: 12px;
+  }
+  body:has(.tech-sticky) .tech-sticky a.source-link::after {
+    content: "CODE";
+    font-size: 12px;
+  }
+  body:has(.tech-sticky) .tech-sticky a:last-child:not(.source-link)::after {
+    content: "NEXT →";
+    font-size: 12px;
+  }
+  body:has(.tech-sticky) .tech-sticky .source-unavailable::after {
+    content: "NO SOURCE";
+    font-size: 12px;
+  }
+}
